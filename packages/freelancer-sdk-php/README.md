@@ -4,7 +4,35 @@ Official PHP SDK for the Freelancer.com API, converted from the Python SDK.
 
 ## Installation
 
-This package is designed to be used locally within a Laravel application:
+This package is designed to be used locally within a Laravel application via a Composer path repository.
+
+### For Local Development (Path Repository)
+
+Add the following to your project's `composer.json`:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/freelancer-sdk-php"
+        }
+    ],
+    "require": {
+        "underdogg-forks/freelancer-sdk-php": "*"
+    }
+}
+```
+
+Then run:
+
+```bash
+composer install
+```
+
+### For Production (Packagist)
+
+Once published to Packagist, you can install directly:
 
 ```bash
 composer require underdogg-forks/freelancer-sdk-php

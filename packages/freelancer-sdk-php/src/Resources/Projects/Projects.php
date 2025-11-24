@@ -41,7 +41,10 @@ class Projects extends ProjectsBase
                 $response['request_id'] ?? null
             );
         } catch (\Exception $e) {
-            throw new ProjectNotCreatedException($e->getMessage());
+            if ($e instanceof ProjectNotCreatedException) {
+                throw $e;
+            }
+            throw new ProjectNotCreatedException($e->getMessage(), null, null, $e->getCode(), $e);
         }
     }
 
@@ -139,7 +142,10 @@ class Projects extends ProjectsBase
                 $response['request_id'] ?? null
             );
         } catch (\Exception $e) {
-            throw new BidsNotFoundException($e->getMessage());
+            if ($e instanceof BidsNotFoundException) {
+                throw $e;
+            }
+            throw new BidsNotFoundException($e->getMessage(), null, null, $e->getCode(), $e);
         }
     }
 
@@ -171,7 +177,10 @@ class Projects extends ProjectsBase
                 $response['request_id'] ?? null
             );
         } catch (\Exception $e) {
-            throw new ProjectsNotFoundException($e->getMessage());
+            if ($e instanceof ProjectsNotFoundException) {
+                throw $e;
+            }
+            throw new ProjectsNotFoundException($e->getMessage(), null, null, $e->getCode(), $e);
         }
     }
 }

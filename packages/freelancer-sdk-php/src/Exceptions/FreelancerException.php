@@ -6,8 +6,8 @@ use Exception;
 
 class FreelancerException extends Exception
 {
-    protected ?string $requestId;
-    protected ?string $errorCode;
+    protected ?string $requestId = null;
+    protected ?string $errorCode = null;
 
     public function __construct(
         string $message = "",
