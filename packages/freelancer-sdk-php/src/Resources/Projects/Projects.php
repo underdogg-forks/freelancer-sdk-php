@@ -41,7 +41,16 @@ class Projects extends ProjectsBase
                 $response['request_id'] ?? null
             );
         } catch (\Exception $e) {
-            throw new ProjectNotCreatedException($e->getMessage());
+            if ($e instanceof ProjectNotCreatedException) {
+                throw $e;
+            }
+            throw new ProjectNotCreatedException(
+                $e->getMessage(),
+                errorCode: null,
+                requestId: null,
+                code: $e->getCode(),
+                previous: $e
+            );
         }
     }
 
@@ -76,7 +85,13 @@ class Projects extends ProjectsBase
             if ($e instanceof ProjectsNotFoundException) {
                 throw $e;
             }
-            throw new ProjectsNotFoundException($e->getMessage(), previous: $e);
+            throw new ProjectsNotFoundException(
+                $e->getMessage(),
+                errorCode: null,
+                requestId: null,
+                code: $e->getCode(),
+                previous: $e
+            );
         }
     }
 
@@ -107,7 +122,13 @@ class Projects extends ProjectsBase
             if ($e instanceof BidNotPlacedException) {
                 throw $e;
             }
-            throw new BidNotPlacedException($e->getMessage(), previous: $e);
+            throw new BidNotPlacedException(
+                $e->getMessage(),
+                errorCode: null,
+                requestId: null,
+                code: $e->getCode(),
+                previous: $e
+            );
         }
     }
 
@@ -139,7 +160,16 @@ class Projects extends ProjectsBase
                 $response['request_id'] ?? null
             );
         } catch (\Exception $e) {
-            throw new BidsNotFoundException($e->getMessage());
+            if ($e instanceof BidsNotFoundException) {
+                throw $e;
+            }
+            throw new BidsNotFoundException(
+                $e->getMessage(),
+                errorCode: null,
+                requestId: null,
+                code: $e->getCode(),
+                previous: $e
+            );
         }
     }
 
@@ -171,7 +201,16 @@ class Projects extends ProjectsBase
                 $response['request_id'] ?? null
             );
         } catch (\Exception $e) {
-            throw new ProjectsNotFoundException($e->getMessage());
+            if ($e instanceof ProjectsNotFoundException) {
+                throw $e;
+            }
+            throw new ProjectsNotFoundException(
+                $e->getMessage(),
+                errorCode: null,
+                requestId: null,
+                code: $e->getCode(),
+                previous: $e
+            );
         }
     }
 }
