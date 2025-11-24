@@ -6,44 +6,24 @@ namespace FreelancerSdk\Tests;
 
 use FreelancerSdk\Exceptions\Messages\MessageNotCreatedException;
 use FreelancerSdk\Resources\Messages\Messages;
-use FreelancerSdk\Session;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
 
-class MessagesTest extends TestCase
+class MessagesTest extends BaseTestCase
 {
-    private function sessionWithResponses(Response ...$responses): Session
-    {
-        $mock    = new MockHandler($responses);
-        $handler = HandlerStack::create($mock);
-        return new Session('token_123', 'https://fake-fln.com', ['handler' => $handler]);
-    }
-
     #[Test]
     public function it_creates_a_project_thread(): void
     {
-        $responseBody = json_encode([
-            'status' => 'success',
-            'result' => [
+        $session = $this->createMockSession(
+            $this->createSuccessResponse([
                 'id'     => 301,
                 'thread' => [
                     'thread_type'  => 'private_chat',
                     'time_created' => 1483228800,
                     'members'      => [101, 102],
-                    'context'      => [
-                        'id'   => 201,
-                        'type' => 'project',
-                    ],
-                    'owner' => 101,
+                    'context'      => ['id' => 201, 'type' => 'project'],
+                    'owner'        => 101,
                 ],
-            ],
-        ]);
-
-        $session = $this->sessionWithResponses(
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+            ])
         );
 
         $messages = new Messages($session);
@@ -57,18 +37,13 @@ class MessagesTest extends TestCase
     #[Test]
     public function it_posts_a_message(): void
     {
-        $responseBody = json_encode([
-            'status' => 'success',
-            'result' => [
+        $session = $this->createMockSession(
+            $this->createSuccessResponse([
                 'id'           => 401,
                 'from_user_id' => 101,
                 'thread_id'    => 301,
                 'message'      => "Let's talk",
-            ],
-        ]);
-
-        $session = $this->sessionWithResponses(
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+            ])
         );
 
         $messages = new Messages($session);
@@ -82,25 +57,16 @@ class MessagesTest extends TestCase
     #[Test]
     public function it_posts_an_attachment(): void
     {
-        $responseBody = json_encode([
-            'status' => 'success',
-            'result' => [
+        $session = $this->createMockSession(
+            $this->createSuccessResponse([
                 'id'           => 401,
                 'from_user_id' => 101,
                 'thread_id'    => 301,
                 'message'      => '',
                 'attachments'  => [
-                    [
-                        'key'        => 501,
-                        'filename'   => 'file.txt',
-                        'message_id' => 401,
-                    ],
+                    ['key' => 501, 'filename' => 'file.txt', 'message_id' => 401],
                 ],
-            ],
-        ]);
-
-        $session = $this->sessionWithResponses(
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+            ])
         );
 
         $messages     = new Messages($session);
@@ -118,35 +84,18 @@ class MessagesTest extends TestCase
     #[Test]
     public function it_gets_messages(): void
     {
-        $responseBody = json_encode([
-            'status' => 'success',
-            'result' => [
+        $session = $this->createMockSession(
+            $this->createSuccessResponse([
                 'unfiltered_count' => 2,
                 'messages'         => [
-                    [
-                        'message_source' => 'default_msg',
-                        'attachments'    => [],
-                        'thread_id'      => 1,
-                        'message'        => 'Hello world!',
-                        'id'             => 1,
-                    ],
-                    [
-                        'message_source' => 'default_msg',
-                        'attachments'    => [],
-                        'thread_id'      => 1,
-                        'message'        => 'Test message',
-                        'id'             => 2,
-                    ],
+                    ['id' => 1, 'thread_id' => 1, 'message' => 'Hello world!'],
+                    ['id' => 2, 'thread_id' => 1, 'message' => 'Test message'],
                 ],
-            ],
-        ]);
-
-        $session = $this->sessionWithResponses(
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+            ])
         );
 
         $messages = new Messages($session);
-        $result   = $messages->getMessages(['threads[]' => [1], 'thread_details' => true]);
+        $result   = $messages->getMessages(['threads[]' => [1]]);
 
         $this->assertIsArray($result);
         $this->assertCount(2, $result['messages']);
@@ -156,24 +105,13 @@ class MessagesTest extends TestCase
     #[Test]
     public function it_searches_messages(): void
     {
-        $responseBody = json_encode([
-            'status' => 'success',
-            'result' => [
+        $session = $this->createMockSession(
+            $this->createSuccessResponse([
                 'unfiltered_count' => 1,
                 'messages'         => [
-                    [
-                        'message_source' => 'default_msg',
-                        'attachments'    => [],
-                        'thread_id'      => 1,
-                        'message'        => 'Hello world!',
-                        'id'             => 1,
-                    ],
+                    ['id' => 1, 'thread_id' => 1, 'message' => 'Hello world!'],
                 ],
-            ],
-        ]);
-
-        $session = $this->sessionWithResponses(
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+            ])
         );
 
         $messages = new Messages($session);
@@ -187,35 +125,23 @@ class MessagesTest extends TestCase
     #[Test]
     public function it_gets_threads(): void
     {
-        $responseBody = json_encode([
-            'status' => 'success',
-            'result' => [
+        $session = $this->createMockSession(
+            $this->createSuccessResponse([
                 'threads' => [
                     [
                         'time_updated' => 1519826182,
                         'thread'       => [
-                            'context' => [
-                                'type' => 'project',
-                                'id'   => 101,
-                            ],
-                            'thread_type'        => 'private_chat',
-                            'write_privacy'      => 'members',
-                            'time_created'       => 1519826180,
-                            'id'                 => 100,
-                            'members'            => [102, 103],
-                            'owner'              => 103,
-                            'owner_read_privacy' => 'members',
-                            'read_privacy'       => 'members',
+                            'id'          => 100,
+                            'context'     => ['type' => 'project', 'id' => 101],
+                            'thread_type' => 'private_chat',
+                            'members'     => [102, 103],
+                            'owner'       => 103,
                         ],
                         'is_muted' => false,
                         'is_read'  => true,
                     ],
                 ],
-            ],
-        ]);
-
-        $session = $this->sessionWithResponses(
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+            ])
         );
 
         $messages = new Messages($session);
@@ -229,17 +155,7 @@ class MessagesTest extends TestCase
     #[Test]
     public function it_throws_exception_when_posting_attachment_fails(): void
     {
-        $responseBody = json_encode([
-            'status'     => 'error',
-            'message'    => 'An error has occurred.',
-            'error_code' => 'ExceptionCodes.UNKNOWN_ERROR',
-            'request_id' => '3ab35843fb99cde325d819a4',
-        ]);
-
-        $session = $this->sessionWithResponses(
-            new Response(500, ['Content-Type' => 'application/json'], $responseBody)
-        );
-
+        $session      = $this->createMockSession($this->createErrorResponse());
         $messages     = new Messages($session);
         $fileResource = fopen('php://memory', 'r');
 
