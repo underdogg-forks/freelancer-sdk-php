@@ -73,7 +73,10 @@ class Projects extends ProjectsBase
                 $response['request_id'] ?? null
             );
         } catch (\Exception $e) {
-            throw new ProjectsNotFoundException($e->getMessage());
+            if ($e instanceof ProjectsNotFoundException) {
+                throw $e;
+            }
+            throw new ProjectsNotFoundException($e->getMessage(), previous: $e);
         }
     }
 
@@ -101,7 +104,10 @@ class Projects extends ProjectsBase
                 $response['request_id'] ?? null
             );
         } catch (\Exception $e) {
-            throw new BidNotPlacedException($e->getMessage());
+            if ($e instanceof BidNotPlacedException) {
+                throw $e;
+            }
+            throw new BidNotPlacedException($e->getMessage(), previous: $e);
         }
     }
 

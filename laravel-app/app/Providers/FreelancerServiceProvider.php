@@ -15,9 +15,10 @@ class FreelancerServiceProvider extends ServiceProvider
         $this->app->singleton(Session::class, function ($app) {
             $token = config('freelancer.oauth_token');
             
-            // Don't create session if no token is provided
             if (empty($token)) {
-                $token = 'dummy-token-for-testing';
+                throw new \RuntimeException(
+                    'Freelancer OAuth token not configured. Set FREELANCER_OAUTH_TOKEN in your .env file.'
+                );
             }
             
             $url = config('freelancer.use_sandbox') 

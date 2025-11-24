@@ -30,7 +30,11 @@ class ProjectsBase
     {
         $url = $this->endpoint . '/' . $path . '/';
         $response = $this->session->getClient()->get($url, ['query' => $params]);
-        return json_decode($response->getBody()->getContents(), true);
+        $decoded = json_decode($response->getBody()->getContents(), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException('Invalid JSON response: ' . json_last_error_msg());
+        }
+        return $decoded;
     }
 
     /**
@@ -45,7 +49,11 @@ class ProjectsBase
     {
         $url = $this->endpoint . '/' . $path . '/';
         $response = $this->session->getClient()->post($url, ['json' => $data]);
-        return json_decode($response->getBody()->getContents(), true);
+        $decoded = json_decode($response->getBody()->getContents(), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException('Invalid JSON response: ' . json_last_error_msg());
+        }
+        return $decoded;
     }
 
     /**
@@ -68,6 +76,10 @@ class ProjectsBase
             $options['query'] = $params;
         }
         $response = $this->session->getClient()->put($url, $options);
-        return json_decode($response->getBody()->getContents(), true);
+        $decoded = json_decode($response->getBody()->getContents(), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException('Invalid JSON response: ' . json_last_error_msg());
+        }
+        return $decoded;
     }
 }

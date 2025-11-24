@@ -28,8 +28,10 @@ class Session
         }
 
         $this->oauthToken = $oauthToken;
-        $this->url = $url ?: 'https://www.freelancer.com';
+        $this->url = $url;
 
+        // Set default headers
+        $this->client = new Client([
         // Set default headers
         $this->client = new Client([
             'base_uri' => $this->url,
