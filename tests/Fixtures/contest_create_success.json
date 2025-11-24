@@ -1,0 +1,28 @@
+{
+  "status": "success",
+  "result": {
+    "id": 201,
+    "owner_id": 101,
+    "title": "Design a logo",
+    "description": "I need a logo for my company",
+    "type": "freemium",
+    "duration": 7,
+    "jobs": [
+      {
+        "id": 1,
+        "name": "Graphic Design"
+      },
+      {
+        "id": 2,
+        "name": "Logo Design"
+      }
+    ],
+    "currency": {
+      "id": 1,
+      "code": "USD",
+      "sign": "$",
+      "name": "US Dollar"
+    },
+    "prize": 100
+  }
+}

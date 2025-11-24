@@ -31,6 +31,15 @@ abstract class BaseTestCase extends TestCase
         return file_get_contents($path);
     }
 
+    protected function loadFixtureAsResponse(string $name, int $statusCode = 200): Response
+    {
+        return new Response(
+            $statusCode,
+            ['Content-Type' => 'application/json'],
+            $this->loadFixture($name)
+        );
+    }
+
     protected function createJsonResponse(int $statusCode, array $data): Response
     {
         return new Response(
