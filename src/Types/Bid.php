@@ -4,7 +4,7 @@ namespace FreelancerSdk\Types;
 
 /**
  * Bid model class
- * Represents a Bid object from the Freelancer API
+ * Represents a Bid object from the Freelancer API.
  */
 class Bid
 {

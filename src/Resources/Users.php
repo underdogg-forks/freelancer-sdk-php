@@ -1,8 +1,10 @@
 <?php
+
 namespace FreelancerSdk\Resources;
+
 /**
  * Users resource class
- * Handles all user-related API operations
+ * Handles all user-related API operations.
  */
 class Users
 {

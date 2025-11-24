@@ -2,46 +2,50 @@
 
 namespace FreelancerSdk\Resources\Projects;
 
+use Exception;
 use FreelancerSdk\Exceptions\Projects\BidNotPlacedException;
 use FreelancerSdk\Exceptions\Projects\BidsNotFoundException;
+use FreelancerSdk\Exceptions\Projects\JobsNotFoundException;
 use FreelancerSdk\Exceptions\Projects\ProjectNotCreatedException;
 use FreelancerSdk\Exceptions\Projects\ProjectsNotFoundException;
-use FreelancerSdk\Exceptions\Projects\JobsNotFoundException;
 use FreelancerSdk\Types\Bid;
 use FreelancerSdk\Types\Project;
 
 /**
  * Projects resource class
- * Handles all project-related API operations
+ * Handles all project-related API operations.
  */
 class Projects extends ProjectsBase
 {
     /**
-     * Create a new project
+     * Create a new project.
      *
      * @param array $data Project data including title, description, currency, budget, jobs
+     *
      * @return Project
+     *
      * @throws ProjectNotCreatedException
      */
     public function createProject(array $data): Project
     {
         try {
             $response = $this->makePostRequest('projects', $data);
-            
+
             if (isset($response['status']) && $response['status'] === 'success' && isset($response['result'])) {
                 $project = new Project($response['result']);
                 if (isset($project->seo_url)) {
-                    $project->url = rtrim($this->session->getUrl(), '/') . '/projects/' . $project->seo_url;
+                    $project->url = mb_rtrim($this->session->getUrl(), '/') . '/projects/' . $project->seo_url;
                 }
+
                 return $project;
             }
-            
+
             throw new ProjectNotCreatedException(
                 $response['message'] ?? 'Failed to create project',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof ProjectNotCreatedException) {
                 throw $e;
             }
@@ -56,17 +60,19 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Get projects by various filters
+     * Get projects by various filters.
      *
      * @param array $filters
+     *
      * @return array
+     *
      * @throws ProjectsNotFoundException
      */
     public function getProjects(array $filters = []): array
     {
         try {
             $response = $this->makeGetRequest('projects', $filters);
-            
+
             if (isset($response['status']) && $response['status'] === 'success' && isset($response['result'])) {
                 $projects = [];
                 if (isset($response['result']['projects'])) {
@@ -74,15 +80,16 @@ class Projects extends ProjectsBase
                         $projects[] = new Project($projectData);
                     }
                 }
+
                 return $projects;
             }
-            
+
             throw new ProjectsNotFoundException(
                 $response['message'] ?? 'Projects not found',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof ProjectsNotFoundException) {
                 throw $e;
             }
@@ -97,29 +104,31 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Place a bid on a project
+     * Place a bid on a project.
      *
-     * @param int $projectId
+     * @param int   $projectId
      * @param array $bidData
+     *
      * @return Bid
+     *
      * @throws BidNotPlacedException
      */
     public function placeBid(int $projectId, array $bidData): Bid
     {
         try {
             $bidData['project_id'] = $projectId;
-            $response = $this->makePostRequest('bids', $bidData);
-            
+            $response              = $this->makePostRequest('bids', $bidData);
+
             if (isset($response['status']) && $response['status'] === 'success' && isset($response['result'])) {
                 return new Bid($response['result']);
             }
-            
+
             throw new BidNotPlacedException(
                 $response['message'] ?? 'Failed to place bid',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof BidNotPlacedException) {
                 throw $e;
             }
@@ -134,17 +143,19 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Get bids for a project
+     * Get bids for a project.
      *
      * @param array $filters
+     *
      * @return array
+     *
      * @throws BidsNotFoundException
      */
     public function getBids(array $filters = []): array
     {
         try {
             $response = $this->makeGetRequest('bids', $filters);
-            
+
             if (isset($response['status']) && $response['status'] === 'success' && isset($response['result'])) {
                 $bids = [];
                 if (isset($response['result']['bids'])) {
@@ -152,15 +163,16 @@ class Projects extends ProjectsBase
                         $bids[] = new Bid($bidData);
                     }
                 }
+
                 return $bids;
             }
-            
+
             throw new BidsNotFoundException(
                 $response['message'] ?? 'Bids not found',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof BidsNotFoundException) {
                 throw $e;
             }
@@ -175,17 +187,19 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Search for projects
+     * Search for projects.
      *
      * @param array $filters
+     *
      * @return array
+     *
      * @throws ProjectsNotFoundException
      */
     public function searchProjects(array $filters = []): array
     {
         try {
             $response = $this->makeGetRequest('projects/active', $filters);
-            
+
             if (isset($response['status']) && $response['status'] === 'success' && isset($response['result'])) {
                 $projects = [];
                 if (isset($response['result']['projects'])) {
@@ -193,15 +207,16 @@ class Projects extends ProjectsBase
                         $projects[] = new Project($projectData);
                     }
                 }
+
                 return $projects;
             }
-            
+
             throw new ProjectsNotFoundException(
                 $response['message'] ?? 'Projects not found',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof ProjectsNotFoundException) {
                 throw $e;
             }
@@ -216,10 +231,12 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Get a project by id
+     * Get a project by id.
      *
      * @param int $projectId
+     *
      * @return Project
+     *
      * @throws ProjectsNotFoundException
      */
     public function getProject(int $projectId): Project
@@ -232,10 +249,11 @@ class Projects extends ProjectsBase
                 if (isset($data['projects']) && is_array($data['projects']) && count($data['projects']) > 0) {
                     return new Project($data['projects'][0]);
                 }
+
                 return new Project($data);
             }
             throw new ProjectsNotFoundException($response['message'] ?? 'Project not found');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof ProjectsNotFoundException) {
                 throw $e;
             }
@@ -244,11 +262,13 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Update a project
+     * Update a project.
      *
-     * @param int $projectId
+     * @param int   $projectId
      * @param array $data
+     *
      * @return Project
+     *
      * @throws ProjectNotCreatedException
      */
     public function updateProject(int $projectId, array $data): Project
@@ -259,7 +279,7 @@ class Projects extends ProjectsBase
                 return new Project($response['result']);
             }
             throw new ProjectNotCreatedException($response['message'] ?? 'Failed to update project');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof ProjectNotCreatedException) {
                 throw $e;
             }
@@ -268,10 +288,12 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Delete/Cancel a project
+     * Delete/Cancel a project.
      *
      * @param int $projectId
+     *
      * @return bool
+     *
      * @throws ProjectsNotFoundException
      */
     public function deleteProject(int $projectId): bool
@@ -282,7 +304,7 @@ class Projects extends ProjectsBase
                 return true;
             }
             throw new ProjectsNotFoundException($response['message'] ?? 'Failed to delete project');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof ProjectsNotFoundException) {
                 throw $e;
             }
@@ -291,11 +313,13 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Update a bid on a project
+     * Update a bid on a project.
      *
-     * @param int $bidId
+     * @param int   $bidId
      * @param array $data
+     *
      * @return Bid
+     *
      * @throws BidNotPlacedException
      */
     public function updateBid(int $bidId, array $data): Bid
@@ -306,7 +330,7 @@ class Projects extends ProjectsBase
                 return new Bid($response['result']);
             }
             throw new BidNotPlacedException($response['message'] ?? 'Failed to update bid');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof BidNotPlacedException) {
                 throw $e;
             }
@@ -315,10 +339,12 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Retract a bid
+     * Retract a bid.
      *
      * @param int $bidId
+     *
      * @return bool
+     *
      * @throws BidNotRetractedException
      */
     public function retractBid(int $bidId): bool
@@ -329,7 +355,7 @@ class Projects extends ProjectsBase
                 return true;
             }
             throw new \FreelancerSdk\Exceptions\Projects\BidNotRetractedException($response['message'] ?? 'Failed to retract bid');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof \FreelancerSdk\Exceptions\Projects\BidNotRetractedException) {
                 throw $e;
             }
@@ -338,10 +364,12 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Get list of jobs
+     * Get list of jobs.
      *
      * @param array $filters
+     *
      * @return array
+     *
      * @throws JobsNotFoundException
      */
     public function getJobs(array $filters = []): array
@@ -352,7 +380,7 @@ class Projects extends ProjectsBase
                 return $response['result'];
             }
             throw new JobsNotFoundException($response['message'] ?? 'Jobs not found');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e instanceof JobsNotFoundException) {
                 throw $e;
             }

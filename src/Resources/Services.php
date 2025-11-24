@@ -1,8 +1,10 @@
 <?php
+
 namespace FreelancerSdk\Resources;
+
 /**
  * Services resource class
- * Handles all service-related API operations
+ * Handles all service-related API operations.
  */
 class Services
 {
@@ -14,4 +16,3 @@ class Services
     }
     // ...other service-related methods...
 }
-

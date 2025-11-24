@@ -4,7 +4,7 @@ namespace FreelancerSdk\Types;
 
 /**
  * Project model class
- * Represents a Project object from the Freelancer API
+ * Represents a Project object from the Freelancer API.
  */
 class Project
 {

@@ -4,7 +4,7 @@ namespace FreelancerSdk\Types;
 
 /**
  * MilestoneRequest model class
- * Represents a Milestone Request object from the Freelancer API
+ * Represents a Milestone Request object from the Freelancer API.
  */
 class MilestoneRequest
 {

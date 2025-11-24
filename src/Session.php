@@ -6,47 +6,50 @@ use FreelancerSdk\Exceptions\AuthTokenNotSuppliedException;
 use GuzzleHttp\Client;
 
 /**
- * This class manages an HTTP session to the freelancer.com API
+ * This class manages an HTTP session to the freelancer.com API.
  */
 class Session
 {
     private Client $client;
+
     private string $url;
+
     private string $oauthToken;
 
     /**
-     * Create a new Session instance
+     * Create a new Session instance.
      *
-     * @param string|null $oauthToken OAuth2 token for authentication
-     * @param string $url Base URL for the API (defaults to production)
-     * @param array $clientOptions Optional Guzzle client options (useful for testing: pass a handler)
+     * @param string|null $oauthToken    OAuth2 token for authentication
+     * @param string      $url           Base URL for the API (defaults to production)
+     * @param array       $clientOptions Optional Guzzle client options (useful for testing: pass a handler)
+     *
      * @throws AuthTokenNotSuppliedException
      */
     public function __construct(?string $oauthToken = null, string $url = 'https://www.freelancer.com', array $clientOptions = [])
     {
-        if (!$oauthToken) {
+        if ( ! $oauthToken) {
             throw new AuthTokenNotSuppliedException('OAuth token not supplied');
         }
 
         $this->oauthToken = $oauthToken;
-        $this->url = $url;
+        $this->url        = $url;
 
         // Set default headers
         $defaults = [
             'base_uri' => $this->url,
-            'headers' => [
+            'headers'  => [
                 'Freelancer-OAuth-V1' => $oauthToken,
-                'User-Agent' => 'Freelancer.com PHP SDK',
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
+                'User-Agent'          => 'Freelancer.com PHP SDK',
+                'Accept'              => 'application/json',
+                'Content-Type'        => 'application/json',
             ],
         ];
-        $options = array_replace_recursive($defaults, $clientOptions);
+        $options      = array_replace_recursive($defaults, $clientOptions);
         $this->client = new Client($options);
     }
 
     /**
-     * Get the HTTP client
+     * Get the HTTP client.
      *
      * @return Client
      */
@@ -56,7 +59,7 @@ class Session
     }
 
     /**
-     * Get the base URL
+     * Get the base URL.
      *
      * @return string
      */
@@ -66,7 +69,7 @@ class Session
     }
 
     /**
-     * Get the OAuth token
+     * Get the OAuth token.
      *
      * @return string
      */

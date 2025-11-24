@@ -3,12 +3,12 @@
 namespace FreelancerSdk\Resources\Projects;
 
 /**
- * Helper functions for creating project-related objects
+ * Helper functions for creating project-related objects.
  */
 class Helpers
 {
     /**
-     * Create a currency object
+     * Create a currency object.
      */
     public static function createCurrencyObject(
         int $id,
@@ -19,18 +19,28 @@ class Helpers
         ?string $country = null
     ): array {
         $currency = ['id' => $id];
-        
-        if ($code !== null) $currency['code'] = $code;
-        if ($sign !== null) $currency['sign'] = $sign;
-        if ($name !== null) $currency['name'] = $name;
-        if ($exchangeRate !== null) $currency['exchange_rate'] = $exchangeRate;
-        if ($country !== null) $currency['country'] = $country;
-        
+
+        if ($code !== null) {
+            $currency['code'] = $code;
+        }
+        if ($sign !== null) {
+            $currency['sign'] = $sign;
+        }
+        if ($name !== null) {
+            $currency['name'] = $name;
+        }
+        if ($exchangeRate !== null) {
+            $currency['exchange_rate'] = $exchangeRate;
+        }
+        if ($country !== null) {
+            $currency['country'] = $country;
+        }
+
         return $currency;
     }
 
     /**
-     * Create a job object
+     * Create a job object.
      */
     public static function createJobObject(
         int $id,
@@ -41,18 +51,28 @@ class Helpers
         ?array $seoInfo = null
     ): array {
         $job = ['id' => $id];
-        
-        if ($name !== null) $job['name'] = $name;
-        if ($category !== null) $job['category'] = $category;
-        if ($activeProjectCount !== null) $job['active_project_count'] = $activeProjectCount;
-        if ($seoUrl !== null) $job['seo_url'] = $seoUrl;
-        if ($seoInfo !== null) $job['seo_info'] = $seoInfo;
-        
+
+        if ($name !== null) {
+            $job['name'] = $name;
+        }
+        if ($category !== null) {
+            $job['category'] = $category;
+        }
+        if ($activeProjectCount !== null) {
+            $job['active_project_count'] = $activeProjectCount;
+        }
+        if ($seoUrl !== null) {
+            $job['seo_url'] = $seoUrl;
+        }
+        if ($seoInfo !== null) {
+            $job['seo_info'] = $seoInfo;
+        }
+
         return $job;
     }
 
     /**
-     * Create a budget object
+     * Create a budget object.
      */
     public static function createBudgetObject(
         float $minimum,
@@ -62,17 +82,25 @@ class Helpers
         ?int $currencyId = null
     ): array {
         $budget = ['minimum' => $minimum];
-        
-        if ($maximum !== null) $budget['maximum'] = $maximum;
-        if ($name !== null) $budget['name'] = $name;
-        if ($projectType !== null) $budget['project_type'] = $projectType;
-        if ($currencyId !== null) $budget['currency_id'] = $currencyId;
-        
+
+        if ($maximum !== null) {
+            $budget['maximum'] = $maximum;
+        }
+        if ($name !== null) {
+            $budget['name'] = $name;
+        }
+        if ($projectType !== null) {
+            $budget['project_type'] = $projectType;
+        }
+        if ($currencyId !== null) {
+            $budget['currency_id'] = $currencyId;
+        }
+
         return $budget;
     }
 
     /**
-     * Create an hourly project info object
+     * Create an hourly project info object.
      */
     public static function createHourlyProjectInfoObject(
         int $commitmentHours,
@@ -80,14 +108,14 @@ class Helpers
     ): array {
         return [
             'commitment' => [
-                'hours' => $commitmentHours,
+                'hours'    => $commitmentHours,
                 'interval' => $commitmentInterval,
             ],
         ];
     }
 
     /**
-     * Create a location object
+     * Create a location object.
      */
     public static function createLocationObject(
         ?array $country = null,
@@ -99,20 +127,34 @@ class Helpers
         ?string $fullAddress = null
     ): array {
         $location = [];
-        
-        if ($country !== null) $location['country'] = $country;
-        if ($city !== null) $location['city'] = $city;
-        if ($latitude !== null) $location['latitude'] = $latitude;
-        if ($longitude !== null) $location['longitude'] = $longitude;
-        if ($vicinity !== null) $location['vicinity'] = $vicinity;
-        if ($administrativeArea !== null) $location['administrative_area'] = $administrativeArea;
-        if ($fullAddress !== null) $location['full_address'] = $fullAddress;
-        
+
+        if ($country !== null) {
+            $location['country'] = $country;
+        }
+        if ($city !== null) {
+            $location['city'] = $city;
+        }
+        if ($latitude !== null) {
+            $location['latitude'] = $latitude;
+        }
+        if ($longitude !== null) {
+            $location['longitude'] = $longitude;
+        }
+        if ($vicinity !== null) {
+            $location['vicinity'] = $vicinity;
+        }
+        if ($administrativeArea !== null) {
+            $location['administrative_area'] = $administrativeArea;
+        }
+        if ($fullAddress !== null) {
+            $location['full_address'] = $fullAddress;
+        }
+
         return $location;
     }
 
     /**
-     * Create a bid object
+     * Create a bid object.
      */
     public static function createBidObject(
         int $id,
@@ -125,13 +167,13 @@ class Helpers
         int $projectOwnerId
     ): array {
         return [
-            'id' => $id,
-            'bidder_id' => $bidderId,
-            'project_id' => $projectId,
-            'retracted' => $retracted,
-            'amount' => $amount,
-            'period' => $period,
-            'description' => $description,
+            'id'               => $id,
+            'bidder_id'        => $bidderId,
+            'project_id'       => $projectId,
+            'retracted'        => $retracted,
+            'amount'           => $amount,
+            'period'           => $period,
+            'description'      => $description,
             'project_owner_id' => $projectOwnerId,
         ];
     }
