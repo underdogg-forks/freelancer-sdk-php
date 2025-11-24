@@ -78,7 +78,7 @@ class ContestsTest extends TestCase
         $this->assertSame('I need a logo for my company', $contest->description);
         $this->assertSame('freemium', $contest->type);
         $this->assertSame(7, $contest->duration);
-        $this->assertSame(100.0, $contest->prize);
+        $this->assertEquals(100, $contest->prize);
     }
 
     #[Test]

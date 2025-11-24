@@ -242,7 +242,7 @@ class ProjectsTest extends TestCase
         $this->assertSame(39343812, $bid->id);
         $this->assertSame(2, $bid->bidder_id);
         $this->assertSame('A bid', $bid->description);
-        $this->assertEquals(10, $bid->amount); // Use assertEquals instead of assertSame for numeric comparison
+        $this->assertEquals(10, $bid->amount);
     }
 
     #[Test]

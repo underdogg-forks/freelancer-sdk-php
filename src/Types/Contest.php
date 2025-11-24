@@ -6,22 +6,30 @@ namespace FreelancerSdk\Types;
 
 class Contest
 {
-    public int $id;
-    public int $owner_id;
-    public string $title;
-    public string $description;
-    public string $type;
-    public int $duration;
-    public array $jobs;
-    public array $currency;
-    public float $prize;
+    private array $data;
 
     public function __construct(array $data)
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->{$key} = $value;
-            }
-        }
+        $this->data = $data;
+    }
+
+    public function __get(string $name)
+    {
+        return $this->data[$name] ?? null;
+    }
+
+    public function __set(string $name, $value)
+    {
+        $this->data[$name] = $value;
+    }
+
+    public function __isset(string $name): bool
+    {
+        return isset($this->data[$name]);
+    }
+
+    public function toArray(): array
+    {
+        return $this->data;
     }
 }
