@@ -28,29 +28,29 @@ class ContestsTest extends TestCase
         $responseBody = json_encode([
             'status' => 'success',
             'result' => [
-                'id' => 201,
-                'owner_id' => 101,
-                'title' => 'Design a logo',
+                'id'          => 201,
+                'owner_id'    => 101,
+                'title'       => 'Design a logo',
                 'description' => 'I need a logo for my company',
-                'type' => 'freemium',
-                'duration' => 7,
-                'jobs' => [
+                'type'        => 'freemium',
+                'duration'    => 7,
+                'jobs'        => [
                     [
-                        'id' => 1,
+                        'id'   => 1,
                         'name' => 'Graphic Design',
                     ],
                     [
-                        'id' => 2,
+                        'id'   => 2,
                         'name' => 'Logo Design',
                     ],
                 ],
                 'currency' => [
-                    'id' => 1,
-                    'code' => 'USD',
-                    'sign' => '$',
-                    'name' => 'US Dollar',
+                    'id'            => 1,
+                    'code'          => 'USD',
+                    'sign'          => '$',
+                    'name'          => 'US Dollar',
                     'exchange_rate' => 1,
-                    'country' => 'US',
+                    'country'       => 'US',
                 ],
                 'prize' => 100,
             ],
@@ -60,15 +60,15 @@ class ContestsTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $contests = new Contests($session);
+        $contests    = new Contests($session);
         $contestData = [
-            'title' => 'Design a logo',
+            'title'       => 'Design a logo',
             'description' => 'I need a logo for my company',
-            'type' => 'freemium',
-            'duration' => 7,
-            'job_ids' => [1, 2],
+            'type'        => 'freemium',
+            'duration'    => 7,
+            'job_ids'     => [1, 2],
             'currency_id' => 1,
-            'prize' => 100,
+            'prize'       => 100,
         ];
 
         $contest = $contests->createContest($contestData);
@@ -85,8 +85,8 @@ class ContestsTest extends TestCase
     public function it_throws_exception_when_contest_creation_fails(): void
     {
         $responseBody = json_encode([
-            'status' => 'error',
-            'message' => 'An error has occurred.',
+            'status'     => 'error',
+            'message'    => 'An error has occurred.',
             'error_code' => 'ExceptionCodes.UNKNOWN_ERROR',
             'request_id' => '3ab35843fb99cde325d819a4',
         ]);
@@ -95,15 +95,15 @@ class ContestsTest extends TestCase
             new Response(500, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $contests = new Contests($session);
+        $contests    = new Contests($session);
         $contestData = [
-            'title' => 'Design a logo',
+            'title'       => 'Design a logo',
             'description' => 'I need a logo for my company',
-            'type' => 'freemium',
-            'duration' => 7,
-            'job_ids' => [1, 2],
+            'type'        => 'freemium',
+            'duration'    => 7,
+            'job_ids'     => [1, 2],
             'currency_id' => 1,
-            'prize' => 100,
+            'prize'       => 100,
         ];
 
         $this->expectException(ContestNotCreatedException::class);

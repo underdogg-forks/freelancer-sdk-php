@@ -39,12 +39,12 @@ class Messages
             $response = $this->session->getClient()->post(
                 self::ENDPOINT . '/threads/',
                 [
-                    'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
+                    'headers'     => ['Content-Type' => 'application/x-www-form-urlencoded'],
                     'form_params' => [
-                        'members[]' => $memberIds,
+                        'members[]'    => $memberIds,
                         'context_type' => $contextType,
-                        'context' => $context,
-                        'message' => $message,
+                        'context'      => $context,
+                        'message'      => $message,
                     ],
                 ]
             );
@@ -56,7 +56,7 @@ class Messages
             }
 
             throw new ThreadNotCreatedException(
-                $data['message'] ?? 'Failed to create thread',
+                $data['message']    ?? 'Failed to create thread',
                 $data['error_code'] ?? null,
                 $data['request_id'] ?? null
             );
@@ -99,7 +99,7 @@ class Messages
             $response = $this->session->getClient()->post(
                 self::ENDPOINT . '/threads/' . $threadId . '/messages/',
                 [
-                    'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
+                    'headers'     => ['Content-Type' => 'application/x-www-form-urlencoded'],
                     'form_params' => [
                         'message' => $message,
                     ],
@@ -113,7 +113,7 @@ class Messages
             }
 
             throw new MessageNotCreatedException(
-                $data['message'] ?? 'Failed to post message',
+                $data['message']    ?? 'Failed to post message',
                 $data['error_code'] ?? null,
                 $data['request_id'] ?? null
             );
@@ -138,12 +138,12 @@ class Messages
     public function postAttachment(int $threadId, array $attachments): Message
     {
         try {
-            $files = [];
+            $files     = [];
             $filenames = [];
 
             foreach ($attachments as $attachment) {
                 $files[] = [
-                    'name' => 'files[]',
+                    'name'     => 'files[]',
                     'contents' => $attachment['file'],
                     'filename' => $attachment['filename'],
                 ];
@@ -153,7 +153,7 @@ class Messages
             $multipart = array_merge(
                 [
                     [
-                        'name' => 'attachments[]',
+                        'name'     => 'attachments[]',
                         'contents' => implode(',', $filenames),
                     ],
                 ],
@@ -174,7 +174,7 @@ class Messages
             }
 
             throw new MessageNotCreatedException(
-                $data['message'] ?? 'Failed to post attachment',
+                $data['message']    ?? 'Failed to post attachment',
                 $data['error_code'] ?? null,
                 $data['request_id'] ?? null
             );
@@ -200,7 +200,7 @@ class Messages
     public function getMessages(array $query, int $limit = 10, int $offset = 0): array
     {
         try {
-            $query['limit'] = $limit;
+            $query['limit']  = $limit;
             $query['offset'] = $offset;
 
             $response = $this->session->getClient()->get(
@@ -215,7 +215,7 @@ class Messages
             }
 
             throw new MessagesNotFoundException(
-                $data['message'] ?? 'Messages not found',
+                $data['message']    ?? 'Messages not found',
                 $data['error_code'] ?? null,
                 $data['request_id'] ?? null
             );
@@ -254,9 +254,9 @@ class Messages
         try {
             $queryParams = [
                 'thread_id' => $threadId,
-                'query' => $query,
-                'limit' => $limit,
-                'offset' => $offset,
+                'query'     => $query,
+                'limit'     => $limit,
+                'offset'    => $offset,
             ];
 
             if ($messageContextDetails !== null) {
@@ -281,7 +281,7 @@ class Messages
             }
 
             throw new MessagesNotFoundException(
-                $data['message'] ?? 'Messages not found',
+                $data['message']    ?? 'Messages not found',
                 $data['error_code'] ?? null,
                 $data['request_id'] ?? null
             );
@@ -317,7 +317,7 @@ class Messages
             }
 
             throw new ThreadsNotFoundException(
-                $data['message'] ?? 'Threads not found',
+                $data['message']    ?? 'Threads not found',
                 $data['error_code'] ?? null,
                 $data['request_id'] ?? null
             );

@@ -1,6 +1,9 @@
 <?php
+
 declare(strict_types=1);
+
 namespace FreelancerSdk\Tests;
+
 use FreelancerSdk\Resources\Services;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

@@ -49,7 +49,7 @@ class Contests
             }
 
             throw new ContestNotCreatedException(
-                $data['message'] ?? 'Failed to create contest',
+                $data['message']    ?? 'Failed to create contest',
                 $data['error_code'] ?? null,
                 $data['request_id'] ?? null
             );

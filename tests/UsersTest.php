@@ -30,11 +30,11 @@ class UsersTest extends TestCase
                 'users' => [
                     '100' => [
                         'status' => null,
-                        'id' => 100,
+                        'id'     => 100,
                     ],
                     '200' => [
                         'status' => null,
-                        'id' => 200,
+                        'id'     => 200,
                     ],
                 ],
             ],
@@ -44,7 +44,7 @@ class UsersTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $users = new Users($session);
+        $users  = new Users($session);
         $result = $users->getUsers(['users[]' => [100, 200]]);
 
         $this->assertIsArray($result);
@@ -58,7 +58,7 @@ class UsersTest extends TestCase
         $responseBody = json_encode([
             'status' => 'success',
             'result' => [
-                'id' => 100,
+                'id'       => 100,
                 'username' => 'creativedesign',
             ],
         ]);
@@ -67,7 +67,7 @@ class UsersTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $users = new Users($session);
+        $users  = new Users($session);
         $result = $users->getUserById(100, ['country' => true, 'status' => true]);
 
         $this->assertIsArray($result);
@@ -89,7 +89,7 @@ class UsersTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $users = new Users($session);
+        $users  = new Users($session);
         $result = $users->getSelf(['country' => true, 'status' => true]);
 
         $this->assertIsArray($result);
@@ -104,8 +104,8 @@ class UsersTest extends TestCase
             'result' => [
                 'users' => [
                     '100' => [
-                        'status' => null,
-                        'id' => 100,
+                        'status'   => null,
+                        'id'       => 100,
                         'username' => 'creativedesign',
                     ],
                 ],
@@ -116,14 +116,14 @@ class UsersTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $users = new Users($session);
+        $users  = new Users($session);
         $result = $users->searchFreelancers([
-            'query' => 'designer',
-            'limit' => 10,
-            'offset' => 0,
+            'query'   => 'designer',
+            'limit'   => 10,
+            'offset'  => 0,
             'compact' => true,
             'country' => true,
-            'status' => true,
+            'status'  => true,
         ]);
 
         $this->assertIsArray($result);
@@ -138,24 +138,24 @@ class UsersTest extends TestCase
             'status' => 'success',
             'result' => [
                 '1' => [
-                    'user_id' => 1,
+                    'user_id'     => 1,
                     'last3months' => [
                         'completion_rate' => 0.75,
-                        'all' => 4,
+                        'all'             => 4,
                     ],
                 ],
                 '2' => [
-                    'user_id' => 2,
+                    'user_id'     => 2,
                     'last3months' => [
                         'completion_rate' => 0.99,
-                        'all' => 7,
+                        'all'             => 7,
                     ],
                 ],
                 '3' => [
-                    'user_id' => 3,
+                    'user_id'     => 3,
                     'last3months' => [
                         'completion_rate' => 0.88,
-                        'all' => 10,
+                        'all'             => 10,
                     ],
                 ],
             ],
@@ -165,14 +165,14 @@ class UsersTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $users = new Users($session);
+        $users  = new Users($session);
         $result = $users->getReputations([
-            'users[]' => [1, 2, 3],
-            'jobs[]' => [],
-            'role' => 'freelancer',
-            'job_history' => true,
+            'users[]'       => [1, 2, 3],
+            'jobs[]'        => [],
+            'role'          => 'freelancer',
+            'job_history'   => true,
             'project_stats' => true,
-            'rehire_rates' => true,
+            'rehire_rates'  => true,
         ]);
 
         $this->assertIsArray($result);
@@ -191,24 +191,24 @@ class UsersTest extends TestCase
                             'files' => [
                                 [
                                     'description' => 'hello',
-                                    'filename' => 'Hello.flv',
-                                    'id' => 2000,
+                                    'filename'    => 'Hello.flv',
+                                    'id'          => 2000,
                                 ],
                             ],
-                            'articles' => [],
-                            'user_id' => 1,
+                            'articles'    => [],
+                            'user_id'     => 1,
                             'description' => 'hello!',
                         ],
                         [
                             'files' => [
                                 [
                                     'description' => 'hi',
-                                    'filename' => 'Hi.jpg',
-                                    'id' => 2001,
+                                    'filename'    => 'Hi.jpg',
+                                    'id'          => 2001,
                                 ],
                             ],
-                            'articles' => [],
-                            'user_id' => 1,
+                            'articles'    => [],
+                            'user_id'     => 1,
                             'description' => 'hi!',
                         ],
                     ],
@@ -220,11 +220,11 @@ class UsersTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $users = new Users($session);
+        $users  = new Users($session);
         $result = $users->getPortfolios([
             'users[]' => [1],
-            'limit' => 10,
-            'offset' => 0,
+            'limit'   => 10,
+            'offset'  => 0,
         ]);
 
         $this->assertIsArray($result);

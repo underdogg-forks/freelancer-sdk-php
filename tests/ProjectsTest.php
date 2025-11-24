@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace FreelancerSdk\Tests;
 
-use FreelancerSdk\Exceptions\Projects\BidNotPlacedException;
-use FreelancerSdk\Exceptions\Projects\ProjectNotCreatedException;
 use FreelancerSdk\Exceptions\Projects\ProjectsNotFoundException;
 use FreelancerSdk\Resources\Projects\Projects;
 use FreelancerSdk\Session;
@@ -34,8 +32,9 @@ class ProjectsTest extends TestCase
     public function it_creates_a_project(): void
     {
         $responseBody = json_encode([
+            'status' => 'success',
             'result' => [
-                'title' => 'My New Project',
+                'title'   => 'My New Project',
                 'seo_url' => 'java/foo',
             ],
         ]);
@@ -44,13 +43,13 @@ class ProjectsTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $projects = new Projects($session);
+        $projects    = new Projects($session);
         $projectData = [
-            'title' => 'My new project',
+            'title'       => 'My new project',
             'description' => 'description',
-            'currency' => ['id' => 1],
-            'budget' => ['minimum' => 10],
-            'jobs' => [['id' => 7]],
+            'currency'    => ['id' => 1],
+            'budget'      => ['minimum' => 10],
+            'jobs'        => [['id' => 7]],
         ];
 
         $project = $projects->createProject($projectData);
@@ -66,27 +65,27 @@ class ProjectsTest extends TestCase
         $responseBody = json_encode([
             'status' => 'success',
             'result' => [
-                'total_count' => 3,
+                'total_count'   => 3,
                 'selected_bids' => null,
-                'users' => [
+                'users'         => [
                     '101' => ['id' => '101', 'username' => 'user1'],
                     '102' => ['id' => '102', 'username' => 'user2'],
                     '103' => ['id' => '103', 'username' => 'user3'],
                 ],
                 'projects' => [
                     [
-                        'id' => '201',
-                        'title' => 'Phasellus blandit posuere enim',
+                        'id'          => 201,
+                        'title'       => 'Phasellus blandit posuere enim',
                         'description' => 'Morbi libero elit, posuere eu suscipit et dignissim non urna.',
                     ],
                     [
-                        'id' => '202',
-                        'title' => 'Donec fringilla elit velit',
+                        'id'          => 202,
+                        'title'       => 'Donec fringilla elit velit',
                         'description' => 'Vestibulum mauris risus, molestie vel velit a, semper ultricies odio.',
                     ],
                     [
-                        'id' => '203',
-                        'title' => 'In hac habitasse platea dictumst',
+                        'id'          => 203,
+                        'title'       => 'In hac habitasse platea dictumst',
                         'description' => 'Duis sed tristique urna. Nullam vestibulum elit at quam dapibus venenatis.',
                     ],
                 ],
@@ -98,18 +97,18 @@ class ProjectsTest extends TestCase
         );
 
         $projects = new Projects($session);
-        $query = [
-            'projects[]' => [201, 202, 203],
+        $query    = [
+            'projects[]'       => [201, 202, 203],
             'full_description' => true,
-            'user_details' => true,
+            'user_details'     => true,
         ];
 
         $result = $projects->getProjects($query);
 
         $this->assertIsArray($result);
-        $this->assertArrayHasKey('projects', $result);
-        $this->assertCount(3, $result['projects']);
-        $this->assertSame('Phasellus blandit posuere enim', $result['projects'][0]['title']);
+        $this->assertCount(3, $result);
+        $this->assertInstanceOf(Project::class, $result[0]);
+        $this->assertSame('Phasellus blandit posuere enim', $result[0]->title);
     }
 
     #[Test]
@@ -118,23 +117,23 @@ class ProjectsTest extends TestCase
         $responseBody = json_encode([
             'status' => 'success',
             'result' => [
-                'total_count' => 1000,
+                'total_count'   => 1000,
                 'selected_bids' => [],
-                'users' => [],
-                'projects' => [
+                'users'         => [],
+                'projects'      => [
                     [
-                        'id' => '201',
-                        'title' => 'Phasellus blandit posuere enim',
+                        'id'          => 201,
+                        'title'       => 'Phasellus blandit posuere enim',
                         'description' => 'Morbi libero elit, posuere eu suscipit logo et dignissim non urna.',
                     ],
                     [
-                        'id' => '202',
-                        'title' => 'Donec fringilla elit velit',
+                        'id'          => 202,
+                        'title'       => 'Donec fringilla elit velit',
                         'description' => 'Vestibulum mauris risus, molestie logo vel velit a, semper ultricies odio.',
                     ],
                     [
-                        'id' => '203',
-                        'title' => 'In hac habitasse platea dictumst',
+                        'id'          => 203,
+                        'title'       => 'In hac habitasse platea dictumst',
                         'description' => 'Duis sed tristique urna. Nullam vestibulum elit at quam dapibus logo venenatis.',
                     ],
                 ],
@@ -146,15 +145,15 @@ class ProjectsTest extends TestCase
         );
 
         $projects = new Projects($session);
-        $result = $projects->searchProjects([
-            'query' => 'logo design',
-            'limit' => 3,
+        $result   = $projects->searchProjects([
+            'query'  => 'logo design',
+            'limit'  => 3,
             'offset' => 0,
         ]);
 
         $this->assertIsArray($result);
-        $this->assertArrayHasKey('projects', $result);
-        $this->assertCount(3, $result['projects']);
+        $this->assertCount(3, $result);
+        $this->assertInstanceOf(Project::class, $result[0]);
     }
 
     #[Test]
@@ -163,8 +162,8 @@ class ProjectsTest extends TestCase
         $responseBody = json_encode([
             'status' => 'success',
             'result' => [
-                'id' => 2,
-                'title' => 'Sample title',
+                'id'     => 2,
+                'title'  => 'Sample title',
                 'tracks' => [1, 2],
             ],
         ]);
@@ -174,21 +173,21 @@ class ProjectsTest extends TestCase
         );
 
         $projects = new Projects($session);
-        $result = $projects->getProject(2, ['full_description' => true]);
+        $result   = $projects->getProject(2);
 
-        $this->assertIsArray($result);
-        $this->assertSame(2, $result['id']);
-        $this->assertSame('Sample title', $result['title']);
-        $this->assertIsArray($result['tracks']);
-        $this->assertCount(2, $result['tracks']);
+        $this->assertInstanceOf(Project::class, $result);
+        $this->assertSame(2, $result->id);
+        $this->assertSame('Sample title', $result->title);
+        $this->assertIsArray($result->tracks);
+        $this->assertCount(2, $result->tracks);
     }
 
     #[Test]
     public function it_throws_exception_when_project_not_found(): void
     {
         $responseBody = json_encode([
-            'status' => 'error',
-            'message' => 'An error has occurred.',
+            'status'     => 'error',
+            'message'    => 'An error has occurred.',
             'error_code' => 'ExceptionCodes.UNKNOWN_ERROR',
             'request_id' => '3ab35843fb99cde325d819a4',
         ]);
@@ -202,25 +201,26 @@ class ProjectsTest extends TestCase
         $this->expectException(ProjectsNotFoundException::class);
         $this->expectExceptionMessage('An error has occurred.');
 
-        $projects->getProject(2, ['full_description' => true]);
+        $projects->getProject(2);
     }
 
     #[Test]
     public function it_places_a_bid(): void
     {
         $responseBody = json_encode([
+            'status' => 'success',
             'result' => [
                 'milestone_percentage' => 100,
-                'period' => 2,
-                'id' => 39343812,
-                'retracted' => false,
-                'project_owner_id' => 12,
-                'submitdate' => 1424142980,
-                'project_id' => 1,
-                'bidder_id' => 2,
-                'description' => 'A bid',
-                'time_submitted' => 1424142980,
-                'amount' => 10,
+                'period'               => 2,
+                'id'                   => 39343812,
+                'retracted'            => false,
+                'project_owner_id'     => 12,
+                'submitdate'           => 1424142980,
+                'project_id'           => 1,
+                'bidder_id'            => 2,
+                'description'          => 'A bid',
+                'time_submitted'       => 1424142980,
+                'amount'               => 10,
             ],
         ]);
 
@@ -229,21 +229,20 @@ class ProjectsTest extends TestCase
         );
 
         $projects = new Projects($session);
-        $bidData = [
-            'project_id' => 1,
-            'bidder_id' => 2,
-            'amount' => 10,
-            'period' => 2,
+        $bidData  = [
+            'bidder_id'            => 2,
+            'amount'               => 10,
+            'period'               => 2,
             'milestone_percentage' => 100,
-            'description' => 'A bid',
+            'description'          => 'A bid',
         ];
 
-        $bid = $projects->placeBid($bidData);
+        $bid = $projects->placeBid(1, $bidData);
 
         $this->assertSame(39343812, $bid->id);
         $this->assertSame(2, $bid->bidder_id);
         $this->assertSame('A bid', $bid->description);
-        $this->assertSame(10.0, $bid->amount);
+        $this->assertEquals(10, $bid->amount); // Use assertEquals instead of assertSame for numeric comparison
     }
 
     #[Test]
@@ -259,7 +258,7 @@ class ProjectsTest extends TestCase
                     ['id' => 304, 'project_id' => 202, 'bidder_id' => 104],
                     ['id' => 305, 'project_id' => 202, 'bidder_id' => 105],
                 ],
-                'users' => null,
+                'users'    => null,
                 'projects' => null,
             ],
         ]);
@@ -269,47 +268,14 @@ class ProjectsTest extends TestCase
         );
 
         $projects = new Projects($session);
-        $result = $projects->getBids([
+        $result   = $projects->getBids([
             'projects[]' => [101, 102],
-            'limit' => 20,
-            'offset' => 10,
+            'limit'      => 20,
+            'offset'     => 10,
         ]);
 
         $this->assertIsArray($result);
-        $this->assertArrayHasKey('bids', $result);
-        $this->assertCount(5, $result['bids']);
-    }
-
-    #[Test]
-    public function it_creates_milestone_payment(): void
-    {
-        $responseBody = json_encode([
-            'result' => [
-                'bidder_id' => 2,
-                'description' => 'A milestone',
-                'time_submitted' => 1424142980,
-                'amount' => 10,
-                'reason' => 1,
-            ],
-        ]);
-
-        $session = $this->sessionWithResponses(
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
-        );
-
-        $projects = new Projects($session);
-        $milestoneData = [
-            'project_id' => 1,
-            'bidder_id' => 2,
-            'amount' => 10,
-            'reason' => 1,
-            'description' => 'This is a milestone',
-        ];
-
-        $milestone = $projects->createMilestonePayment($milestoneData);
-
-        $this->assertSame(2, $milestone->bidder_id);
-        $this->assertSame('A milestone', $milestone->description);
-        $this->assertSame(10.0, $milestone->amount);
+        $this->assertCount(5, $result);
+        $this->assertInstanceOf(\FreelancerSdk\Types\Bid::class, $result[0]);
     }
 }

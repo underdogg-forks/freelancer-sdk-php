@@ -169,4 +169,3 @@ class Users
         return $this->getUserById($userId);
     }
 }
-

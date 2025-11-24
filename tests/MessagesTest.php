@@ -28,13 +28,13 @@ class MessagesTest extends TestCase
         $responseBody = json_encode([
             'status' => 'success',
             'result' => [
-                'id' => 301,
+                'id'     => 301,
                 'thread' => [
-                    'thread_type' => 'private_chat',
+                    'thread_type'  => 'private_chat',
                     'time_created' => 1483228800,
-                    'members' => [101, 102],
-                    'context' => [
-                        'id' => 201,
+                    'members'      => [101, 102],
+                    'context'      => [
+                        'id'   => 201,
                         'type' => 'project',
                     ],
                     'owner' => 101,
@@ -47,7 +47,7 @@ class MessagesTest extends TestCase
         );
 
         $messages = new Messages($session);
-        $thread = $messages->createProjectThread([102], 201, "Let's talk");
+        $thread   = $messages->createProjectThread([102], 201, "Let's talk");
 
         $this->assertSame(301, $thread->id);
         $this->assertSame('project', $thread->thread['context']['type']);
@@ -60,10 +60,10 @@ class MessagesTest extends TestCase
         $responseBody = json_encode([
             'status' => 'success',
             'result' => [
-                'id' => 401,
+                'id'           => 401,
                 'from_user_id' => 101,
-                'thread_id' => 301,
-                'message' => "Let's talk",
+                'thread_id'    => 301,
+                'message'      => "Let's talk",
             ],
         ]);
 
@@ -72,7 +72,7 @@ class MessagesTest extends TestCase
         );
 
         $messages = new Messages($session);
-        $message = $messages->postMessage(301, "Let's talk");
+        $message  = $messages->postMessage(301, "Let's talk");
 
         $this->assertSame(401, $message->id);
         $this->assertSame(301, $message->thread_id);
@@ -85,14 +85,14 @@ class MessagesTest extends TestCase
         $responseBody = json_encode([
             'status' => 'success',
             'result' => [
-                'id' => 401,
+                'id'           => 401,
                 'from_user_id' => 101,
-                'thread_id' => 301,
-                'message' => '',
-                'attachments' => [
+                'thread_id'    => 301,
+                'message'      => '',
+                'attachments'  => [
                     [
-                        'key' => 501,
-                        'filename' => 'file.txt',
+                        'key'        => 501,
+                        'filename'   => 'file.txt',
                         'message_id' => 401,
                     ],
                 ],
@@ -103,9 +103,9 @@ class MessagesTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $messages = new Messages($session);
+        $messages     = new Messages($session);
         $fileResource = fopen('php://memory', 'r');
-        $message = $messages->postAttachment(301, [
+        $message      = $messages->postAttachment(301, [
             ['file' => $fileResource, 'filename' => 'file.txt'],
         ]);
 
@@ -122,20 +122,20 @@ class MessagesTest extends TestCase
             'status' => 'success',
             'result' => [
                 'unfiltered_count' => 2,
-                'messages' => [
+                'messages'         => [
                     [
                         'message_source' => 'default_msg',
-                        'attachments' => [],
-                        'thread_id' => 1,
-                        'message' => 'Hello world!',
-                        'id' => 1,
+                        'attachments'    => [],
+                        'thread_id'      => 1,
+                        'message'        => 'Hello world!',
+                        'id'             => 1,
                     ],
                     [
                         'message_source' => 'default_msg',
-                        'attachments' => [],
-                        'thread_id' => 1,
-                        'message' => 'Test message',
-                        'id' => 2,
+                        'attachments'    => [],
+                        'thread_id'      => 1,
+                        'message'        => 'Test message',
+                        'id'             => 2,
                     ],
                 ],
             ],
@@ -146,7 +146,7 @@ class MessagesTest extends TestCase
         );
 
         $messages = new Messages($session);
-        $result = $messages->getMessages(['threads[]' => [1], 'thread_details' => true]);
+        $result   = $messages->getMessages(['threads[]' => [1], 'thread_details' => true]);
 
         $this->assertIsArray($result);
         $this->assertCount(2, $result['messages']);
@@ -160,13 +160,13 @@ class MessagesTest extends TestCase
             'status' => 'success',
             'result' => [
                 'unfiltered_count' => 1,
-                'messages' => [
+                'messages'         => [
                     [
                         'message_source' => 'default_msg',
-                        'attachments' => [],
-                        'thread_id' => 1,
-                        'message' => 'Hello world!',
-                        'id' => 1,
+                        'attachments'    => [],
+                        'thread_id'      => 1,
+                        'message'        => 'Hello world!',
+                        'id'             => 1,
                     ],
                 ],
             ],
@@ -177,7 +177,7 @@ class MessagesTest extends TestCase
         );
 
         $messages = new Messages($session);
-        $result = $messages->searchMessages(1, 'Hello world!', 20, 0);
+        $result   = $messages->searchMessages(1, 'Hello world!', 20, 0);
 
         $this->assertIsArray($result);
         $this->assertCount(1, $result['messages']);
@@ -193,22 +193,22 @@ class MessagesTest extends TestCase
                 'threads' => [
                     [
                         'time_updated' => 1519826182,
-                        'thread' => [
+                        'thread'       => [
                             'context' => [
                                 'type' => 'project',
-                                'id' => 101,
+                                'id'   => 101,
                             ],
-                            'thread_type' => 'private_chat',
-                            'write_privacy' => 'members',
-                            'time_created' => 1519826180,
-                            'id' => 100,
-                            'members' => [102, 103],
-                            'owner' => 103,
+                            'thread_type'        => 'private_chat',
+                            'write_privacy'      => 'members',
+                            'time_created'       => 1519826180,
+                            'id'                 => 100,
+                            'members'            => [102, 103],
+                            'owner'              => 103,
                             'owner_read_privacy' => 'members',
-                            'read_privacy' => 'members',
+                            'read_privacy'       => 'members',
                         ],
                         'is_muted' => false,
-                        'is_read' => true,
+                        'is_read'  => true,
                     ],
                 ],
             ],
@@ -219,7 +219,7 @@ class MessagesTest extends TestCase
         );
 
         $messages = new Messages($session);
-        $result = $messages->getThreads(['threads[]' => [1]]);
+        $result   = $messages->getThreads(['threads[]' => [1]]);
 
         $this->assertIsArray($result);
         $this->assertCount(1, $result['threads']);
@@ -230,8 +230,8 @@ class MessagesTest extends TestCase
     public function it_throws_exception_when_posting_attachment_fails(): void
     {
         $responseBody = json_encode([
-            'status' => 'error',
-            'message' => 'An error has occurred.',
+            'status'     => 'error',
+            'message'    => 'An error has occurred.',
             'error_code' => 'ExceptionCodes.UNKNOWN_ERROR',
             'request_id' => '3ab35843fb99cde325d819a4',
         ]);
@@ -240,7 +240,7 @@ class MessagesTest extends TestCase
             new Response(500, ['Content-Type' => 'application/json'], $responseBody)
         );
 
-        $messages = new Messages($session);
+        $messages     = new Messages($session);
         $fileResource = fopen('php://memory', 'r');
 
         $this->expectException(MessageNotCreatedException::class);

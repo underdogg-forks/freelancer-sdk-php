@@ -27,7 +27,7 @@ class Session
      */
     public function __construct(?string $oauthToken = null, string $url = 'https://www.freelancer.com', array $clientOptions = [])
     {
-        if ( ! $oauthToken) {
+        if (! $oauthToken) {
             throw new AuthTokenNotSuppliedException('OAuth token not supplied');
         }
 

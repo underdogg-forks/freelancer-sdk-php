@@ -72,10 +72,10 @@ class ProjectsBase
     {
         $url     = $this->endpoint . '/' . $path . '/';
         $options = [];
-        if ( ! empty($data)) {
+        if (! empty($data)) {
             $options['json'] = $data;
         }
-        if ( ! empty($params)) {
+        if (! empty($params)) {
             $options['query'] = $params;
         }
         $response = $this->session->getClient()->put($url, $options);
@@ -99,7 +99,7 @@ class ProjectsBase
     {
         $url     = $this->endpoint . '/' . $path . '/';
         $options = [];
-        if ( ! empty($params)) {
+        if (! empty($params)) {
             $options['query'] = $params;
         }
         $response = $this->session->getClient()->delete($url, $options);
