@@ -3,7 +3,6 @@
 namespace FreelancerSdk\Resources\Projects;
 
 use FreelancerSdk\Session;
-use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Base class for Projects resources
@@ -24,7 +23,6 @@ class ProjectsBase
      * @param string $path
      * @param array $params
      * @return array
-     * @throws GuzzleException
      */
     protected function makeGetRequest(string $path, array $params = []): array
     {
@@ -43,7 +41,6 @@ class ProjectsBase
      * @param string $path
      * @param array $data
      * @return array
-     * @throws GuzzleException
      */
     protected function makePostRequest(string $path, array $data = []): array
     {
@@ -63,7 +60,6 @@ class ProjectsBase
      * @param array $data
      * @param array $params
      * @return array
-     * @throws GuzzleException
      */
     protected function makePutRequest(string $path, array $data = [], array $params = []): array
     {

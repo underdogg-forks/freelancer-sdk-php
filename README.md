@@ -19,7 +19,7 @@ Add the following to your project's `composer.json`:
         }
     ],
     "require": {
-        "underdogg-forks/freelancer-sdk-php": "*"
+        "freelancer/freelancer-sdk-php": "*"
     }
 }
 ```
@@ -35,7 +35,7 @@ composer install
 Once published to Packagist, you can install directly:
 
 ```bash
-composer require underdogg-forks/freelancer-sdk-php
+composer require freelancer/freelancer-sdk-php
 ```
 
 ## Usage

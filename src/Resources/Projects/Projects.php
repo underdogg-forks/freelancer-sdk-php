@@ -2,12 +2,12 @@
 
 namespace FreelancerSdk\Resources\Projects;
 
-use FreelancerSdk\Exceptions\Projects\ProjectNotCreatedException;
-use FreelancerSdk\Exceptions\Projects\ProjectsNotFoundException;
 use FreelancerSdk\Exceptions\Projects\BidNotPlacedException;
 use FreelancerSdk\Exceptions\Projects\BidsNotFoundException;
-use FreelancerSdk\Resources\Projects\Project;
-use FreelancerSdk\Resources\Projects\Bid;
+use FreelancerSdk\Exceptions\Projects\ProjectNotCreatedException;
+use FreelancerSdk\Exceptions\Projects\ProjectsNotFoundException;
+use FreelancerSdk\Types\Bid;
+use FreelancerSdk\Types\Project;
 
 /**
  * Projects resource class

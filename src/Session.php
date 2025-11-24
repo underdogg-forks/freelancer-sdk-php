@@ -32,8 +32,6 @@ class Session
 
         // Set default headers
         $this->client = new Client([
-        // Set default headers
-        $this->client = new Client([
             'base_uri' => $this->url,
             'headers' => [
                 'Freelancer-OAuth-V1' => $oauthToken,
