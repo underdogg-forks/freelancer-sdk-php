@@ -1,17 +1,167 @@
-Python library for Freelancer.com API
-=====================================
+# Freelancer SDK - Laravel Filament Implementation
 
-.. image:: https://badge.fury.io/py/freelancersdk.svg
-    :target: https://badge.fury.io/py/freelancersdk
-.. image:: https://travis-ci.org/freelancer/freelancer-sdk-python.svg?branch=master
-    :target: https://travis-ci.org/freelancer/freelancer-sdk-python
+This repository contains both the original Python Freelancer SDK and a complete Laravel 12 application with a PHP conversion of the SDK.
 
+## What's Included
 
-This is a Python library for the `Freelancer.com
-API <https://developers.freelancer.com>`__. Using this, you can interact
-with Freelancer.com from your Python applications. It supports Python
-2.7 and Python 3 (3.6+). For more about information about the
-Freelancer.com API, visit https://developers.freelancer.com.
+### 1. Original Python SDK
+The original Freelancer.com Python SDK (files in root directory)
+
+### 2. Laravel 12 Application (`laravel-app/`)
+A complete Laravel application with:
+- **Laravel 12** - Latest PHP framework
+- **Filament v4** - Admin panel framework (structure ready)
+- **TailwindCSS v4** - Modern CSS framework
+- **Freelancer PHP SDK** - Converted from Python
+
+### 3. Freelancer PHP SDK (`packages/freelancer-sdk-php/`)
+A PHP conversion of the Python SDK with:
+- Session management
+- Projects resource (create, read, search)
+- Bids resource (place, retrieve)
+- Exception handling
+- Helper functions
+
+## Quick Start
+
+### For Laravel Application
+
+```bash
+cd laravel-app
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+
+# Add your Freelancer OAuth token to .env
+# FREELANCER_OAUTH_TOKEN=your_token_here
+
+npm run build
+php artisan serve
+```
+
+Visit http://localhost:8000
+
+### For Python SDK
+
+```bash
+pip install freelancersdk
+# or
+pip install -e .
+```
+
+## Project Structure
+
+```
+.
+├── README.rst                 # Original Python SDK README
+├── freelancersdk/            # Python SDK source
+├── examples/                 # Python examples
+├── laravel-app/              # Laravel 12 application
+│   ├── app/
+│   ├── config/
+│   ├── resources/
+│   └── routes/
+└── packages/
+    └── freelancer-sdk-php/   # PHP SDK (symlinked into Laravel)
+        ├── src/
+        │   ├── Session.php
+        │   ├── Exceptions/
+        │   └── Resources/
+        └── composer.json
+```
+
+## Documentation
+
+- [Laravel Application README](laravel-app/README.md) - Complete Laravel setup guide
+- [PHP SDK README](packages/freelancer-sdk-php/README.md) - PHP SDK usage
+- [Python SDK README](README.rst) - Original Python SDK documentation
+- [Freelancer API Docs](https://developers.freelancer.com) - Official API documentation
+
+## Features
+
+### Laravel Application Features
+- Dashboard with Freelancer API integration
+- RESTful API endpoints for projects and bids
+- TailwindCSS v4 styled interface
+- Configuration management
+- Service provider for dependency injection
+
+### PHP SDK Features
+- OAuth 2.0 authentication
+- Projects management (create, list, search)
+- Bids management (place, retrieve)
+- Exception handling
+- Helper functions for data objects
+- PSR-4 autoloading
+- Guzzle HTTP client
+
+## API Endpoints
+
+The Laravel application provides these endpoints:
+
+- `GET /freelancer/projects` - List projects
+- `GET /freelancer/projects/search` - Search projects
+- `POST /freelancer/projects` - Create project
+- `GET /freelancer/bids` - List bids
+- `POST /freelancer/projects/{id}/bids` - Place bid
+
+## Authentication
+
+You need a Freelancer.com OAuth token:
+
+1. Visit https://developers.freelancer.com/docs/authentication/creating-a-client
+2. Create an application
+3. Generate an OAuth token
+4. Add to `.env` file:
+   ```
+   FREELANCER_OAUTH_TOKEN=your_token_here
+   ```
+
+## Development
+
+### Adding Features
+
+The architecture supports easy extension:
+- Add new resources in `packages/freelancer-sdk-php/src/Resources/`
+- Add controllers in `laravel-app/app/Http/Controllers/`
+- Add routes in `laravel-app/routes/web.php`
+- Add views in `laravel-app/resources/views/`
+
+### Testing
+
+```bash
+# Laravel tests
+cd laravel-app
+php artisan test
+
+# PHP SDK tests (when implemented)
+cd packages/freelancer-sdk-php
+vendor/bin/phpunit
+
+# Python SDK tests
+pytest
+```
+
+## License
+
+GNU LGPLv3
+
+## Contributing
+
+Contributions welcome! Areas for improvement:
+- Complete remaining SDK resources (Users, Messages, Contests)
+- Add comprehensive tests
+- Enhance Filament admin interface
+- Add more API endpoints
+- Improve error handling
+- Add caching layer
+
+## Support
+
+- [Freelancer API Support](api-support@freelancer.com)
+- [Freelancer Developer Portal](https://developers.freelancer.com)
+
 
 Install
 ~~~~~~~
