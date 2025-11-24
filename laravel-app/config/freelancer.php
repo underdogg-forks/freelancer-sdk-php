@@ -26,5 +26,5 @@ return [
 
     'use_sandbox' => env('FREELANCER_USE_SANDBOX', false),
 
-    'sandbox_url' => 'https://www.freelancer-sandbox.com',
+    'sandbox_url' => env('FREELANCER_SANDBOX_URL', 'https://www.freelancer-sandbox.com'),
 ];
