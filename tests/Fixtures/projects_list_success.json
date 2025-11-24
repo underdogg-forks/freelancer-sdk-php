@@ -1,0 +1,9 @@
+{
+  "status": "success",
+  "result": {
+    "projects": [
+      {"id": 123, "title": "Test Project A"},
+      {"id": 124, "title": "Test Project B"}
+    ]
+  }
+}

@@ -78,4 +78,26 @@ class ProjectsBase
         }
         return $decoded;
     }
+
+    /**
+     * Make a DELETE request to the API
+     *
+     * @param string $path
+     * @param array $params
+     * @return array
+     */
+    protected function makeDeleteRequest(string $path, array $params = []): array
+    {
+        $url = $this->endpoint . '/' . $path . '/';
+        $options = [];
+        if (!empty($params)) {
+            $options['query'] = $params;
+        }
+        $response = $this->session->getClient()->delete($url, $options);
+        $decoded = json_decode($response->getBody()->getContents(), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException('Invalid JSON response: ' . json_last_error_msg());
+        }
+        return $decoded;
+    }
 }
