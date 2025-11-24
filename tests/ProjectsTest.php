@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace FreelancerSdk\Tests;
 
+use FreelancerSdk\Exceptions\Projects\BidNotPlacedException;
+use FreelancerSdk\Exceptions\Projects\ProjectNotCreatedException;
+use FreelancerSdk\Exceptions\Projects\ProjectsNotFoundException;
 use FreelancerSdk\Resources\Projects\Projects;
 use FreelancerSdk\Session;
+use FreelancerSdk\Types\Project;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
@@ -16,9 +20,9 @@ class ProjectsTest extends TestCase
 {
     private function sessionWithResponses(Response ...$responses): Session
     {
-        $mock = new MockHandler($responses);
+        $mock    = new MockHandler($responses);
         $handler = HandlerStack::create($mock);
-        return new Session('token_123', 'https://example.com', ['handler' => $handler]);
+        return new Session('token_123', 'https://fake-fln.com', ['handler' => $handler]);
     }
 
     private function fixture(string $name): string
@@ -29,54 +33,283 @@ class ProjectsTest extends TestCase
     #[Test]
     public function it_creates_a_project(): void
     {
-        $session = $this->sessionWithResponses(
-            new Response(200, ['Content-Type' => 'application/json'], $this->fixture('projects_create_success.json'))
-        );
-        $projects = $this->createMock(Projects::class);
-        $projects->method('createProject')->willReturn((object)[
-            'id' => 123,
-            'url' => 'https://example.com/projects/test-project-123'
+        $responseBody = json_encode([
+            'result' => [
+                'title' => 'My New Project',
+                'seo_url' => 'java/foo',
+            ],
         ]);
-        $project = $projects->createProject(['title' => 'Test Project']);
-        $this->assertSame(123, $project->id);
-        $this->assertSame('https://example.com/projects/test-project-123', $project->url);
+
+        $session = $this->sessionWithResponses(
+            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+        );
+
+        $projects = new Projects($session);
+        $projectData = [
+            'title' => 'My new project',
+            'description' => 'description',
+            'currency' => ['id' => 1],
+            'budget' => ['minimum' => 10],
+            'jobs' => [['id' => 7]],
+        ];
+
+        $project = $projects->createProject($projectData);
+
+        $this->assertInstanceOf(Project::class, $project);
+        $this->assertSame('My New Project', $project->title);
+        $this->assertSame('https://fake-fln.com/projects/java/foo', $project->url);
     }
 
     #[Test]
     public function it_gets_projects(): void
     {
-        $projectsApi = $this->createMock(Projects::class);
-        $projectsApi->method('getProjects')->willReturn([
-            (object)['title' => 'Test Project A'],
-            (object)['title' => 'Test Project B']
+        $responseBody = json_encode([
+            'status' => 'success',
+            'result' => [
+                'total_count' => 3,
+                'selected_bids' => null,
+                'users' => [
+                    '101' => ['id' => '101', 'username' => 'user1'],
+                    '102' => ['id' => '102', 'username' => 'user2'],
+                    '103' => ['id' => '103', 'username' => 'user3'],
+                ],
+                'projects' => [
+                    [
+                        'id' => '201',
+                        'title' => 'Phasellus blandit posuere enim',
+                        'description' => 'Morbi libero elit, posuere eu suscipit et dignissim non urna.',
+                    ],
+                    [
+                        'id' => '202',
+                        'title' => 'Donec fringilla elit velit',
+                        'description' => 'Vestibulum mauris risus, molestie vel velit a, semper ultricies odio.',
+                    ],
+                    [
+                        'id' => '203',
+                        'title' => 'In hac habitasse platea dictumst',
+                        'description' => 'Duis sed tristique urna. Nullam vestibulum elit at quam dapibus venenatis.',
+                    ],
+                ],
+            ],
         ]);
-        $projects = $projectsApi->getProjects();
-        $this->assertCount(2, $projects);
-        $this->assertSame('Test Project A', $projects[0]->title);
+
+        $session = $this->sessionWithResponses(
+            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+        );
+
+        $projects = new Projects($session);
+        $query = [
+            'projects[]' => [201, 202, 203],
+            'full_description' => true,
+            'user_details' => true,
+        ];
+
+        $result = $projects->getProjects($query);
+
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('projects', $result);
+        $this->assertCount(3, $result['projects']);
+        $this->assertSame('Phasellus blandit posuere enim', $result['projects'][0]['title']);
     }
 
     #[Test]
     public function it_searches_projects(): void
     {
-        $projectsApi = $this->createMock(Projects::class);
-        $projectsApi->method('searchProjects')->willReturn([
-            (object)['id' => 125]
+        $responseBody = json_encode([
+            'status' => 'success',
+            'result' => [
+                'total_count' => 1000,
+                'selected_bids' => [],
+                'users' => [],
+                'projects' => [
+                    [
+                        'id' => '201',
+                        'title' => 'Phasellus blandit posuere enim',
+                        'description' => 'Morbi libero elit, posuere eu suscipit logo et dignissim non urna.',
+                    ],
+                    [
+                        'id' => '202',
+                        'title' => 'Donec fringilla elit velit',
+                        'description' => 'Vestibulum mauris risus, molestie logo vel velit a, semper ultricies odio.',
+                    ],
+                    [
+                        'id' => '203',
+                        'title' => 'In hac habitasse platea dictumst',
+                        'description' => 'Duis sed tristique urna. Nullam vestibulum elit at quam dapibus logo venenatis.',
+                    ],
+                ],
+            ],
         ]);
-        $projects = $projectsApi->searchProjects();
-        $this->assertCount(1, $projects);
-        $this->assertSame(125, $projects[0]->id);
+
+        $session = $this->sessionWithResponses(
+            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+        );
+
+        $projects = new Projects($session);
+        $result = $projects->searchProjects([
+            'query' => 'logo design',
+            'limit' => 3,
+            'offset' => 0,
+        ]);
+
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('projects', $result);
+        $this->assertCount(3, $result['projects']);
     }
 
     #[Test]
     public function it_gets_a_project_by_id(): void
     {
-        $projectsApi = $this->createMock(Projects::class);
-        $projectsApi->method('getProject')->willReturn((object)[
-            'id' => 123,
-            'title' => 'Test Project'
+        $responseBody = json_encode([
+            'status' => 'success',
+            'result' => [
+                'id' => 2,
+                'title' => 'Sample title',
+                'tracks' => [1, 2],
+            ],
         ]);
-        $project = $projectsApi->getProject(123);
-        $this->assertSame(123, $project->id);
-        $this->assertSame('Test Project', $project->title);
+
+        $session = $this->sessionWithResponses(
+            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+        );
+
+        $projects = new Projects($session);
+        $result = $projects->getProject(2, ['full_description' => true]);
+
+        $this->assertIsArray($result);
+        $this->assertSame(2, $result['id']);
+        $this->assertSame('Sample title', $result['title']);
+        $this->assertIsArray($result['tracks']);
+        $this->assertCount(2, $result['tracks']);
+    }
+
+    #[Test]
+    public function it_throws_exception_when_project_not_found(): void
+    {
+        $responseBody = json_encode([
+            'status' => 'error',
+            'message' => 'An error has occurred.',
+            'error_code' => 'ExceptionCodes.UNKNOWN_ERROR',
+            'request_id' => '3ab35843fb99cde325d819a4',
+        ]);
+
+        $session = $this->sessionWithResponses(
+            new Response(500, ['Content-Type' => 'application/json'], $responseBody)
+        );
+
+        $projects = new Projects($session);
+
+        $this->expectException(ProjectsNotFoundException::class);
+        $this->expectExceptionMessage('An error has occurred.');
+
+        $projects->getProject(2, ['full_description' => true]);
+    }
+
+    #[Test]
+    public function it_places_a_bid(): void
+    {
+        $responseBody = json_encode([
+            'result' => [
+                'milestone_percentage' => 100,
+                'period' => 2,
+                'id' => 39343812,
+                'retracted' => false,
+                'project_owner_id' => 12,
+                'submitdate' => 1424142980,
+                'project_id' => 1,
+                'bidder_id' => 2,
+                'description' => 'A bid',
+                'time_submitted' => 1424142980,
+                'amount' => 10,
+            ],
+        ]);
+
+        $session = $this->sessionWithResponses(
+            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+        );
+
+        $projects = new Projects($session);
+        $bidData = [
+            'project_id' => 1,
+            'bidder_id' => 2,
+            'amount' => 10,
+            'period' => 2,
+            'milestone_percentage' => 100,
+            'description' => 'A bid',
+        ];
+
+        $bid = $projects->placeBid($bidData);
+
+        $this->assertSame(39343812, $bid->id);
+        $this->assertSame(2, $bid->bidder_id);
+        $this->assertSame('A bid', $bid->description);
+        $this->assertSame(10.0, $bid->amount);
+    }
+
+    #[Test]
+    public function it_gets_bids(): void
+    {
+        $responseBody = json_encode([
+            'status' => 'success',
+            'result' => [
+                'bids' => [
+                    ['id' => 301, 'project_id' => 201, 'bidder_id' => 101],
+                    ['id' => 302, 'project_id' => 201, 'bidder_id' => 102],
+                    ['id' => 303, 'project_id' => 201, 'bidder_id' => 103],
+                    ['id' => 304, 'project_id' => 202, 'bidder_id' => 104],
+                    ['id' => 305, 'project_id' => 202, 'bidder_id' => 105],
+                ],
+                'users' => null,
+                'projects' => null,
+            ],
+        ]);
+
+        $session = $this->sessionWithResponses(
+            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+        );
+
+        $projects = new Projects($session);
+        $result = $projects->getBids([
+            'projects[]' => [101, 102],
+            'limit' => 20,
+            'offset' => 10,
+        ]);
+
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('bids', $result);
+        $this->assertCount(5, $result['bids']);
+    }
+
+    #[Test]
+    public function it_creates_milestone_payment(): void
+    {
+        $responseBody = json_encode([
+            'result' => [
+                'bidder_id' => 2,
+                'description' => 'A milestone',
+                'time_submitted' => 1424142980,
+                'amount' => 10,
+                'reason' => 1,
+            ],
+        ]);
+
+        $session = $this->sessionWithResponses(
+            new Response(200, ['Content-Type' => 'application/json'], $responseBody)
+        );
+
+        $projects = new Projects($session);
+        $milestoneData = [
+            'project_id' => 1,
+            'bidder_id' => 2,
+            'amount' => 10,
+            'reason' => 1,
+            'description' => 'This is a milestone',
+        ];
+
+        $milestone = $projects->createMilestonePayment($milestoneData);
+
+        $this->assertSame(2, $milestone->bidder_id);
+        $this->assertSame('A milestone', $milestone->description);
+        $this->assertSame(10.0, $milestone->amount);
     }
 }
