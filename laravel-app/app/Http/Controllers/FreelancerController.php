@@ -9,7 +9,6 @@ use FreelancerSdk\Exceptions\Projects\BidNotPlacedException;
 use FreelancerSdk\Exceptions\Projects\BidsNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
 
 class FreelancerController extends Controller
 {
