@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FreelancerSdk\Tests\Resources\Enums;
 
 use FreelancerSdk\Resources\Enums\ProjectType;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ class ProjectTypeTest extends TestCase
     /**
      * Test that all expected enum cases exist.
      */
-    public function testAllEnumCasesExist(): void
+    #[Test]
+    public function it_has_all_expected_enum_cases(): void
     {
         $this->assertTrue(enum_exists(ProjectType::class));
         
@@ -30,7 +32,8 @@ class ProjectTypeTest extends TestCase
     /**
      * Test enum case values.
      */
-    public function testEnumCaseValues(): void
+    #[Test]
+    public function it_has_correct_enum_case_values(): void
     {
         $this->assertSame(0, ProjectType::FIXED->value);
         $this->assertSame(1, ProjectType::HOURLY->value);
@@ -39,7 +42,8 @@ class ProjectTypeTest extends TestCase
     /**
      * Test from() method creates enum from value.
      */
-    public function testFromMethodCreatesEnumFromValue(): void
+    #[Test]
+    public function it_creates_enum_from_value_using_from_method(): void
     {
         $this->assertSame(ProjectType::FIXED, ProjectType::from(0));
         $this->assertSame(ProjectType::HOURLY, ProjectType::from(1));
@@ -48,7 +52,8 @@ class ProjectTypeTest extends TestCase
     /**
      * Test tryFrom() method.
      */
-    public function testTryFromMethod(): void
+    #[Test]
+    public function it_returns_null_for_invalid_value_using_try_from(): void
     {
         $this->assertSame(ProjectType::FIXED, ProjectType::tryFrom(0));
         $this->assertNull(ProjectType::tryFrom(999));

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FreelancerSdk\Tests\Types;
 
 use FreelancerSdk\Types\User;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ class UserTest extends TestCase
     /**
      * Test that a User can be instantiated with an empty array.
      */
-    public function testCanInstantiateWithEmptyArray(): void
+    #[Test]
+    public function it_can_instantiate_with_empty_array(): void
     {
         $user = new User([]);
         
@@ -25,7 +27,8 @@ class UserTest extends TestCase
     /**
      * Test that a User can be instantiated with data.
      */
-    public function testCanInstantiateWithData(): void
+    #[Test]
+    public function it_can_instantiate_with_data(): void
     {
         $data = [
             'id' => 12345,
@@ -41,7 +44,8 @@ class UserTest extends TestCase
     /**
      * Test magic __get retrieves data correctly.
      */
-    public function testMagicGetRetrievesData(): void
+    #[Test]
+    public function it_magic_get_retrieves_data(): void
     {
         $data = [
             'id' => 123,
@@ -63,7 +67,8 @@ class UserTest extends TestCase
     /**
      * Test magic __get returns null for nonexistent fields.
      */
-    public function testMagicGetReturnsNullForNonexistentFields(): void
+    #[Test]
+    public function it_magic_get_returns_null_for_nonexistent_fields(): void
     {
         $user = new User(['id' => 123]);
 
@@ -75,7 +80,8 @@ class UserTest extends TestCase
     /**
      * Test toArray returns the underlying data.
      */
-    public function testToArrayReturnsUnderlyingData(): void
+    #[Test]
+    public function it_to_array_returns_underlying_data(): void
     {
         $data = [
             'id' => 999,
@@ -92,7 +98,8 @@ class UserTest extends TestCase
     /**
      * Test toArray returns empty array when instantiated with empty array.
      */
-    public function testToArrayReturnsEmptyArrayWhenEmpty(): void
+    #[Test]
+    public function it_to_array_returns_empty_array_when_empty(): void
     {
         $user = new User([]);
 
@@ -102,7 +109,8 @@ class UserTest extends TestCase
     /**
      * Test handling of complex nested data structures.
      */
-    public function testHandlesComplexNestedData(): void
+    #[Test]
+    public function it_handles_complex_nested_data(): void
     {
         $data = [
             'id' => 12345,
@@ -128,7 +136,8 @@ class UserTest extends TestCase
     /**
      * Test handling of array values.
      */
-    public function testHandlesArrayValues(): void
+    #[Test]
+    public function it_handles_array_values(): void
     {
         $data = [
             'id' => 123,
@@ -147,7 +156,8 @@ class UserTest extends TestCase
     /**
      * Test handling of boolean values.
      */
-    public function testHandlesBooleanValues(): void
+    #[Test]
+    public function it_handles_boolean_values(): void
     {
         $data = [
             'id' => 123,
@@ -166,7 +176,8 @@ class UserTest extends TestCase
     /**
      * Test handling of numeric edge cases.
      */
-    public function testHandlesNumericEdgeCases(): void
+    #[Test]
+    public function it_handles_numeric_edge_cases(): void
     {
         $data = [
             'id' => 0,
@@ -186,7 +197,8 @@ class UserTest extends TestCase
     /**
      * Test handling of string values with special characters.
      */
-    public function testHandlesStringWithSpecialCharacters(): void
+    #[Test]
+    public function it_handles_string_with_special_characters(): void
     {
         $data = [
             'id' => 123,
@@ -205,7 +217,8 @@ class UserTest extends TestCase
     /**
      * Test handling of empty strings.
      */
-    public function testHandlesEmptyStrings(): void
+    #[Test]
+    public function it_handles_empty_strings(): void
     {
         $data = [
             'id' => 123,
@@ -222,7 +235,8 @@ class UserTest extends TestCase
     /**
      * Test handling of null values.
      */
-    public function testHandlesNullValues(): void
+    #[Test]
+    public function it_handles_null_values(): void
     {
         $data = [
             'id' => 123,
@@ -240,7 +254,8 @@ class UserTest extends TestCase
     /**
      * Test comprehensive user data with all typical fields.
      */
-    public function testComprehensiveUserData(): void
+    #[Test]
+    public function it_comprehensive_user_data(): void
     {
         $data = [
             'id' => 12345,
@@ -282,7 +297,8 @@ class UserTest extends TestCase
     /**
      * Test accessing fields in different ways.
      */
-    public function testAccessingFieldsInDifferentWays(): void
+    #[Test]
+    public function it_accessing_fields_in_different_ways(): void
     {
         $user = new User(['id' => 123, 'username' => 'test_user', 'email' => 'test@example.com']);
 
@@ -300,7 +316,8 @@ class UserTest extends TestCase
     /**
      * Test that User data is immutable from external modifications.
      */
-    public function testUserDataImmutableFromExternalModifications(): void
+    #[Test]
+    public function it_user_data_immutable_from_external_modifications(): void
     {
         $originalData = ['id' => 123, 'username' => 'original'];
         $user = new User($originalData);
@@ -317,7 +334,8 @@ class UserTest extends TestCase
     /**
      * Test User with minimal required data.
      */
-    public function testUserWithMinimalData(): void
+    #[Test]
+    public function it_user_with_minimal_data(): void
     {
         $user = new User(['id' => 1]);
 
@@ -329,7 +347,8 @@ class UserTest extends TestCase
     /**
      * Test User with very large dataset.
      */
-    public function testUserWithLargeDataset(): void
+    #[Test]
+    public function it_user_with_large_dataset(): void
     {
         $data = [];
         for ($i = 0; $i < 100; $i++) {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FreelancerSdk\Tests\Resources\Enums;
 
 use FreelancerSdk\Resources\Enums\MilestoneReason;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ class MilestoneReasonTest extends TestCase
     /**
      * Test that all expected enum cases exist.
      */
-    public function testAllEnumCasesExist(): void
+    #[Test]
+    public function it_has_all_expected_enum_cases(): void
     {
         $this->assertTrue(enum_exists(MilestoneReason::class));
         
@@ -32,7 +34,8 @@ class MilestoneReasonTest extends TestCase
     /**
      * Test enum case values.
      */
-    public function testEnumCaseValues(): void
+    #[Test]
+    public function it_has_correct_enum_case_values(): void
     {
         $this->assertSame(0, MilestoneReason::FULL_PAYMENT->value);
         $this->assertSame(1, MilestoneReason::PARTIAL_PAYMENT->value);
@@ -43,7 +46,8 @@ class MilestoneReasonTest extends TestCase
     /**
      * Test from() method creates enum from value.
      */
-    public function testFromMethodCreatesEnumFromValue(): void
+    #[Test]
+    public function it_creates_enum_from_value_using_from_method(): void
     {
         $this->assertSame(MilestoneReason::FULL_PAYMENT, MilestoneReason::from(0));
         $this->assertSame(MilestoneReason::PARTIAL_PAYMENT, MilestoneReason::from(1));
@@ -54,7 +58,8 @@ class MilestoneReasonTest extends TestCase
     /**
      * Test tryFrom() method.
      */
-    public function testTryFromMethod(): void
+    #[Test]
+    public function it_returns_null_for_invalid_value_using_try_from(): void
     {
         $this->assertSame(MilestoneReason::FULL_PAYMENT, MilestoneReason::tryFrom(0));
         $this->assertNull(MilestoneReason::tryFrom(999));

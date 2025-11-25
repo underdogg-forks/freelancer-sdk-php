@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FreelancerSdk\Tests\Resources\Projects;
 
 use FreelancerSdk\Resources\Projects\Helpers;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ class HelpersTest extends TestCase
     /**
      * Test createCurrencyObject with only required parameters.
      */
-    public function testCreateCurrencyObjectWithOnlyId(): void
+    #[Test]
+    public function it_create_currency_object_with_only_id(): void
     {
         $currency = Helpers::createCurrencyObject(1);
 
@@ -28,7 +30,8 @@ class HelpersTest extends TestCase
     /**
      * Test createCurrencyObject with all parameters.
      */
-    public function testCreateCurrencyObjectWithAllParameters(): void
+    #[Test]
+    public function it_create_currency_object_with_all_parameters(): void
     {
         $currency = Helpers::createCurrencyObject(
             1,
@@ -52,7 +55,8 @@ class HelpersTest extends TestCase
     /**
      * Test createCurrencyObject with some optional parameters.
      */
-    public function testCreateCurrencyObjectWithSomeParameters(): void
+    #[Test]
+    public function it_create_currency_object_with_some_parameters(): void
     {
         $currency = Helpers::createCurrencyObject(2, 'EUR', '€');
 
@@ -67,7 +71,8 @@ class HelpersTest extends TestCase
     /**
      * Test createJobObject with only required parameter.
      */
-    public function testCreateJobObjectWithOnlyId(): void
+    #[Test]
+    public function it_create_job_object_with_only_id(): void
     {
         $job = Helpers::createJobObject(10);
 
@@ -80,7 +85,8 @@ class HelpersTest extends TestCase
     /**
      * Test createJobObject with all parameters.
      */
-    public function testCreateJobObjectWithAllParameters(): void
+    #[Test]
+    public function it_create_job_object_with_all_parameters(): void
     {
         $category = ['id' => 5, 'name' => 'Programming'];
         $seoInfo = ['title' => 'PHP Jobs', 'description' => 'Find PHP jobs'];
@@ -107,7 +113,8 @@ class HelpersTest extends TestCase
     /**
      * Test createBudgetObject with only required parameter.
      */
-    public function testCreateBudgetObjectWithOnlyMinimum(): void
+    #[Test]
+    public function it_create_budget_object_with_only_minimum(): void
     {
         $budget = Helpers::createBudgetObject(100.0);
 
@@ -120,7 +127,8 @@ class HelpersTest extends TestCase
     /**
      * Test createBudgetObject with all parameters.
      */
-    public function testCreateBudgetObjectWithAllParameters(): void
+    #[Test]
+    public function it_create_budget_object_with_all_parameters(): void
     {
         $budget = Helpers::createBudgetObject(
             100.0,
@@ -142,7 +150,8 @@ class HelpersTest extends TestCase
     /**
      * Test createHourlyProjectInfoObject with valid parameters.
      */
-    public function testCreateHourlyProjectInfoObject(): void
+    #[Test]
+    public function it_create_hourly_project_info_object(): void
     {
         $info = Helpers::createHourlyProjectInfoObject(40, 'week');
 
@@ -158,7 +167,8 @@ class HelpersTest extends TestCase
     /**
      * Test createLocationObject with no parameters.
      */
-    public function testCreateLocationObjectWithNoParameters(): void
+    #[Test]
+    public function it_create_location_object_with_no_parameters(): void
     {
         $location = Helpers::createLocationObject();
 
@@ -169,7 +179,8 @@ class HelpersTest extends TestCase
     /**
      * Test createLocationObject with all parameters.
      */
-    public function testCreateLocationObjectWithAllParameters(): void
+    #[Test]
+    public function it_create_location_object_with_all_parameters(): void
     {
         $country = ['id' => 1, 'code' => 'US', 'name' => 'United States'];
 
@@ -197,7 +208,8 @@ class HelpersTest extends TestCase
     /**
      * Test createBidObject with all parameters.
      */
-    public function testCreateBidObject(): void
+    #[Test]
+    public function it_create_bid_object(): void
     {
         $bid = Helpers::createBidObject(
             12345,
@@ -225,7 +237,8 @@ class HelpersTest extends TestCase
     /**
      * Test that helper methods are all static.
      */
-    public function testHelperMethodsAreStatic(): void
+    #[Test]
+    public function it_helper_methods_are_static(): void
     {
         $reflection = new \ReflectionClass(Helpers::class);
         $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
