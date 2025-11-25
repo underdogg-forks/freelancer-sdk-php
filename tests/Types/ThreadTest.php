@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FreelancerSdk\Tests\Types;
 
 use FreelancerSdk\Types\Thread;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ class ThreadTest extends TestCase
     /**
      * Test that a Thread can be instantiated with an empty array.
      */
-    public function testCanInstantiateWithEmptyArray(): void
+    #[Test]
+    public function it_can_instantiate_with_empty_array(): void
     {
         $thread = new Thread([]);
         
@@ -28,7 +30,8 @@ class ThreadTest extends TestCase
     /**
      * Test that a Thread can be instantiated with declared properties.
      */
-    public function testCanInstantiateWithDeclaredProperties(): void
+    #[Test]
+    public function it_can_instantiate_with_declared_properties(): void
     {
         $data = [
             'id' => 12345,
@@ -54,7 +57,8 @@ class ThreadTest extends TestCase
     /**
      * Test that undeclared properties are stored in attributes.
      */
-    public function testUndeclaredPropertiesStoredInAttributes(): void
+    #[Test]
+    public function it_undeclared_properties_stored_in_attributes(): void
     {
         $data = [
             'id' => 123,
@@ -72,7 +76,8 @@ class ThreadTest extends TestCase
     /**
      * Test getAttribute with default value when attribute doesn't exist.
      */
-    public function testGetAttributeReturnsDefaultWhenNotSet(): void
+    #[Test]
+    public function it_get_attribute_returns_default_when_not_set(): void
     {
         $thread = new Thread([]);
 
@@ -84,7 +89,8 @@ class ThreadTest extends TestCase
     /**
      * Test the fill method updates existing properties.
      */
-    public function testFillMethodUpdatesProperties(): void
+    #[Test]
+    public function it_fill_method_updates_properties(): void
     {
         $thread = new Thread(['id' => 1, 'owner' => 100]);
 
@@ -101,7 +107,8 @@ class ThreadTest extends TestCase
     /**
      * Test the fill method returns the instance for method chaining.
      */
-    public function testFillMethodReturnsInstance(): void
+    #[Test]
+    public function it_fill_method_returns_instance(): void
     {
         $thread = new Thread([]);
         $result = $thread->fill(['id' => 123]);
@@ -112,7 +119,8 @@ class ThreadTest extends TestCase
     /**
      * Test toArray includes all non-null properties.
      */
-    public function testToArrayIncludesNonNullProperties(): void
+    #[Test]
+    public function it_to_array_includes_non_null_properties(): void
     {
         $data = [
             'id' => 999,
@@ -134,7 +142,8 @@ class ThreadTest extends TestCase
     /**
      * Test toArray excludes null properties.
      */
-    public function testToArrayExcludesNullProperties(): void
+    #[Test]
+    public function it_to_array_excludes_null_properties(): void
     {
         $thread = new Thread(['id' => 123]);
         $array = $thread->toArray();
@@ -148,7 +157,8 @@ class ThreadTest extends TestCase
     /**
      * Test toArray merges attributes into the result.
      */
-    public function testToArrayMergesAttributes(): void
+    #[Test]
+    public function it_to_array_merges_attributes(): void
     {
         $data = [
             'id' => 456,
@@ -169,7 +179,8 @@ class ThreadTest extends TestCase
     /**
      * Test jsonSerialize returns the same as toArray.
      */
-    public function testJsonSerializeReturnsArrayRepresentation(): void
+    #[Test]
+    public function it_json_serialize_returns_array_representation(): void
     {
         $data = [
             'id' => 789,
@@ -185,7 +196,8 @@ class ThreadTest extends TestCase
     /**
      * Test that Thread can be JSON encoded.
      */
-    public function testThreadCanBeJsonEncoded(): void
+    #[Test]
+    public function it_thread_can_be_json_encoded(): void
     {
         $thread = new Thread(['id' => 100, 'owner' => 50]);
         $json = json_encode($thread);
@@ -199,7 +211,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetExists with declared properties.
      */
-    public function testOffsetExistsWithDeclaredProperties(): void
+    #[Test]
+    public function it_offset_exists_with_declared_properties(): void
     {
         $thread = new Thread(['id' => 123, 'owner' => 100]);
 
@@ -211,7 +224,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetExists with attributes.
      */
-    public function testOffsetExistsWithAttributes(): void
+    #[Test]
+    public function it_offset_exists_with_attributes(): void
     {
         $thread = new Thread(['custom_field' => 'value']);
 
@@ -221,7 +235,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetGet with declared properties.
      */
-    public function testOffsetGetWithDeclaredProperties(): void
+    #[Test]
+    public function it_offset_get_with_declared_properties(): void
     {
         $thread = new Thread(['id' => 555, 'owner' => 75]);
 
@@ -232,7 +247,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetGet with attributes.
      */
-    public function testOffsetGetWithAttributes(): void
+    #[Test]
+    public function it_offset_get_with_attributes(): void
     {
         $thread = new Thread(['custom' => 'attribute']);
 
@@ -242,7 +258,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetGet returns null for nonexistent keys.
      */
-    public function testOffsetGetReturnsNullForNonexistent(): void
+    #[Test]
+    public function it_offset_get_returns_null_for_nonexistent(): void
     {
         $thread = new Thread([]);
 
@@ -252,7 +269,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetSet with declared properties.
      */
-    public function testOffsetSetWithDeclaredProperties(): void
+    #[Test]
+    public function it_offset_set_with_declared_properties(): void
     {
         $thread = new Thread([]);
         $thread['id'] = 777;
@@ -265,7 +283,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetSet with attributes.
      */
-    public function testOffsetSetWithAttributes(): void
+    #[Test]
+    public function it_offset_set_with_attributes(): void
     {
         $thread = new Thread([]);
         $thread['custom'] = 'new_value';
@@ -276,7 +295,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetUnset with declared properties sets them to null.
      */
-    public function testOffsetUnsetWithDeclaredPropertiesSetsToNull(): void
+    #[Test]
+    public function it_offset_unset_with_declared_properties_sets_to_null(): void
     {
         $thread = new Thread(['id' => 123, 'owner' => 50]);
 
@@ -289,7 +309,8 @@ class ThreadTest extends TestCase
     /**
      * Test ArrayAccess offsetUnset with attributes removes them.
      */
-    public function testOffsetUnsetWithAttributesRemovesThem(): void
+    #[Test]
+    public function it_offset_unset_with_attributes_removes_them(): void
     {
         $thread = new Thread(['custom' => 'value']);
 
@@ -304,7 +325,8 @@ class ThreadTest extends TestCase
     /**
      * Test magic __get with declared properties.
      */
-    public function testMagicGetWithDeclaredProperties(): void
+    #[Test]
+    public function it_magic_get_with_declared_properties(): void
     {
         $thread = new Thread(['id' => 321, 'owner' => 88]);
 
@@ -315,7 +337,8 @@ class ThreadTest extends TestCase
     /**
      * Test magic __get with attributes.
      */
-    public function testMagicGetWithAttributes(): void
+    #[Test]
+    public function it_magic_get_with_attributes(): void
     {
         $thread = new Thread(['custom_property' => 'test_value']);
 
@@ -325,7 +348,8 @@ class ThreadTest extends TestCase
     /**
      * Test magic __get returns null for nonexistent properties.
      */
-    public function testMagicGetReturnsNullForNonexistent(): void
+    #[Test]
+    public function it_magic_get_returns_null_for_nonexistent(): void
     {
         $thread = new Thread([]);
 
@@ -335,7 +359,8 @@ class ThreadTest extends TestCase
     /**
      * Test magic __set with declared properties.
      */
-    public function testMagicSetWithDeclaredProperties(): void
+    #[Test]
+    public function it_magic_set_with_declared_properties(): void
     {
         $thread = new Thread([]);
         $thread->id = 999;
@@ -348,7 +373,8 @@ class ThreadTest extends TestCase
     /**
      * Test magic __set with attributes.
      */
-    public function testMagicSetWithAttributes(): void
+    #[Test]
+    public function it_magic_set_with_attributes(): void
     {
         $thread = new Thread([]);
         $thread->dynamic_field = 'dynamic_value';
@@ -359,7 +385,8 @@ class ThreadTest extends TestCase
     /**
      * Test magic __isset with declared properties.
      */
-    public function testMagicIssetWithDeclaredProperties(): void
+    #[Test]
+    public function it_magic_isset_with_declared_properties(): void
     {
         $thread = new Thread(['id' => 100]);
 
@@ -370,7 +397,8 @@ class ThreadTest extends TestCase
     /**
      * Test magic __isset with attributes.
      */
-    public function testMagicIssetWithAttributes(): void
+    #[Test]
+    public function it_magic_isset_with_attributes(): void
     {
         $thread = new Thread(['custom' => 'exists']);
 
@@ -381,7 +409,8 @@ class ThreadTest extends TestCase
     /**
      * Test handling of array properties (thread, context, members).
      */
-    public function testArrayPropertiesHandledCorrectly(): void
+    #[Test]
+    public function it_array_properties_handled_correctly(): void
     {
         $threadData = ['message_count' => 10, 'unread' => 3];
         $contextData = ['type' => 'project', 'id' => 999];
@@ -401,7 +430,8 @@ class ThreadTest extends TestCase
     /**
      * Test handling of empty array properties.
      */
-    public function testEmptyArrayProperties(): void
+    #[Test]
+    public function it_empty_array_properties(): void
     {
         $thread = new Thread([
             'thread' => [],
@@ -417,7 +447,8 @@ class ThreadTest extends TestCase
     /**
      * Test handling of different thread types.
      */
-    public function testDifferentThreadTypes(): void
+    #[Test]
+    public function it_different_thread_types(): void
     {
         $privateThread = new Thread(['thread_type' => 'private_chat']);
         $groupThread = new Thread(['thread_type' => 'group_chat']);
@@ -431,7 +462,8 @@ class ThreadTest extends TestCase
     /**
      * Test complex thread with all fields populated.
      */
-    public function testComplexThreadWithAllFields(): void
+    #[Test]
+    public function it_complex_thread_with_all_fields(): void
     {
         $data = [
             'id' => 12345,
@@ -472,7 +504,8 @@ class ThreadTest extends TestCase
     /**
      * Test handling of null members array.
      */
-    public function testNullMembersArray(): void
+    #[Test]
+    public function it_null_members_array(): void
     {
         $thread = new Thread(['id' => 123]);
 
@@ -482,7 +515,8 @@ class ThreadTest extends TestCase
     /**
      * Test handling of numeric edge cases.
      */
-    public function testNumericEdgeCases(): void
+    #[Test]
+    public function it_numeric_edge_cases(): void
     {
         $thread = new Thread([
             'id' => 0,
@@ -498,7 +532,8 @@ class ThreadTest extends TestCase
     /**
      * Test immutability of original data array after instantiation.
      */
-    public function testOriginalDataArrayNotModified(): void
+    #[Test]
+    public function it_original_data_array_not_modified(): void
     {
         $originalData = ['id' => 123, 'owner' => 100];
         $thread = new Thread($originalData);

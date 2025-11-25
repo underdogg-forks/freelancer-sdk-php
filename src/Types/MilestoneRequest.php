@@ -20,7 +20,7 @@ class MilestoneRequest
         $this->data = $milestoneRequestData;
     }
 
-    / **
+    /**
      * Retrieve a value from the internal milestone data by key.
      *
      * @param string $name The data key to retrieve.

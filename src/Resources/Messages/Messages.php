@@ -85,7 +85,7 @@ class Messages
         return $this->createThread($memberIds, 'project', $projectId, $message);
     }
 
-    / **
+    /**
      * Posts a message to an existing thread.
      *
      * @param int $threadId The ID of the thread to post the message to.

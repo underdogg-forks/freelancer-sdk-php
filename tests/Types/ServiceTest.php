@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FreelancerSdk\Tests\Types;
 
 use FreelancerSdk\Types\Service;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ class ServiceTest extends TestCase
     /**
      * Test that a Service can be instantiated with an empty array.
      */
-    public function testCanInstantiateWithEmptyArray(): void
+    #[Test]
+    public function it_can_instantiate_with_empty_array(): void
     {
         $service = new Service([]);
         
@@ -25,7 +27,8 @@ class ServiceTest extends TestCase
     /**
      * Test that a Service can be instantiated with data.
      */
-    public function testCanInstantiateWithData(): void
+    #[Test]
+    public function it_can_instantiate_with_data(): void
     {
         $data = [
             'id' => 12345,
@@ -41,7 +44,8 @@ class ServiceTest extends TestCase
     /**
      * Test magic __get retrieves data correctly.
      */
-    public function testMagicGetRetrievesData(): void
+    #[Test]
+    public function it_magic_get_retrieves_data(): void
     {
         $data = [
             'id' => 123,
@@ -63,7 +67,8 @@ class ServiceTest extends TestCase
     /**
      * Test magic __get returns null for nonexistent fields.
      */
-    public function testMagicGetReturnsNullForNonexistentFields(): void
+    #[Test]
+    public function it_magic_get_returns_null_for_nonexistent_fields(): void
     {
         $service = new Service(['id' => 123]);
 
@@ -75,7 +80,8 @@ class ServiceTest extends TestCase
     /**
      * Test toArray returns the underlying data.
      */
-    public function testToArrayReturnsUnderlyingData(): void
+    #[Test]
+    public function it_to_array_returns_underlying_data(): void
     {
         $data = [
             'id' => 999,
@@ -92,7 +98,8 @@ class ServiceTest extends TestCase
     /**
      * Test toArray returns empty array when instantiated with empty array.
      */
-    public function testToArrayReturnsEmptyArrayWhenEmpty(): void
+    #[Test]
+    public function it_to_array_returns_empty_array_when_empty(): void
     {
         $service = new Service([]);
 
@@ -102,7 +109,8 @@ class ServiceTest extends TestCase
     /**
      * Test handling of complex nested data structures.
      */
-    public function testHandlesComplexNestedData(): void
+    #[Test]
+    public function it_handles_complex_nested_data(): void
     {
         $data = [
             'id' => 12345,
@@ -132,7 +140,8 @@ class ServiceTest extends TestCase
     /**
      * Test handling of array values.
      */
-    public function testHandlesArrayValues(): void
+    #[Test]
+    public function it_handles_array_values(): void
     {
         $data = [
             'id' => 123,
@@ -151,7 +160,8 @@ class ServiceTest extends TestCase
     /**
      * Test handling of boolean values.
      */
-    public function testHandlesBooleanValues(): void
+    #[Test]
+    public function it_handles_boolean_values(): void
     {
         $data = [
             'id' => 123,
@@ -170,7 +180,8 @@ class ServiceTest extends TestCase
     /**
      * Test handling of numeric edge cases.
      */
-    public function testHandlesNumericEdgeCases(): void
+    #[Test]
+    public function it_handles_numeric_edge_cases(): void
     {
         $data = [
             'id' => 0,
@@ -190,7 +201,8 @@ class ServiceTest extends TestCase
     /**
      * Test handling of string values with special characters.
      */
-    public function testHandlesStringWithSpecialCharacters(): void
+    #[Test]
+    public function it_handles_string_with_special_characters(): void
     {
         $data = [
             'id' => 123,
@@ -209,7 +221,8 @@ class ServiceTest extends TestCase
     /**
      * Test handling of empty strings.
      */
-    public function testHandlesEmptyStrings(): void
+    #[Test]
+    public function it_handles_empty_strings(): void
     {
         $data = [
             'id' => 123,
@@ -226,7 +239,8 @@ class ServiceTest extends TestCase
     /**
      * Test handling of null values.
      */
-    public function testHandlesNullValues(): void
+    #[Test]
+    public function it_handles_null_values(): void
     {
         $data = [
             'id' => 123,
@@ -244,7 +258,8 @@ class ServiceTest extends TestCase
     /**
      * Test comprehensive service data with all typical fields.
      */
-    public function testComprehensiveServiceData(): void
+    #[Test]
+    public function it_comprehensive_service_data(): void
     {
         $data = [
             'id' => 12345,
@@ -286,7 +301,8 @@ class ServiceTest extends TestCase
     /**
      * Test accessing fields in different ways.
      */
-    public function testAccessingFieldsInDifferentWays(): void
+    #[Test]
+    public function it_accessing_fields_in_different_ways(): void
     {
         $service = new Service(['id' => 123, 'name' => 'Test Service', 'price' => 100.0]);
 
@@ -304,7 +320,8 @@ class ServiceTest extends TestCase
     /**
      * Test that Service data is immutable from external modifications.
      */
-    public function testServiceDataImmutableFromExternalModifications(): void
+    #[Test]
+    public function it_service_data_immutable_from_external_modifications(): void
     {
         $originalData = ['id' => 123, 'name' => 'Original Service'];
         $service = new Service($originalData);
@@ -321,7 +338,8 @@ class ServiceTest extends TestCase
     /**
      * Test Service with minimal required data.
      */
-    public function testServiceWithMinimalData(): void
+    #[Test]
+    public function it_service_with_minimal_data(): void
     {
         $service = new Service(['id' => 1]);
 
@@ -333,7 +351,8 @@ class ServiceTest extends TestCase
     /**
      * Test Service with pricing tiers.
      */
-    public function testServiceWithPricingTiers(): void
+    #[Test]
+    public function it_service_with_pricing_tiers(): void
     {
         $data = [
             'id' => 123,
@@ -364,7 +383,8 @@ class ServiceTest extends TestCase
     /**
      * Test Service with large dataset.
      */
-    public function testServiceWithLargeDataset(): void
+    #[Test]
+    public function it_service_with_large_dataset(): void
     {
         $data = ['id' => 1];
         for ($i = 0; $i < 50; $i++) {

@@ -124,7 +124,7 @@ class Bid implements ArrayAccess, JsonSerializable
         return $this->milestone_percentage;
     }
 
-    / **
+    /**
      * Indicates whether the bid has been retracted.
      *
      * @return bool|null `true` if the bid is retracted, `false` if not retracted, `null` if the retraction status is unknown or not set.
@@ -230,7 +230,7 @@ class Bid implements ArrayAccess, JsonSerializable
         }
     }
 
-    / **
+    /**
      * Unset the value identified by the given offset on the Bid object.
      *
      * If the offset corresponds to a declared property, that property is set to null;

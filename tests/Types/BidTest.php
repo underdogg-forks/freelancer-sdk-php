@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FreelancerSdk\Tests\Types;
 
 use FreelancerSdk\Types\Bid;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ class BidTest extends TestCase
     /**
      * Test that a Bid can be instantiated with an empty array.
      */
-    public function testCanInstantiateWithEmptyArray(): void
+    #[Test]
+    public function it_can_instantiate_with_empty_array(): void
     {
         $bid = new Bid([]);
         
@@ -28,7 +30,8 @@ class BidTest extends TestCase
     /**
      * Test that a Bid can be instantiated with declared properties.
      */
-    public function testCanInstantiateWithDeclaredProperties(): void
+    #[Test]
+    public function it_can_instantiate_with_declared_properties(): void
     {
         $data = [
             'id' => 12345,
@@ -58,7 +61,8 @@ class BidTest extends TestCase
     /**
      * Test that undeclared properties are stored in attributes.
      */
-    public function testUndeclaredPropertiesStoredInAttributes(): void
+    #[Test]
+    public function it_undeclared_properties_stored_in_attributes(): void
     {
         $data = [
             'id' => 123,
@@ -76,7 +80,8 @@ class BidTest extends TestCase
     /**
      * Test getAttribute with default value when attribute doesn't exist.
      */
-    public function testGetAttributeReturnsDefaultWhenNotSet(): void
+    #[Test]
+    public function it_get_attribute_returns_default_when_not_set(): void
     {
         $bid = new Bid([]);
 
@@ -88,7 +93,8 @@ class BidTest extends TestCase
     /**
      * Test the fill method updates existing properties.
      */
-    public function testFillMethodUpdatesProperties(): void
+    #[Test]
+    public function it_fill_method_updates_properties(): void
     {
         $bid = new Bid(['id' => 1, 'amount' => 100.0]);
 
@@ -105,7 +111,8 @@ class BidTest extends TestCase
     /**
      * Test the fill method returns the instance for method chaining.
      */
-    public function testFillMethodReturnsInstance(): void
+    #[Test]
+    public function it_fill_method_returns_instance(): void
     {
         $bid = new Bid([]);
         $result = $bid->fill(['id' => 123]);
@@ -116,7 +123,8 @@ class BidTest extends TestCase
     /**
      * Test toArray includes all non-null properties.
      */
-    public function testToArrayIncludesNonNullProperties(): void
+    #[Test]
+    public function it_to_array_includes_non_null_properties(): void
     {
         $data = [
             'id' => 999,
@@ -138,7 +146,8 @@ class BidTest extends TestCase
     /**
      * Test toArray excludes null properties.
      */
-    public function testToArrayExcludesNullProperties(): void
+    #[Test]
+    public function it_to_array_excludes_null_properties(): void
     {
         $bid = new Bid(['id' => 123]);
         $array = $bid->toArray();
@@ -152,7 +161,8 @@ class BidTest extends TestCase
     /**
      * Test toArray merges attributes into the result.
      */
-    public function testToArrayMergesAttributes(): void
+    #[Test]
+    public function it_to_array_merges_attributes(): void
     {
         $data = [
             'id' => 456,
@@ -173,7 +183,8 @@ class BidTest extends TestCase
     /**
      * Test jsonSerialize returns the same as toArray.
      */
-    public function testJsonSerializeReturnsArrayRepresentation(): void
+    #[Test]
+    public function it_json_serialize_returns_array_representation(): void
     {
         $data = [
             'id' => 789,
@@ -189,7 +200,8 @@ class BidTest extends TestCase
     /**
      * Test that Bid can be JSON encoded.
      */
-    public function testBidCanBeJsonEncoded(): void
+    #[Test]
+    public function it_bid_can_be_json_encoded(): void
     {
         $bid = new Bid(['id' => 100, 'amount' => 50.0]);
         $json = json_encode($bid);
@@ -203,7 +215,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetExists with declared properties.
      */
-    public function testOffsetExistsWithDeclaredProperties(): void
+    #[Test]
+    public function it_offset_exists_with_declared_properties(): void
     {
         $bid = new Bid(['id' => 123, 'amount' => 100.0]);
 
@@ -215,7 +228,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetExists with attributes.
      */
-    public function testOffsetExistsWithAttributes(): void
+    #[Test]
+    public function it_offset_exists_with_attributes(): void
     {
         $bid = new Bid(['custom_field' => 'value']);
 
@@ -225,7 +239,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetGet with declared properties.
      */
-    public function testOffsetGetWithDeclaredProperties(): void
+    #[Test]
+    public function it_offset_get_with_declared_properties(): void
     {
         $bid = new Bid(['id' => 555, 'amount' => 75.25]);
 
@@ -236,7 +251,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetGet with attributes.
      */
-    public function testOffsetGetWithAttributes(): void
+    #[Test]
+    public function it_offset_get_with_attributes(): void
     {
         $bid = new Bid(['custom' => 'attribute']);
 
@@ -246,7 +262,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetGet returns null for nonexistent keys.
      */
-    public function testOffsetGetReturnsNullForNonexistent(): void
+    #[Test]
+    public function it_offset_get_returns_null_for_nonexistent(): void
     {
         $bid = new Bid([]);
 
@@ -256,7 +273,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetSet with declared properties.
      */
-    public function testOffsetSetWithDeclaredProperties(): void
+    #[Test]
+    public function it_offset_set_with_declared_properties(): void
     {
         $bid = new Bid([]);
         $bid['id'] = 777;
@@ -269,7 +287,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetSet with attributes.
      */
-    public function testOffsetSetWithAttributes(): void
+    #[Test]
+    public function it_offset_set_with_attributes(): void
     {
         $bid = new Bid([]);
         $bid['custom'] = 'new_value';
@@ -280,7 +299,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetUnset with declared properties sets them to null.
      */
-    public function testOffsetUnsetWithDeclaredPropertiesSetsToNull(): void
+    #[Test]
+    public function it_offset_unset_with_declared_properties_sets_to_null(): void
     {
         $bid = new Bid(['id' => 123, 'amount' => 50.0]);
 
@@ -293,7 +313,8 @@ class BidTest extends TestCase
     /**
      * Test ArrayAccess offsetUnset with attributes removes them.
      */
-    public function testOffsetUnsetWithAttributesRemovesThem(): void
+    #[Test]
+    public function it_offset_unset_with_attributes_removes_them(): void
     {
         $bid = new Bid(['custom' => 'value']);
 
@@ -308,7 +329,8 @@ class BidTest extends TestCase
     /**
      * Test magic __get with declared properties.
      */
-    public function testMagicGetWithDeclaredProperties(): void
+    #[Test]
+    public function it_magic_get_with_declared_properties(): void
     {
         $bid = new Bid(['id' => 321, 'amount' => 88.88]);
 
@@ -319,7 +341,8 @@ class BidTest extends TestCase
     /**
      * Test magic __get with attributes.
      */
-    public function testMagicGetWithAttributes(): void
+    #[Test]
+    public function it_magic_get_with_attributes(): void
     {
         $bid = new Bid(['custom_property' => 'test_value']);
 
@@ -329,7 +352,8 @@ class BidTest extends TestCase
     /**
      * Test magic __get returns null for nonexistent properties.
      */
-    public function testMagicGetReturnsNullForNonexistent(): void
+    #[Test]
+    public function it_magic_get_returns_null_for_nonexistent(): void
     {
         $bid = new Bid([]);
 
@@ -339,7 +363,8 @@ class BidTest extends TestCase
     /**
      * Test magic __set with declared properties.
      */
-    public function testMagicSetWithDeclaredProperties(): void
+    #[Test]
+    public function it_magic_set_with_declared_properties(): void
     {
         $bid = new Bid([]);
         $bid->id = 999;
@@ -352,7 +377,8 @@ class BidTest extends TestCase
     /**
      * Test magic __set with attributes.
      */
-    public function testMagicSetWithAttributes(): void
+    #[Test]
+    public function it_magic_set_with_attributes(): void
     {
         $bid = new Bid([]);
         $bid->dynamic_field = 'dynamic_value';
@@ -363,7 +389,8 @@ class BidTest extends TestCase
     /**
      * Test magic __isset with declared properties.
      */
-    public function testMagicIssetWithDeclaredProperties(): void
+    #[Test]
+    public function it_magic_isset_with_declared_properties(): void
     {
         $bid = new Bid(['id' => 100]);
 
@@ -374,7 +401,8 @@ class BidTest extends TestCase
     /**
      * Test magic __isset with attributes.
      */
-    public function testMagicIssetWithAttributes(): void
+    #[Test]
+    public function it_magic_isset_with_attributes(): void
     {
         $bid = new Bid(['custom' => 'exists']);
 
@@ -385,7 +413,8 @@ class BidTest extends TestCase
     /**
      * Test handling of null values for nullable properties.
      */
-    public function testNullablePropertiesHandledCorrectly(): void
+    #[Test]
+    public function it_nullable_properties_handled_correctly(): void
     {
         $bid = new Bid([
             'id' => null,
@@ -401,7 +430,8 @@ class BidTest extends TestCase
     /**
      * Test that boolean retracted field works correctly.
      */
-    public function testRetractedBooleanValues(): void
+    #[Test]
+    public function it_retracted_boolean_values(): void
     {
         $bidRetracted = new Bid(['retracted' => true]);
         $bidActive = new Bid(['retracted' => false]);
@@ -415,7 +445,8 @@ class BidTest extends TestCase
     /**
      * Test handling of edge case values for numeric fields.
      */
-    public function testNumericEdgeCases(): void
+    #[Test]
+    public function it_numeric_edge_cases(): void
     {
         $bid = new Bid([
             'id' => 0,
@@ -433,7 +464,8 @@ class BidTest extends TestCase
     /**
      * Test handling of large numeric values.
      */
-    public function testLargeNumericValues(): void
+    #[Test]
+    public function it_large_numeric_values(): void
     {
         $bid = new Bid([
             'id' => PHP_INT_MAX,
@@ -451,7 +483,8 @@ class BidTest extends TestCase
     /**
      * Test handling of empty string description.
      */
-    public function testEmptyStringDescription(): void
+    #[Test]
+    public function it_empty_string_description(): void
     {
         $bid = new Bid(['description' => '']);
 
@@ -461,7 +494,8 @@ class BidTest extends TestCase
     /**
      * Test handling of multi-line description.
      */
-    public function testMultiLineDescription(): void
+    #[Test]
+    public function it_multi_line_description(): void
     {
         $description = "Line 1\nLine 2\nLine 3";
         $bid = new Bid(['description' => $description]);
@@ -472,7 +506,8 @@ class BidTest extends TestCase
     /**
      * Test that attributes can override declared properties in toArray.
      */
-    public function testAttributesCanOverrideDeclaredPropertiesInToArray(): void
+    #[Test]
+    public function it_attributes_can_override_declared_properties_in_to_array(): void
     {
         // This tests the documented behavior where attributes can override properties
         $bid = new Bid(['id' => 100]);
@@ -492,7 +527,8 @@ class BidTest extends TestCase
     /**
      * Test complex data structure with all fields populated.
      */
-    public function testComplexBidWithAllFields(): void
+    #[Test]
+    public function it_complex_bid_with_all_fields(): void
     {
         $data = [
             'id' => 12345,
@@ -538,7 +574,8 @@ class BidTest extends TestCase
     /**
      * Test immutability of original data array after instantiation.
      */
-    public function testOriginalDataArrayNotModified(): void
+    #[Test]
+    public function it_original_data_array_not_modified(): void
     {
         $originalData = ['id' => 123, 'amount' => 100.0];
         $bid = new Bid($originalData);

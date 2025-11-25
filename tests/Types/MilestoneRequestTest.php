@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FreelancerSdk\Tests\Types;
 
 use FreelancerSdk\Types\MilestoneRequest;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test that a MilestoneRequest can be instantiated with an empty array.
      */
-    public function testCanInstantiateWithEmptyArray(): void
+    #[Test]
+    public function it_can_instantiate_with_empty_array(): void
     {
         $request = new MilestoneRequest([]);
         
@@ -25,7 +27,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test that a MilestoneRequest can be instantiated with data.
      */
-    public function testCanInstantiateWithData(): void
+    #[Test]
+    public function it_can_instantiate_with_data(): void
     {
         $data = [
             'id' => 12345,
@@ -42,7 +45,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test magic __get retrieves data correctly.
      */
-    public function testMagicGetRetrievesData(): void
+    #[Test]
+    public function it_magic_get_retrieves_data(): void
     {
         $data = [
             'id' => 123,
@@ -64,7 +68,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test magic __get returns null for nonexistent fields.
      */
-    public function testMagicGetReturnsNullForNonexistentFields(): void
+    #[Test]
+    public function it_magic_get_returns_null_for_nonexistent_fields(): void
     {
         $request = new MilestoneRequest(['id' => 123]);
 
@@ -75,7 +80,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test magic __set updates data correctly.
      */
-    public function testMagicSetUpdatesData(): void
+    #[Test]
+    public function it_magic_set_updates_data(): void
     {
         $request = new MilestoneRequest(['id' => 123]);
 
@@ -91,7 +97,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test magic __isset checks for field existence.
      */
-    public function testMagicIssetChecksFieldExistence(): void
+    #[Test]
+    public function it_magic_isset_checks_field_existence(): void
     {
         $request = new MilestoneRequest([
             'id' => 123,
@@ -108,7 +115,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test magic __isset handles null values correctly.
      */
-    public function testMagicIssetHandlesNullValues(): void
+    #[Test]
+    public function it_magic_isset_handles_null_values(): void
     {
         $request = new MilestoneRequest([
             'id' => 123,
@@ -124,7 +132,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test toArray returns the underlying data.
      */
-    public function testToArrayReturnsUnderlyingData(): void
+    #[Test]
+    public function it_to_array_returns_underlying_data(): void
     {
         $data = [
             'id' => 999,
@@ -142,7 +151,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test toArray returns empty array when instantiated with empty array.
      */
-    public function testToArrayReturnsEmptyArrayWhenEmpty(): void
+    #[Test]
+    public function it_to_array_returns_empty_array_when_empty(): void
     {
         $request = new MilestoneRequest([]);
 
@@ -152,7 +162,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test that modifications via __set are reflected in toArray.
      */
-    public function testModificationsReflectedInToArray(): void
+    #[Test]
+    public function it_modifications_reflected_in_to_array(): void
     {
         $request = new MilestoneRequest(['id' => 123]);
 
@@ -171,7 +182,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test handling of complex nested data structures.
      */
-    public function testHandlesComplexNestedData(): void
+    #[Test]
+    public function it_handles_complex_nested_data(): void
     {
         $data = [
             'id' => 12345,
@@ -197,7 +209,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test handling of array values.
      */
-    public function testHandlesArrayValues(): void
+    #[Test]
+    public function it_handles_array_values(): void
     {
         $data = [
             'id' => 123,
@@ -214,7 +227,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test handling of boolean values.
      */
-    public function testHandlesBooleanValues(): void
+    #[Test]
+    public function it_handles_boolean_values(): void
     {
         $data = [
             'id' => 123,
@@ -233,7 +247,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test handling of numeric edge cases.
      */
-    public function testHandlesNumericEdgeCases(): void
+    #[Test]
+    public function it_handles_numeric_edge_cases(): void
     {
         $data = [
             'id' => 0,
@@ -253,7 +268,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test handling of string values with special characters.
      */
-    public function testHandlesStringWithSpecialCharacters(): void
+    #[Test]
+    public function it_handles_string_with_special_characters(): void
     {
         $data = [
             'id' => 123,
@@ -270,7 +286,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test handling of empty strings.
      */
-    public function testHandlesEmptyStrings(): void
+    #[Test]
+    public function it_handles_empty_strings(): void
     {
         $data = [
             'id' => 123,
@@ -287,7 +304,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test comprehensive milestone request with all typical fields.
      */
-    public function testComprehensiveMilestoneRequestData(): void
+    #[Test]
+    public function it_comprehensive_milestone_request_data(): void
     {
         $data = [
             'id' => 12345,
@@ -319,7 +337,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test that original data is not modified by mutations.
      */
-    public function testOriginalDataNotModifiedByMutations(): void
+    #[Test]
+    public function it_original_data_not_modified_by_mutations(): void
     {
         $originalData = ['id' => 123, 'amount' => 100.0, 'status' => 'pending'];
         $request = new MilestoneRequest($originalData);
@@ -340,7 +359,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test multiple field updates in sequence.
      */
-    public function testMultipleFieldUpdatesInSequence(): void
+    #[Test]
+    public function it_multiple_field_updates_in_sequence(): void
     {
         $request = new MilestoneRequest(['id' => 1]);
 
@@ -363,7 +383,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test different request statuses.
      */
-    public function testDifferentRequestStatuses(): void
+    #[Test]
+    public function it_different_request_statuses(): void
     {
         $pendingRequest = new MilestoneRequest(['id' => 1, 'status' => 'pending']);
         $approvedRequest = new MilestoneRequest(['id' => 2, 'status' => 'approved']);
@@ -377,7 +398,8 @@ class MilestoneRequestTest extends TestCase
     /**
      * Test accessing fields in different ways.
      */
-    public function testAccessingFieldsInDifferentWays(): void
+    #[Test]
+    public function it_accessing_fields_in_different_ways(): void
     {
         $request = new MilestoneRequest(['id' => 123, 'amount' => 500.0, 'status' => 'pending']);
 
