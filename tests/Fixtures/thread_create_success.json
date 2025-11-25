@@ -1,0 +1,16 @@
+{
+  "status": "success",
+  "result": {
+    "id": 301,
+    "thread": {
+      "thread_type": "private_chat",
+      "time_created": 1483228800,
+      "members": [101, 102],
+      "context": {
+        "id": 201,
+        "type": "project"
+      },
+      "owner": 101
+    }
+  }
+}

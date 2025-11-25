@@ -1,0 +1,9 @@
+{
+  "status": "success",
+  "result": {
+    "id": 401,
+    "from_user_id": 101,
+    "thread_id": 301,
+    "message": "Let's talk"
+  }
+}

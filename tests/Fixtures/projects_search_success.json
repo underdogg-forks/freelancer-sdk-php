@@ -1,0 +1,23 @@
+{
+  "status": "success",
+  "result": {
+    "total_count": 1000,
+    "projects": [
+      {
+        "id": 201,
+        "title": "PHP Developer Needed",
+        "description": "Looking for experienced PHP developer"
+      },
+      {
+        "id": 202,
+        "title": "Logo Design Project",
+        "description": "Need a professional logo"
+      },
+      {
+        "id": 203,
+        "title": "Website Development",
+        "description": "Full stack web development project"
+      }
+    ]
+  }
+}

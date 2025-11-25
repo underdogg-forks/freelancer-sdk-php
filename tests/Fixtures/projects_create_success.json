@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "result": {
+    "id": 123,
+    "title": "Test Project",
+    "seo_url": "test-project-123",
+    "currency": {"id": 1, "code": "USD", "sign": "$"},
+    "budget": {"minimum": 100, "maximum": 200},
+    "jobs": [{"id": 3, "name": "PHP"}]
+  }
+}
