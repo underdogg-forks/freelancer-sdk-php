@@ -12,7 +12,7 @@ use FreelancerSdk\Session;
  */
 function sampleGetSelf(): ?array
 {
-    $oauthToken = getenv('FLN_OAUTH_TOKEN');
+    $oauthToken = getenv('FLN_OAUTH_TOKEN') ?: null;
     $url = getenv('FLN_URL') ?: 'https://www.freelancer.com';
 
     $session = new Session($oauthToken, $url);
@@ -27,7 +27,7 @@ function sampleGetSelf(): ?array
     try {
         $result = $users->getSelf($userDetails);
         return $result;
-    } catch (\Exception $e) {
+    } catch (\RuntimeException $e) {
         echo "Error message: {$e->getMessage()}\n";
         return null;
     }

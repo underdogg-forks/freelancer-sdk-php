@@ -10,13 +10,20 @@ use FreelancerSdk\Session;
 /**
  * Get multiple users
  */
+/**
+ * Create and return a configured Users client
+ */
+function createUsersClient(): Users
+{
+    $oauthToken = getenv('FLN_OAUTH_TOKEN') ?: null;
+    $url = getenv('FLN_URL') ?: 'https://www.freelancer.com';
+    $session = new Session($oauthToken, $url);
+    return new Users($session);
+}
+
 function sampleGetUsers(): ?array
 {
-    $oauthToken = getenv('FLN_OAUTH_TOKEN');
-    $url = getenv('FLN_URL') ?: 'https://www.freelancer.com';
-
-    $session = new Session($oauthToken, $url);
-    $users = new Users($session);
+    $users = createUsersClient();
 
     $query = [
         'users[]' => [110013, 221202, 231203],
@@ -39,11 +46,7 @@ function sampleGetUsers(): ?array
  */
 function sampleGetUserById(): ?array
 {
-    $oauthToken = getenv('FLN_OAUTH_TOKEN');
-    $url = getenv('FLN_URL') ?: 'https://www.freelancer.com';
-
-    $session = new Session($oauthToken, $url);
-    $users = new Users($session);
+    $users = createUsersClient();
 
     try {
         $result = $users->getUserById(110013);
