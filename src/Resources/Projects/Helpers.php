@@ -8,7 +8,15 @@ namespace FreelancerSdk\Resources\Projects;
 class Helpers
 {
     /**
-     * Create a currency object.
+     * Builds an associative array representing a currency.
+     *
+     * @param int $id The currency identifier.
+     * @param string|null $code The ISO code of the currency (e.g., "USD"), or null to omit.
+     * @param string|null $sign The currency sign/symbol (e.g., "$"), or null to omit.
+     * @param string|null $name The human-readable currency name, or null to omit.
+     * @param float|null $exchangeRate The exchange rate relative to a base currency, or null to omit.
+     * @param string|null $country The country associated with the currency, or null to omit.
+     * @return array An associative array containing 'id' and optionally 'code', 'sign', 'name', 'exchange_rate', and 'country'.
      */
     public static function createCurrencyObject(
         int $id,
@@ -40,7 +48,15 @@ class Helpers
     }
 
     /**
-     * Create a job object.
+     * Build an associative array representing a job.
+     *
+     * @param int $id Job identifier.
+     * @param string|null $name Human-readable job name.
+     * @param array|null $category Category data for the job.
+     * @param int|null $activeProjectCount Number of active projects in this job.
+     * @param string|null $seoUrl SEO-friendly URL for the job.
+     * @param array|null $seoInfo Additional SEO metadata.
+     * @return array Associative array containing 'id' and, when provided, 'name', 'category', 'active_project_count', 'seo_url', and 'seo_info'.
      */
     public static function createJobObject(
         int $id,
@@ -72,7 +88,14 @@ class Helpers
     }
 
     /**
-     * Create a budget object.
+     * Builds an associative array representing a budget with optional fields.
+     *
+     * @param float      $minimum     The minimum budget amount.
+     * @param float|null $maximum     The maximum budget amount, if specified.
+     * @param string|null $name       Human-readable name for the budget, if specified.
+     * @param string|null $projectType The project type (for example `fixed` or `hourly`), if specified.
+     * @param int|null   $currencyId  Identifier of the currency associated with the budget, if specified.
+     * @return array Associative array containing the `minimum` key and, when provided, `maximum`, `name`, `project_type`, and `currency_id` keys.
      */
     public static function createBudgetObject(
         float $minimum,
@@ -100,7 +123,11 @@ class Helpers
     }
 
     /**
-     * Create an hourly project info object.
+     * Build hourly project commitment information.
+     *
+     * @param int $commitmentHours Number of committed hours.
+     * @param string $commitmentInterval Commitment interval (for example, "week" or "month").
+     * @return array Array with a 'commitment' key containing 'hours' (int) and 'interval' (string).
      */
     public static function createHourlyProjectInfoObject(
         int $commitmentHours,
@@ -115,7 +142,16 @@ class Helpers
     }
 
     /**
-     * Create a location object.
+     * Builds an associative array representing a location.
+     *
+     * @param array|null  $country            Optional country info to include under the `country` key (e.g., id, code, name).
+     * @param string|null $city               Optional city name to include under the `city` key.
+     * @param float|null  $latitude           Optional latitude to include under the `latitude` key.
+     * @param float|null  $longitude          Optional longitude to include under the `longitude` key.
+     * @param string|null $vicinity           Optional vicinity/area description to include under the `vicinity` key.
+     * @param string|null $administrativeArea Optional administrative area (state/region) to include under the `administrative_area` key.
+     * @param string|null $fullAddress        Optional full postal address to include under the `full_address` key.
+     * @return array Associative array containing any of the keys `country`, `city`, `latitude`, `longitude`, `vicinity`, `administrative_area`, and `full_address` for which arguments were provided.
      */
     public static function createLocationObject(
         ?array $country = null,
@@ -154,7 +190,17 @@ class Helpers
     }
 
     /**
-     * Create a bid object.
+     * Builds an associative array representing a bid.
+     *
+     * @param int $id The bid identifier.
+     * @param int $bidderId The identifier of the user who placed the bid.
+     * @param int $projectId The identifier of the project the bid targets.
+     * @param bool $retracted `true` if the bid has been retracted, `false` otherwise.
+     * @param float $amount The monetary amount offered in the bid.
+     * @param int $period The proposed period/duration associated with the bid.
+     * @param string $description The bidder's textual description or message.
+     * @param int $projectOwnerId The identifier of the project owner.
+     * @return array An associative array with keys: 'id', 'bidder_id', 'project_id', 'retracted', 'amount', 'period', 'description', 'project_owner_id'.
      */
     public static function createBidObject(
         int $id,

@@ -13,25 +13,31 @@ class Contests
 {
     private const ENDPOINT = 'api/contests/0.1';
 
+    /**
+     * Create a Contests resource bound to the provided Session for API requests.
+     *
+     * @param Session $session HTTP session used to send requests to the Freelancer API.
+     */
     public function __construct(
         private readonly Session $session
     ) {
     }
 
     /**
-     * Create a contest
+     * Creates a contest via the Freelancer API.
      *
-     * @param  array{
-     *     title: string,
-     *     description: string,
-     *     type: string,
-     *     duration: int,
-     *     job_ids: array<int>,
-     *     currency_id: int,
-     *     prize: float
-     * } $contestData
-     * @return Contest
-     * @throws ContestNotCreatedException
+     * Sends the provided contest data to the contests endpoint and returns the created Contest on success.
+     *
+     * @param array{title: string, description: string, type: string, duration: int, job_ids: array<int>, currency_id: int, prize: float} $contestData Contest payload with keys:
+     *     - title: contest title
+     *     - description: contest description
+     *     - type: contest type identifier
+     *     - duration: duration in days
+     *     - job_ids: related job IDs
+     *     - currency_id: currency identifier
+     *     - prize: prize amount
+     * @return Contest The created Contest instance constructed from the API response `result`.
+     * @throws ContestNotCreatedException If the API returns invalid JSON, an unexpected response format, an error payload, or if the HTTP request fails.
      */
     public function createContest(array $contestData): Contest
     {

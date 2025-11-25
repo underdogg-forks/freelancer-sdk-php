@@ -9,9 +9,10 @@ use FreelancerSdk\Resources\Projects\Projects;
 use FreelancerSdk\Session;
 
 /**
- * Create a new project
+ * Creates a new Freelancer project using an OAuth session and returns the created project.
  *
  * @see https://www.freelancer.com/api/docs/cases/creating_a_project
+ * @return object|null The created project object on success, `null` if project creation failed.
  */
 function sampleCreateProject(): ?object
 {

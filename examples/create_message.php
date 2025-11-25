@@ -8,7 +8,9 @@ use FreelancerSdk\Resources\Messages\Messages;
 use FreelancerSdk\Session;
 
 /**
- * Post a message to a thread
+ * Create and post a message to a predefined thread using environment-configured session.
+ *
+ * @return object|null The created message object if successful, `null` if the message could not be created.
  */
 function sampleCreateMessage(): ?object
 {

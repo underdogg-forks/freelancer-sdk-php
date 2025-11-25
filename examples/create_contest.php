@@ -9,7 +9,11 @@ use FreelancerSdk\Resources\Contests\Contests;
 use FreelancerSdk\Session;
 
 /**
- * Create a new contest
+ * Create a new contest via the Freelancer SDK and return the created contest object.
+ *
+ * Reads FLN_OAUTH_TOKEN for an OAuth token and FLN_URL for the API base URL (defaults to https://www.freelancer.com).
+ *
+ * @return object|null The created contest object on success, or `null` if the contest could not be created.
  */
 function sampleCreateContest(): ?object
 {

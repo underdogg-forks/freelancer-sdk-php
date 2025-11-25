@@ -11,7 +11,9 @@ use FreelancerSdk\Session;
  * Get multiple users
  */
 /**
- * Create and return a configured Users client
+ * Create and return a configured Users client using environment configuration.
+ *
+ * @return Users The configured Users client.
  */
 function createUsersClient(): Users
 {
@@ -21,6 +23,11 @@ function createUsersClient(): Users
     return new Users($session);
 }
 
+/**
+ * Retrieve multiple users by ID including basic profile, profile description, and reputation.
+ *
+ * @return array|null An associative array of users as returned by the SDK, or `null` if an error occurred.
+ */
 function sampleGetUsers(): ?array
 {
     $users = createUsersClient();
@@ -42,7 +49,9 @@ function sampleGetUsers(): ?array
 }
 
 /**
- * Get a single user by ID
+ * Retrieve the user with ID 110013 and return their data.
+ *
+ * @return array|null The user's data as an associative array, or null if the request failed.
  */
 function sampleGetUserById(): ?array
 {
