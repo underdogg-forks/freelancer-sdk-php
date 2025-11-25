@@ -5,23 +5,13 @@ declare(strict_types=1);
 namespace FreelancerSdk\Resources\Contests;
 
 use FreelancerSdk\Exceptions\Contests\ContestNotCreatedException;
-use FreelancerSdk\Session;
+use FreelancerSdk\Resources\BaseResource;
 use FreelancerSdk\Types\Contest;
 use GuzzleHttp\Exception\GuzzleException;
 
-class Contests
+class Contests extends BaseResource
 {
     private const ENDPOINT = 'api/contests/0.1';
-
-    /**
-     * Create a Contests resource bound to the provided Session for API requests.
-     *
-     * @param Session $session HTTP session used to send requests to the Freelancer API.
-     */
-    public function __construct(
-        private readonly Session $session
-    ) {
-    }
 
     /**
      * Creates a contest via the Freelancer API.
@@ -47,16 +37,7 @@ class Contests
                 ['json' => $contestData]
             );
 
-            $data = json_decode($response->getBody()->getContents(), true);
-
-            // Validate JSON decode result
-            if ($data === null || json_last_error() !== JSON_ERROR_NONE) {
-                throw new ContestNotCreatedException(
-                    'Invalid JSON response from API: ' . json_last_error_msg(),
-                    null,
-                    null
-                );
-            }
+            $data = $this->decodeJsonResponse($response);
 
             if (!is_array($data)) {
                 throw new ContestNotCreatedException(

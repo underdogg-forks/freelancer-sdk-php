@@ -20,7 +20,7 @@ class MilestoneRequestTest extends TestCase
     public function it_can_instantiate_with_empty_array(): void
     {
         $request = new MilestoneRequest([]);
-        
+
         $this->assertInstanceOf(MilestoneRequest::class, $request);
     }
 
@@ -31,9 +31,9 @@ class MilestoneRequestTest extends TestCase
     public function it_can_instantiate_with_data(): void
     {
         $data = [
-            'id' => 12345,
-            'project_id' => 67890,
-            'amount' => 500.0,
+            'id'          => 12345,
+            'project_id'  => 67890,
+            'amount'      => 500.0,
             'description' => 'Milestone payment request',
         ];
 
@@ -49,11 +49,11 @@ class MilestoneRequestTest extends TestCase
     public function it_magic_get_retrieves_data(): void
     {
         $data = [
-            'id' => 123,
-            'project_id' => 456,
-            'amount' => 250.0,
+            'id'          => 123,
+            'project_id'  => 456,
+            'amount'      => 250.0,
             'description' => 'Test request',
-            'status' => 'pending',
+            'status'      => 'pending',
         ];
 
         $request = new MilestoneRequest($data);
@@ -85,9 +85,9 @@ class MilestoneRequestTest extends TestCase
     {
         $request = new MilestoneRequest(['id' => 123]);
 
-        $request->amount = 750.0;
+        $request->amount      = 750.0;
         $request->description = 'Updated request description';
-        $request->status = 'approved';
+        $request->status      = 'approved';
 
         $this->assertSame(750.0, $request->amount);
         $this->assertSame('Updated request description', $request->description);
@@ -101,7 +101,7 @@ class MilestoneRequestTest extends TestCase
     public function it_magic_isset_checks_field_existence(): void
     {
         $request = new MilestoneRequest([
-            'id' => 123,
+            'id'     => 123,
             'amount' => 100.0,
             'status' => 'pending',
         ]);
@@ -119,8 +119,8 @@ class MilestoneRequestTest extends TestCase
     public function it_magic_isset_handles_null_values(): void
     {
         $request = new MilestoneRequest([
-            'id' => 123,
-            'amount' => null,
+            'id'          => 123,
+            'amount'      => null,
             'description' => null,
         ]);
 
@@ -136,11 +136,11 @@ class MilestoneRequestTest extends TestCase
     public function it_to_array_returns_underlying_data(): void
     {
         $data = [
-            'id' => 999,
-            'project_id' => 888,
-            'amount' => 1250.0,
+            'id'          => 999,
+            'project_id'  => 888,
+            'amount'      => 1250.0,
             'description' => 'Final payment request',
-            'status' => 'accepted',
+            'status'      => 'accepted',
         ];
 
         $request = new MilestoneRequest($data);
@@ -169,7 +169,7 @@ class MilestoneRequestTest extends TestCase
 
         $request->amount = 500.0;
         $request->status = 'approved';
-        $request->notes = 'Approved by manager';
+        $request->notes  = 'Approved by manager';
 
         $array = $request->toArray();
 
@@ -186,15 +186,15 @@ class MilestoneRequestTest extends TestCase
     public function it_handles_complex_nested_data(): void
     {
         $data = [
-            'id' => 12345,
+            'id'         => 12345,
             'project_id' => 67890,
-            'amount' => 2000.0,
-            'bidder' => [
-                'id' => 111,
+            'amount'     => 2000.0,
+            'bidder'     => [
+                'id'       => 111,
                 'username' => 'freelancer_joe',
             ],
             'currency' => [
-                'id' => 1,
+                'id'   => 1,
                 'code' => 'USD',
             ],
         ];
@@ -213,9 +213,9 @@ class MilestoneRequestTest extends TestCase
     public function it_handles_array_values(): void
     {
         $data = [
-            'id' => 123,
+            'id'          => 123,
             'attachments' => ['file1.pdf', 'file2.doc'],
-            'metadata' => ['key' => 'value', 'priority' => 'high'],
+            'metadata'    => ['key' => 'value', 'priority' => 'high'],
         ];
 
         $request = new MilestoneRequest($data);
@@ -231,9 +231,9 @@ class MilestoneRequestTest extends TestCase
     public function it_handles_boolean_values(): void
     {
         $data = [
-            'id' => 123,
-            'is_approved' => true,
-            'is_rejected' => false,
+            'id'              => 123,
+            'is_approved'     => true,
+            'is_rejected'     => false,
             'requires_review' => true,
         ];
 
@@ -251,9 +251,9 @@ class MilestoneRequestTest extends TestCase
     public function it_handles_numeric_edge_cases(): void
     {
         $data = [
-            'id' => 0,
-            'amount' => 0.0,
-            'project_id' => PHP_INT_MAX,
+            'id'           => 0,
+            'amount'       => 0.0,
+            'project_id'   => PHP_INT_MAX,
             'large_amount' => 9999999.99,
         ];
 
@@ -272,9 +272,9 @@ class MilestoneRequestTest extends TestCase
     public function it_handles_string_with_special_characters(): void
     {
         $data = [
-            'id' => 123,
+            'id'          => 123,
             'description' => "Payment for 'Phase 1' & \"Phase 2\"",
-            'notes' => "Line 1\nLine 2\nTab\tSeparated",
+            'notes'       => "Line 1\nLine 2\nTab\tSeparated",
         ];
 
         $request = new MilestoneRequest($data);
@@ -290,9 +290,9 @@ class MilestoneRequestTest extends TestCase
     public function it_handles_empty_strings(): void
     {
         $data = [
-            'id' => 123,
+            'id'          => 123,
             'description' => '',
-            'notes' => '',
+            'notes'       => '',
         ];
 
         $request = new MilestoneRequest($data);
@@ -308,16 +308,16 @@ class MilestoneRequestTest extends TestCase
     public function it_comprehensive_milestone_request_data(): void
     {
         $data = [
-            'id' => 12345,
-            'project_id' => 67890,
-            'bidder_id' => 54321,
-            'amount' => 1500.0,
-            'description' => 'Request for milestone payment upon completion',
-            'status' => 'requested',
-            'time_created' => 1609459200,
+            'id'             => 12345,
+            'project_id'     => 67890,
+            'bidder_id'      => 54321,
+            'amount'         => 1500.0,
+            'description'    => 'Request for milestone payment upon completion',
+            'status'         => 'requested',
+            'time_created'   => 1609459200,
             'time_requested' => 1609545600,
-            'reason' => 'Work completed as per agreement',
-            'request_type' => 'release',
+            'reason'         => 'Work completed as per agreement',
+            'request_type'   => 'release',
         ];
 
         $request = new MilestoneRequest($data);
@@ -341,7 +341,7 @@ class MilestoneRequestTest extends TestCase
     public function it_original_data_not_modified_by_mutations(): void
     {
         $originalData = ['id' => 123, 'amount' => 100.0, 'status' => 'pending'];
-        $request = new MilestoneRequest($originalData);
+        $request      = new MilestoneRequest($originalData);
 
         // Modify via magic setter
         $request->amount = 200.0;
@@ -386,7 +386,7 @@ class MilestoneRequestTest extends TestCase
     #[Test]
     public function it_different_request_statuses(): void
     {
-        $pendingRequest = new MilestoneRequest(['id' => 1, 'status' => 'pending']);
+        $pendingRequest  = new MilestoneRequest(['id' => 1, 'status' => 'pending']);
         $approvedRequest = new MilestoneRequest(['id' => 2, 'status' => 'approved']);
         $rejectedRequest = new MilestoneRequest(['id' => 3, 'status' => 'rejected']);
 

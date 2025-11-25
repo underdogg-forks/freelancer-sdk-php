@@ -8,22 +8,14 @@ use FreelancerSdk\Exceptions\Messages\MessageNotCreatedException;
 use FreelancerSdk\Exceptions\Messages\MessagesNotFoundException;
 use FreelancerSdk\Exceptions\Messages\ThreadNotCreatedException;
 use FreelancerSdk\Exceptions\Messages\ThreadsNotFoundException;
-use FreelancerSdk\Session;
+use FreelancerSdk\Resources\BaseResource;
 use FreelancerSdk\Types\Message;
 use FreelancerSdk\Types\Thread;
 use GuzzleHttp\Exception\GuzzleException;
 
-class Messages
+class Messages extends BaseResource
 {
     private const ENDPOINT = 'api/messages/0.1';
-
-    /**
-     * Initialize the Messages resource with a session used for HTTP requests.
-     */
-    public function __construct(
-        private readonly Session $session
-    ) {
-    }
 
     /**
      * Creates a message thread with the specified members, context, and initial message.
@@ -51,7 +43,7 @@ class Messages
                 ]
             );
 
-            $data = json_decode($response->getBody()->getContents(), true);
+            $data = $this->decodeJsonResponse($response);
 
             if ($response->getStatusCode() === 200 && isset($data['result'])) {
                 return new Thread($data['result']);
@@ -106,7 +98,7 @@ class Messages
                 ]
             );
 
-            $data = json_decode($response->getBody()->getContents(), true);
+            $data = $this->decodeJsonResponse($response);
 
             if ($response->getStatusCode() === 200 && isset($data['result'])) {
                 return new Message($data['result']);
@@ -166,7 +158,7 @@ class Messages
                 ]
             );
 
-            $data = json_decode($response->getBody()->getContents(), true);
+            $data = $this->decodeJsonResponse($response);
 
             if ($response->getStatusCode() === 200 && isset($data['result'])) {
                 return new Message($data['result']);
@@ -206,7 +198,7 @@ class Messages
                 ['query' => $query]
             );
 
-            $data = json_decode($response->getBody()->getContents(), true);
+            $data = $this->decodeJsonResponse($response);
 
             if ($response->getStatusCode() === 200 && isset($data['result'])) {
                 return $data['result'];
@@ -271,7 +263,7 @@ class Messages
                 ['query' => $queryParams]
             );
 
-            $data = json_decode($response->getBody()->getContents(), true);
+            $data = $this->decodeJsonResponse($response);
 
             if ($response->getStatusCode() === 200 && isset($data['result'])) {
                 return $data['result'];
@@ -306,7 +298,7 @@ class Messages
                 ['query' => $query]
             );
 
-            $data = json_decode($response->getBody()->getContents(), true);
+            $data = $this->decodeJsonResponse($response);
 
             if ($response->getStatusCode() === 200 && isset($data['result'])) {
                 return $data['result'];

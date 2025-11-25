@@ -20,7 +20,7 @@ class ServiceTest extends TestCase
     public function it_can_instantiate_with_empty_array(): void
     {
         $service = new Service([]);
-        
+
         $this->assertInstanceOf(Service::class, $service);
     }
 
@@ -31,8 +31,8 @@ class ServiceTest extends TestCase
     public function it_can_instantiate_with_data(): void
     {
         $data = [
-            'id' => 12345,
-            'name' => 'Web Development',
+            'id'       => 12345,
+            'name'     => 'Web Development',
             'category' => 'Technology',
         ];
 
@@ -48,10 +48,10 @@ class ServiceTest extends TestCase
     public function it_magic_get_retrieves_data(): void
     {
         $data = [
-            'id' => 123,
-            'name' => 'Logo Design',
-            'category' => 'Design',
-            'price' => 150.0,
+            'id'          => 123,
+            'name'        => 'Logo Design',
+            'category'    => 'Design',
+            'price'       => 150.0,
             'description' => 'Professional logo design service',
         ];
 
@@ -84,9 +84,9 @@ class ServiceTest extends TestCase
     public function it_to_array_returns_underlying_data(): void
     {
         $data = [
-            'id' => 999,
-            'name' => 'Mobile App Development',
-            'price' => 5000.0,
+            'id'       => 999,
+            'name'     => 'Mobile App Development',
+            'price'    => 5000.0,
             'duration' => 30,
         ];
 
@@ -113,17 +113,17 @@ class ServiceTest extends TestCase
     public function it_handles_complex_nested_data(): void
     {
         $data = [
-            'id' => 12345,
-            'name' => 'Full Stack Development',
+            'id'      => 12345,
+            'name'    => 'Full Stack Development',
             'pricing' => [
-                'basic' => 1000.0,
+                'basic'    => 1000.0,
                 'standard' => 2500.0,
-                'premium' => 5000.0,
+                'premium'  => 5000.0,
             ],
             'features' => [
-                'basic' => ['Frontend', 'Backend'],
+                'basic'    => ['Frontend', 'Backend'],
                 'standard' => ['Frontend', 'Backend', 'Database'],
-                'premium' => ['Frontend', 'Backend', 'Database', 'Deployment', 'Support'],
+                'premium'  => ['Frontend', 'Backend', 'Database', 'Deployment', 'Support'],
             ],
         ];
 
@@ -144,10 +144,10 @@ class ServiceTest extends TestCase
     public function it_handles_array_values(): void
     {
         $data = [
-            'id' => 123,
-            'tags' => ['web', 'design', 'responsive'],
+            'id'           => 123,
+            'tags'         => ['web', 'design', 'responsive'],
             'technologies' => ['HTML', 'CSS', 'JavaScript'],
-            'categories' => [10, 20, 30],
+            'categories'   => [10, 20, 30],
         ];
 
         $service = new Service($data);
@@ -164,9 +164,9 @@ class ServiceTest extends TestCase
     public function it_handles_boolean_values(): void
     {
         $data = [
-            'id' => 123,
-            'is_active' => true,
-            'is_featured' => false,
+            'id'                => 123,
+            'is_active'         => true,
+            'is_featured'       => false,
             'requires_approval' => true,
         ];
 
@@ -184,9 +184,9 @@ class ServiceTest extends TestCase
     public function it_handles_numeric_edge_cases(): void
     {
         $data = [
-            'id' => 0,
-            'price' => 0.0,
-            'large_id' => PHP_INT_MAX,
+            'id'              => 0,
+            'price'           => 0.0,
+            'large_id'        => PHP_INT_MAX,
             'expensive_price' => 999999.99,
         ];
 
@@ -205,15 +205,15 @@ class ServiceTest extends TestCase
     public function it_handles_string_with_special_characters(): void
     {
         $data = [
-            'id' => 123,
-            'name' => "Web Development & Design",
+            'id'          => 123,
+            'name'        => 'Web Development & Design',
             'description' => "Professional 'full-stack' development",
-            'notes' => "Line 1\nLine 2\tTabbed content",
+            'notes'       => "Line 1\nLine 2\tTabbed content",
         ];
 
         $service = new Service($data);
 
-        $this->assertSame("Web Development & Design", $service->name);
+        $this->assertSame('Web Development & Design', $service->name);
         $this->assertSame("Professional 'full-stack' development", $service->description);
         $this->assertSame("Line 1\nLine 2\tTabbed content", $service->notes);
     }
@@ -225,8 +225,8 @@ class ServiceTest extends TestCase
     public function it_handles_empty_strings(): void
     {
         $data = [
-            'id' => 123,
-            'name' => '',
+            'id'          => 123,
+            'name'        => '',
             'description' => '',
         ];
 
@@ -243,9 +243,9 @@ class ServiceTest extends TestCase
     public function it_handles_null_values(): void
     {
         $data = [
-            'id' => 123,
+            'id'          => 123,
             'description' => null,
-            'category' => null,
+            'category'    => null,
         ];
 
         $service = new Service($data);
@@ -262,20 +262,20 @@ class ServiceTest extends TestCase
     public function it_comprehensive_service_data(): void
     {
         $data = [
-            'id' => 12345,
-            'name' => 'Premium Web Development',
-            'description' => 'Complete web development service including design and deployment',
-            'category' => 'Web Development',
-            'subcategory' => 'Full Stack',
-            'price' => 2500.0,
-            'currency' => 'USD',
-            'duration' => 30,
+            'id'            => 12345,
+            'name'          => 'Premium Web Development',
+            'description'   => 'Complete web development service including design and deployment',
+            'category'      => 'Web Development',
+            'subcategory'   => 'Full Stack',
+            'price'         => 2500.0,
+            'currency'      => 'USD',
+            'duration'      => 30,
             'duration_unit' => 'days',
             'freelancer_id' => 67890,
-            'rating' => 4.9,
+            'rating'        => 4.9,
             'reviews_count' => 87,
-            'orders_count' => 145,
-            'is_active' => true,
+            'orders_count'  => 145,
+            'is_active'     => true,
             'delivery_time' => 7,
         ];
 
@@ -324,10 +324,10 @@ class ServiceTest extends TestCase
     public function it_service_data_immutable_from_external_modifications(): void
     {
         $originalData = ['id' => 123, 'name' => 'Original Service'];
-        $service = new Service($originalData);
+        $service      = new Service($originalData);
 
         // Modify the original array
-        $originalData['name'] = 'Modified Service';
+        $originalData['name']      = 'Modified Service';
         $originalData['new_field'] = 'new_value';
 
         // Service should still have original data
@@ -355,17 +355,17 @@ class ServiceTest extends TestCase
     public function it_service_with_pricing_tiers(): void
     {
         $data = [
-            'id' => 123,
-            'name' => 'Design Service',
+            'id'    => 123,
+            'name'  => 'Design Service',
             'tiers' => [
                 [
-                    'name' => 'Basic',
-                    'price' => 50.0,
+                    'name'     => 'Basic',
+                    'price'    => 50.0,
                     'features' => ['1 concept', '2 revisions'],
                 ],
                 [
-                    'name' => 'Premium',
-                    'price' => 150.0,
+                    'name'     => 'Premium',
+                    'price'    => 150.0,
                     'features' => ['3 concepts', 'unlimited revisions', 'source files'],
                 ],
             ],

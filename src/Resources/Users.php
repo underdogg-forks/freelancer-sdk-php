@@ -4,24 +4,15 @@ declare(strict_types=1);
 
 namespace FreelancerSdk\Resources;
 
-use FreelancerSdk\Session;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Users resource class
  * Handles all user-related API operations.
  */
-class Users
+class Users extends BaseResource
 {
     private const ENDPOINT = 'api/users/0.1';
-
-    /**
-     * Initialize the Users resource with a Session for API requests.
-     */
-    public function __construct(
-        private readonly Session $session
-    ) {
-    }
 
     /**
      * Retrieve details for the currently authenticated user.
@@ -79,7 +70,7 @@ class Users
             ['query' => $searchData]
         );
 
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = $this->decodeJsonResponse($response);
 
         if ($response->getStatusCode() === 200 && isset($data['result'])) {
             return $data['result'];
@@ -103,7 +94,7 @@ class Users
             ['query' => $query]
         );
 
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = $this->decodeJsonResponse($response);
 
         if ($response->getStatusCode() === 200 && isset($data['result'])) {
             return $data['result'];
@@ -127,7 +118,7 @@ class Users
             ['query' => $query]
         );
 
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = $this->decodeJsonResponse($response);
 
         if ($response->getStatusCode() === 200 && isset($data['result'])) {
             return $data['result'];
@@ -168,7 +159,7 @@ class Users
             ['query' => $query]
         );
 
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = $this->decodeJsonResponse($response);
 
         if ($response->getStatusCode() === 200 && isset($data['result'])) {
             return $data['result'];

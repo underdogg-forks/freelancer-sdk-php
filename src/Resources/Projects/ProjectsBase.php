@@ -2,27 +2,14 @@
 
 namespace FreelancerSdk\Resources\Projects;
 
-use FreelancerSdk\Session;
-use RuntimeException;
+use FreelancerSdk\Resources\BaseResource;
 
 /**
  * Base class for Projects resources.
  */
-class ProjectsBase
+class ProjectsBase extends BaseResource
 {
-    protected Session $session;
-
     protected string $endpoint = 'api/projects/0.1';
-
-    /**
-     * Bind the resource to a Session for performing API requests.
-     *
-     * @param Session $session Session used to perform HTTP requests to the API.
-     */
-    public function __construct(Session $session)
-    {
-        $this->session = $session;
-    }
 
     /**
      * Send a GET request to the projects API path and return the decoded JSON response.
@@ -36,12 +23,8 @@ class ProjectsBase
     {
         $url      = $this->endpoint . '/' . $path . '/';
         $response = $this->session->getClient()->get($url, ['query' => $params]);
-        $decoded  = json_decode($response->getBody()->getContents(), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException('Invalid JSON response: ' . json_last_error_msg());
-        }
 
-        return $decoded;
+        return $this->decodeJsonResponse($response);
     }
 
     /**
@@ -56,12 +39,8 @@ class ProjectsBase
     {
         $url      = $this->endpoint . '/' . $path . '/';
         $response = $this->session->getClient()->post($url, ['json' => $data]);
-        $decoded  = json_decode($response->getBody()->getContents(), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException('Invalid JSON response: ' . json_last_error_msg());
-        }
 
-        return $decoded;
+        return $this->decodeJsonResponse($response);
     }
 
     /**
@@ -84,12 +63,8 @@ class ProjectsBase
             $options['query'] = $params;
         }
         $response = $this->session->getClient()->put($url, $options);
-        $decoded  = json_decode($response->getBody()->getContents(), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException('Invalid JSON response: ' . json_last_error_msg());
-        }
 
-        return $decoded;
+        return $this->decodeJsonResponse($response);
     }
 
     /**
@@ -108,11 +83,7 @@ class ProjectsBase
             $options['query'] = $params;
         }
         $response = $this->session->getClient()->delete($url, $options);
-        $decoded  = json_decode($response->getBody()->getContents(), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException('Invalid JSON response: ' . json_last_error_msg());
-        }
 
-        return $decoded;
+        return $this->decodeJsonResponse($response);
     }
 }

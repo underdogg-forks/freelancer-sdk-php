@@ -20,7 +20,7 @@ class BidTest extends TestCase
     public function it_can_instantiate_with_empty_array(): void
     {
         $bid = new Bid([]);
-        
+
         $this->assertInstanceOf(Bid::class, $bid);
         $this->assertNull($bid->getId());
         $this->assertNull($bid->getProjectId());
@@ -34,15 +34,15 @@ class BidTest extends TestCase
     public function it_can_instantiate_with_declared_properties(): void
     {
         $data = [
-            'id' => 12345,
-            'project_id' => 67890,
-            'bidder_id' => 111,
-            'amount' => 250.50,
-            'period' => 7,
-            'description' => 'I can complete this project',
+            'id'                   => 12345,
+            'project_id'           => 67890,
+            'bidder_id'            => 111,
+            'amount'               => 250.50,
+            'period'               => 7,
+            'description'          => 'I can complete this project',
             'milestone_percentage' => 50,
-            'retracted' => false,
-            'time_submitted' => 1640000000,
+            'retracted'            => false,
+            'time_submitted'       => 1640000000,
         ];
 
         $bid = new Bid($data);
@@ -65,8 +65,8 @@ class BidTest extends TestCase
     public function it_undeclared_properties_stored_in_attributes(): void
     {
         $data = [
-            'id' => 123,
-            'custom_field' => 'custom_value',
+            'id'            => 123,
+            'custom_field'  => 'custom_value',
             'another_field' => 42,
         ];
 
@@ -114,7 +114,7 @@ class BidTest extends TestCase
     #[Test]
     public function it_fill_method_returns_instance(): void
     {
-        $bid = new Bid([]);
+        $bid    = new Bid([]);
         $result = $bid->fill(['id' => 123]);
 
         $this->assertSame($bid, $result);
@@ -127,12 +127,12 @@ class BidTest extends TestCase
     public function it_to_array_includes_non_null_properties(): void
     {
         $data = [
-            'id' => 999,
+            'id'         => 999,
             'project_id' => 888,
-            'amount' => 150.0,
+            'amount'     => 150.0,
         ];
 
-        $bid = new Bid($data);
+        $bid   = new Bid($data);
         $array = $bid->toArray();
 
         $this->assertArrayHasKey('id', $array);
@@ -149,7 +149,7 @@ class BidTest extends TestCase
     #[Test]
     public function it_to_array_excludes_null_properties(): void
     {
-        $bid = new Bid(['id' => 123]);
+        $bid   = new Bid(['id' => 123]);
         $array = $bid->toArray();
 
         $this->assertArrayHasKey('id', $array);
@@ -165,12 +165,12 @@ class BidTest extends TestCase
     public function it_to_array_merges_attributes(): void
     {
         $data = [
-            'id' => 456,
-            'custom_attr' => 'value',
+            'id'           => 456,
+            'custom_attr'  => 'value',
             'another_attr' => true,
         ];
 
-        $bid = new Bid($data);
+        $bid   = new Bid($data);
         $array = $bid->toArray();
 
         $this->assertArrayHasKey('id', $array);
@@ -187,7 +187,7 @@ class BidTest extends TestCase
     public function it_json_serialize_returns_array_representation(): void
     {
         $data = [
-            'id' => 789,
+            'id'     => 789,
             'amount' => 300.0,
             'custom' => 'data',
         ];
@@ -203,7 +203,7 @@ class BidTest extends TestCase
     #[Test]
     public function it_bid_can_be_json_encoded(): void
     {
-        $bid = new Bid(['id' => 100, 'amount' => 50.0]);
+        $bid  = new Bid(['id' => 100, 'amount' => 50.0]);
         $json = json_encode($bid);
 
         $this->assertIsString($json);
@@ -276,8 +276,8 @@ class BidTest extends TestCase
     #[Test]
     public function it_offset_set_with_declared_properties(): void
     {
-        $bid = new Bid([]);
-        $bid['id'] = 777;
+        $bid           = new Bid([]);
+        $bid['id']     = 777;
         $bid['amount'] = 99.99;
 
         $this->assertSame(777, $bid->getId());
@@ -290,7 +290,7 @@ class BidTest extends TestCase
     #[Test]
     public function it_offset_set_with_attributes(): void
     {
-        $bid = new Bid([]);
+        $bid           = new Bid([]);
         $bid['custom'] = 'new_value';
 
         $this->assertSame('new_value', $bid->getAttribute('custom'));
@@ -366,8 +366,8 @@ class BidTest extends TestCase
     #[Test]
     public function it_magic_set_with_declared_properties(): void
     {
-        $bid = new Bid([]);
-        $bid->id = 999;
+        $bid         = new Bid([]);
+        $bid->id     = 999;
         $bid->amount = 123.45;
 
         $this->assertSame(999, $bid->getId());
@@ -380,7 +380,7 @@ class BidTest extends TestCase
     #[Test]
     public function it_magic_set_with_attributes(): void
     {
-        $bid = new Bid([]);
+        $bid                = new Bid([]);
         $bid->dynamic_field = 'dynamic_value';
 
         $this->assertSame('dynamic_value', $bid->getAttribute('dynamic_field'));
@@ -417,8 +417,8 @@ class BidTest extends TestCase
     public function it_nullable_properties_handled_correctly(): void
     {
         $bid = new Bid([
-            'id' => null,
-            'amount' => null,
+            'id'        => null,
+            'amount'    => null,
             'retracted' => null,
         ]);
 
@@ -434,8 +434,8 @@ class BidTest extends TestCase
     public function it_retracted_boolean_values(): void
     {
         $bidRetracted = new Bid(['retracted' => true]);
-        $bidActive = new Bid(['retracted' => false]);
-        $bidUnknown = new Bid([]);
+        $bidActive    = new Bid(['retracted' => false]);
+        $bidUnknown   = new Bid([]);
 
         $this->assertTrue($bidRetracted->isRetracted());
         $this->assertFalse($bidActive->isRetracted());
@@ -449,9 +449,9 @@ class BidTest extends TestCase
     public function it_numeric_edge_cases(): void
     {
         $bid = new Bid([
-            'id' => 0,
-            'amount' => 0.0,
-            'period' => 0,
+            'id'                   => 0,
+            'amount'               => 0.0,
+            'period'               => 0,
             'milestone_percentage' => 0,
         ]);
 
@@ -468,9 +468,9 @@ class BidTest extends TestCase
     public function it_large_numeric_values(): void
     {
         $bid = new Bid([
-            'id' => PHP_INT_MAX,
-            'amount' => 999999999.99,
-            'period' => 365,
+            'id'             => PHP_INT_MAX,
+            'amount'         => 999999999.99,
+            'period'         => 365,
             'time_submitted' => 2147483647,
         ]);
 
@@ -498,7 +498,7 @@ class BidTest extends TestCase
     public function it_multi_line_description(): void
     {
         $description = "Line 1\nLine 2\nLine 3";
-        $bid = new Bid(['description' => $description]);
+        $bid         = new Bid(['description' => $description]);
 
         $this->assertSame($description, $bid->getDescription());
     }
@@ -512,13 +512,13 @@ class BidTest extends TestCase
         // This tests the documented behavior where attributes can override properties
         $bid = new Bid(['id' => 100]);
         $bid->fill(['custom_id' => 999]);
-        
+
         $array = $bid->toArray();
-        
+
         // The declared property should be in the array
         $this->assertArrayHasKey('id', $array);
         $this->assertSame(100, $array['id']);
-        
+
         // Custom attributes should also be present
         $this->assertArrayHasKey('custom_id', $array);
         $this->assertSame(999, $array['custom_id']);
@@ -531,18 +531,18 @@ class BidTest extends TestCase
     public function it_complex_bid_with_all_fields(): void
     {
         $data = [
-            'id' => 12345,
-            'project_id' => 67890,
-            'bidder_id' => 54321,
-            'amount' => 1500.75,
-            'period' => 14,
-            'description' => 'Comprehensive bid description with details',
+            'id'                   => 12345,
+            'project_id'           => 67890,
+            'bidder_id'            => 54321,
+            'amount'               => 1500.75,
+            'period'               => 14,
+            'description'          => 'Comprehensive bid description with details',
             'milestone_percentage' => 75,
-            'retracted' => false,
-            'time_submitted' => 1609459200,
-            'custom_rating' => 4.5,
-            'verified' => true,
-            'extra_data' => ['key' => 'value'],
+            'retracted'            => false,
+            'time_submitted'       => 1609459200,
+            'custom_rating'        => 4.5,
+            'verified'             => true,
+            'extra_data'           => ['key' => 'value'],
         ];
 
         $bid = new Bid($data);
@@ -578,10 +578,10 @@ class BidTest extends TestCase
     public function it_original_data_array_not_modified(): void
     {
         $originalData = ['id' => 123, 'amount' => 100.0];
-        $bid = new Bid($originalData);
-        
+        $bid          = new Bid($originalData);
+
         $bid->fill(['id' => 456]);
-        
+
         // Original array should remain unchanged
         $this->assertSame(123, $originalData['id']);
         $this->assertSame(100.0, $originalData['amount']);

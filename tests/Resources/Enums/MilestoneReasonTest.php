@@ -20,11 +20,11 @@ class MilestoneReasonTest extends TestCase
     public function it_has_all_expected_enum_cases(): void
     {
         $this->assertTrue(enum_exists(MilestoneReason::class));
-        
+
         $cases = MilestoneReason::cases();
         $this->assertCount(4, $cases);
-        
-        $caseNames = array_map(fn($case) => $case->name, $cases);
+
+        $caseNames = array_map(fn ($case) => $case->name, $cases);
         $this->assertContains('FULL_PAYMENT', $caseNames);
         $this->assertContains('PARTIAL_PAYMENT', $caseNames);
         $this->assertContains('TASK_DESCRIPTION', $caseNames);

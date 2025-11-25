@@ -20,7 +20,7 @@ class ThreadTest extends TestCase
     public function it_can_instantiate_with_empty_array(): void
     {
         $thread = new Thread([]);
-        
+
         $this->assertInstanceOf(Thread::class, $thread);
         $this->assertNull($thread->getId());
         $this->assertNull($thread->getOwner());
@@ -34,12 +34,12 @@ class ThreadTest extends TestCase
     public function it_can_instantiate_with_declared_properties(): void
     {
         $data = [
-            'id' => 12345,
-            'thread' => ['message_count' => 5],
-            'context' => ['project_id' => 67890],
-            'members' => [111, 222, 333],
-            'owner' => 111,
-            'thread_type' => 'private_chat',
+            'id'           => 12345,
+            'thread'       => ['message_count' => 5],
+            'context'      => ['project_id' => 67890],
+            'members'      => [111, 222, 333],
+            'owner'        => 111,
+            'thread_type'  => 'private_chat',
             'time_created' => 1640000000,
         ];
 
@@ -61,9 +61,9 @@ class ThreadTest extends TestCase
     public function it_undeclared_properties_stored_in_attributes(): void
     {
         $data = [
-            'id' => 123,
+            'id'           => 123,
             'custom_field' => 'custom_value',
-            'metadata' => ['key' => 'value'],
+            'metadata'     => ['key' => 'value'],
         ];
 
         $thread = new Thread($data);
@@ -123,13 +123,13 @@ class ThreadTest extends TestCase
     public function it_to_array_includes_non_null_properties(): void
     {
         $data = [
-            'id' => 999,
-            'owner' => 888,
+            'id'          => 999,
+            'owner'       => 888,
             'thread_type' => 'project',
         ];
 
         $thread = new Thread($data);
-        $array = $thread->toArray();
+        $array  = $thread->toArray();
 
         $this->assertArrayHasKey('id', $array);
         $this->assertArrayHasKey('owner', $array);
@@ -146,7 +146,7 @@ class ThreadTest extends TestCase
     public function it_to_array_excludes_null_properties(): void
     {
         $thread = new Thread(['id' => 123]);
-        $array = $thread->toArray();
+        $array  = $thread->toArray();
 
         $this->assertArrayHasKey('id', $array);
         $this->assertArrayNotHasKey('owner', $array);
@@ -161,13 +161,13 @@ class ThreadTest extends TestCase
     public function it_to_array_merges_attributes(): void
     {
         $data = [
-            'id' => 456,
+            'id'          => 456,
             'custom_attr' => 'value',
-            'flags' => ['read' => true],
+            'flags'       => ['read' => true],
         ];
 
         $thread = new Thread($data);
-        $array = $thread->toArray();
+        $array  = $thread->toArray();
 
         $this->assertArrayHasKey('id', $array);
         $this->assertArrayHasKey('custom_attr', $array);
@@ -183,8 +183,8 @@ class ThreadTest extends TestCase
     public function it_json_serialize_returns_array_representation(): void
     {
         $data = [
-            'id' => 789,
-            'owner' => 456,
+            'id'     => 789,
+            'owner'  => 456,
             'custom' => 'data',
         ];
 
@@ -200,7 +200,7 @@ class ThreadTest extends TestCase
     public function it_thread_can_be_json_encoded(): void
     {
         $thread = new Thread(['id' => 100, 'owner' => 50]);
-        $json = json_encode($thread);
+        $json   = json_encode($thread);
 
         $this->assertIsString($json);
         $decoded = json_decode($json, true);
@@ -272,8 +272,8 @@ class ThreadTest extends TestCase
     #[Test]
     public function it_offset_set_with_declared_properties(): void
     {
-        $thread = new Thread([]);
-        $thread['id'] = 777;
+        $thread          = new Thread([]);
+        $thread['id']    = 777;
         $thread['owner'] = 99;
 
         $this->assertSame(777, $thread->getId());
@@ -286,7 +286,7 @@ class ThreadTest extends TestCase
     #[Test]
     public function it_offset_set_with_attributes(): void
     {
-        $thread = new Thread([]);
+        $thread           = new Thread([]);
         $thread['custom'] = 'new_value';
 
         $this->assertSame('new_value', $thread->getAttribute('custom'));
@@ -362,8 +362,8 @@ class ThreadTest extends TestCase
     #[Test]
     public function it_magic_set_with_declared_properties(): void
     {
-        $thread = new Thread([]);
-        $thread->id = 999;
+        $thread        = new Thread([]);
+        $thread->id    = 999;
         $thread->owner = 123;
 
         $this->assertSame(999, $thread->getId());
@@ -376,7 +376,7 @@ class ThreadTest extends TestCase
     #[Test]
     public function it_magic_set_with_attributes(): void
     {
-        $thread = new Thread([]);
+        $thread                = new Thread([]);
         $thread->dynamic_field = 'dynamic_value';
 
         $this->assertSame('dynamic_value', $thread->getAttribute('dynamic_field'));
@@ -412,12 +412,12 @@ class ThreadTest extends TestCase
     #[Test]
     public function it_array_properties_handled_correctly(): void
     {
-        $threadData = ['message_count' => 10, 'unread' => 3];
+        $threadData  = ['message_count' => 10, 'unread' => 3];
         $contextData = ['type' => 'project', 'id' => 999];
         $membersData = [1, 2, 3, 4, 5];
 
         $thread = new Thread([
-            'thread' => $threadData,
+            'thread'  => $threadData,
             'context' => $contextData,
             'members' => $membersData,
         ]);
@@ -434,7 +434,7 @@ class ThreadTest extends TestCase
     public function it_empty_array_properties(): void
     {
         $thread = new Thread([
-            'thread' => [],
+            'thread'  => [],
             'context' => [],
             'members' => [],
         ]);
@@ -451,7 +451,7 @@ class ThreadTest extends TestCase
     public function it_different_thread_types(): void
     {
         $privateThread = new Thread(['thread_type' => 'private_chat']);
-        $groupThread = new Thread(['thread_type' => 'group_chat']);
+        $groupThread   = new Thread(['thread_type' => 'group_chat']);
         $projectThread = new Thread(['thread_type' => 'project_thread']);
 
         $this->assertSame('private_chat', $privateThread->getThreadType());
@@ -466,16 +466,16 @@ class ThreadTest extends TestCase
     public function it_complex_thread_with_all_fields(): void
     {
         $data = [
-            'id' => 12345,
-            'thread' => ['message_count' => 42, 'last_message_id' => 999],
-            'context' => ['project_id' => 67890, 'type' => 'support'],
-            'members' => [111, 222, 333, 444],
-            'owner' => 111,
-            'thread_type' => 'group_discussion',
+            'id'           => 12345,
+            'thread'       => ['message_count' => 42, 'last_message_id' => 999],
+            'context'      => ['project_id' => 67890, 'type' => 'support'],
+            'members'      => [111, 222, 333, 444],
+            'owner'        => 111,
+            'thread_type'  => 'group_discussion',
             'time_created' => 1609459200,
-            'is_archived' => false,
-            'priority' => 'high',
-            'tags' => ['urgent', 'feedback'],
+            'is_archived'  => false,
+            'priority'     => 'high',
+            'tags'         => ['urgent', 'feedback'],
         ];
 
         $thread = new Thread($data);
@@ -519,8 +519,8 @@ class ThreadTest extends TestCase
     public function it_numeric_edge_cases(): void
     {
         $thread = new Thread([
-            'id' => 0,
-            'owner' => 0,
+            'id'           => 0,
+            'owner'        => 0,
             'time_created' => 0,
         ]);
 
@@ -536,10 +536,10 @@ class ThreadTest extends TestCase
     public function it_original_data_array_not_modified(): void
     {
         $originalData = ['id' => 123, 'owner' => 100];
-        $thread = new Thread($originalData);
-        
+        $thread       = new Thread($originalData);
+
         $thread->fill(['id' => 456]);
-        
+
         // Original array should remain unchanged
         $this->assertSame(123, $originalData['id']);
         $this->assertSame(100, $originalData['owner']);

@@ -20,7 +20,7 @@ class MilestoneTest extends TestCase
     public function it_can_instantiate_with_empty_array(): void
     {
         $milestone = new Milestone([]);
-        
+
         $this->assertInstanceOf(Milestone::class, $milestone);
     }
 
@@ -31,11 +31,11 @@ class MilestoneTest extends TestCase
     public function it_can_instantiate_with_data(): void
     {
         $data = [
-            'id' => 12345,
-            'project_id' => 67890,
-            'amount' => 250.50,
+            'id'          => 12345,
+            'project_id'  => 67890,
+            'amount'      => 250.50,
             'description' => 'First milestone payment',
-            'status' => 'active',
+            'status'      => 'active',
         ];
 
         $milestone = new Milestone($data);
@@ -50,9 +50,9 @@ class MilestoneTest extends TestCase
     public function it_magic_get_retrieves_data(): void
     {
         $data = [
-            'id' => 123,
-            'project_id' => 456,
-            'amount' => 100.0,
+            'id'          => 123,
+            'project_id'  => 456,
+            'amount'      => 100.0,
             'description' => 'Test milestone',
         ];
 
@@ -84,7 +84,7 @@ class MilestoneTest extends TestCase
     {
         $milestone = new Milestone(['id' => 123]);
 
-        $milestone->amount = 500.0;
+        $milestone->amount      = 500.0;
         $milestone->description = 'Updated description';
 
         $this->assertSame(500.0, $milestone->amount);
@@ -98,7 +98,7 @@ class MilestoneTest extends TestCase
     public function it_magic_isset_checks_field_existence(): void
     {
         $milestone = new Milestone([
-            'id' => 123,
+            'id'     => 123,
             'amount' => 100.0,
         ]);
 
@@ -114,7 +114,7 @@ class MilestoneTest extends TestCase
     public function it_magic_isset_handles_null_values(): void
     {
         $milestone = new Milestone([
-            'id' => 123,
+            'id'     => 123,
             'amount' => null,
         ]);
 
@@ -129,10 +129,10 @@ class MilestoneTest extends TestCase
     public function it_to_array_returns_underlying_data(): void
     {
         $data = [
-            'id' => 999,
+            'id'         => 999,
             'project_id' => 888,
-            'amount' => 750.0,
-            'status' => 'pending',
+            'amount'     => 750.0,
+            'status'     => 'pending',
         ];
 
         $milestone = new Milestone($data);
@@ -176,16 +176,16 @@ class MilestoneTest extends TestCase
     public function it_handles_complex_nested_data(): void
     {
         $data = [
-            'id' => 12345,
+            'id'         => 12345,
             'project_id' => 67890,
-            'amount' => 1500.0,
-            'currency' => [
-                'id' => 1,
+            'amount'     => 1500.0,
+            'currency'   => [
+                'id'   => 1,
                 'code' => 'USD',
                 'sign' => '$',
             ],
             'bidder' => [
-                'id' => 111,
+                'id'       => 111,
                 'username' => 'john_doe',
             ],
         ];
@@ -204,8 +204,8 @@ class MilestoneTest extends TestCase
     public function it_handles_array_values(): void
     {
         $data = [
-            'id' => 123,
-            'tags' => ['urgent', 'priority'],
+            'id'       => 123,
+            'tags'     => ['urgent', 'priority'],
             'metadata' => ['key1' => 'value1', 'key2' => 'value2'],
         ];
 
@@ -222,8 +222,8 @@ class MilestoneTest extends TestCase
     public function it_handles_boolean_values(): void
     {
         $data = [
-            'id' => 123,
-            'is_paid' => true,
+            'id'          => 123,
+            'is_paid'     => true,
             'is_disputed' => false,
         ];
 
@@ -240,9 +240,9 @@ class MilestoneTest extends TestCase
     public function it_handles_numeric_edge_cases(): void
     {
         $data = [
-            'id' => 0,
-            'amount' => 0.0,
-            'project_id' => PHP_INT_MAX,
+            'id'           => 0,
+            'amount'       => 0.0,
+            'project_id'   => PHP_INT_MAX,
             'large_amount' => 999999999.99,
         ];
 
@@ -261,9 +261,9 @@ class MilestoneTest extends TestCase
     public function it_handles_string_with_special_characters(): void
     {
         $data = [
-            'id' => 123,
+            'id'          => 123,
             'description' => "Test with 'quotes' and \"double quotes\"",
-            'notes' => "Line 1\nLine 2\nLine 3",
+            'notes'       => "Line 1\nLine 2\nLine 3",
         ];
 
         $milestone = new Milestone($data);
@@ -279,9 +279,9 @@ class MilestoneTest extends TestCase
     public function it_handles_empty_strings(): void
     {
         $data = [
-            'id' => 123,
+            'id'          => 123,
             'description' => '',
-            'notes' => '',
+            'notes'       => '',
         ];
 
         $milestone = new Milestone($data);
@@ -297,16 +297,16 @@ class MilestoneTest extends TestCase
     public function it_comprehensive_milestone_data(): void
     {
         $data = [
-            'id' => 12345,
-            'project_id' => 67890,
-            'bidder_id' => 54321,
-            'amount' => 1250.75,
-            'description' => 'Complete the frontend development',
-            'status' => 'requested',
-            'time_created' => 1609459200,
+            'id'             => 12345,
+            'project_id'     => 67890,
+            'bidder_id'      => 54321,
+            'amount'         => 1250.75,
+            'description'    => 'Complete the frontend development',
+            'status'         => 'requested',
+            'time_created'   => 1609459200,
             'time_requested' => 1609545600,
             'transaction_id' => 'TXN123456',
-            'reason' => 2,
+            'reason'         => 2,
         ];
 
         $milestone = new Milestone($data);
@@ -330,7 +330,7 @@ class MilestoneTest extends TestCase
     public function it_original_data_not_modified_by_mutations(): void
     {
         $originalData = ['id' => 123, 'amount' => 100.0];
-        $milestone = new Milestone($originalData);
+        $milestone    = new Milestone($originalData);
 
         // Modify via magic setter
         $milestone->amount = 200.0;
