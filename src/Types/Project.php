@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace FreelancerSdk\Types;
 
-use ArrayAccess;
-use JsonSerializable;
-
 /**
  * Project model class
  * Represents a Project object from the Freelancer API.
  */
-class Project implements ArrayAccess, JsonSerializable
+class Project extends BaseType
 {
     protected ?int $id             = null;
     protected ?string $title       = null;
@@ -24,7 +21,6 @@ class Project implements ArrayAccess, JsonSerializable
     protected ?int $owner_id       = null;
     protected ?string $status      = null;
     protected ?array $tracks       = null;
-    protected array $attributes    = [];
 
     /**
      * Create a Project instance populated from provided data.
@@ -180,151 +176,5 @@ class Project implements ArrayAccess, JsonSerializable
     public function getTracks(): ?array
     {
         return $this->tracks;
-    }
-
-    /**
-     * Retrieve a dynamic attribute value by key.
-     *
-     * @param string $key The attribute key to look up.
-     * @param mixed $default Value to return if the attribute is not set.
-     * @return mixed The attribute value if present, otherwise the provided `$default`.
-     */
-    public function getAttribute(string $key, $default = null)
-    {
-        return $this->attributes[$key] ?? $default;
-    }
-
-    /**
-     * Convert the project to an associative array, merging dynamic attributes into top-level keys.
-     *
-     * Builds an array containing all non-null defined properties and merges entries from the internal
-     * attributes map into the result so dynamic fields appear as top-level keys.
-     *
-     * @return array The assembled associative array representation of the project.
-     */
-    public function toArray(): array
-    {
-        $data = [];
-        foreach (get_object_vars($this) as $key => $value) {
-            if ($key === 'attributes') {
-                $data = array_merge($data, $value);
-            } elseif ($value !== null) {
-                $data[$key] = $value;
-            }
-        }
-        return $data;
-    }
-
-    /**
-     * Provide an associative array representation of the project suitable for JSON serialization.
-     *
-     * @return array The project's data as an associative array ready for JSON encoding.
-     */
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Determine whether a property or attribute with the given name exists on the model.
-     *
-     * @param mixed $offset The property name or attribute key to check.
-     * @return bool `true` if a defined class property exists or the attribute key is set, `false` otherwise.
-     */
-    public function offsetExists($offset): bool
-    {
-        return property_exists($this, $offset) || isset($this->attributes[$offset]);
-    }
-
-    /**
-     * Retrieve a value by property name or attribute key for ArrayAccess-style access.
-     *
-     * @param string|int $offset The property name or attribute key to retrieve.
-     * @return mixed The value of the named property or attribute, or null if not present.
-     */
-    public function offsetGet($offset): mixed
-    {
-        if (property_exists($this, $offset)) {
-            return $this->$offset;
-        }
-        return $this->attributes[$offset] ?? null;
-    }
-
-    /**
-     * Set a value for the given offset on the project model, assigning to a declared property when present or storing it in the attributes map otherwise.
-     *
-     * @param mixed $offset The property name or attribute key.
-     * @param mixed $value The value to assign.
-     */
-    public function offsetSet($offset, $value): void
-    {
-        if (property_exists($this, $offset)) {
-            $this->$offset = $value;
-        } else {
-            $this->attributes[$offset] = $value;
-        }
-    }
-
-    /**
-     * Remove the value identified by the given offset from the project.
-     *
-     * If the offset corresponds to a declared class property, that property is set to null;
-     * otherwise the key is removed from the internal attributes map.
-     *
-     * @param mixed $offset The property name or attribute key to unset.
-     */
-    public function offsetUnset($offset): void
-    {
-        if (property_exists($this, $offset)) {
-            $this->$offset = null;
-        } else {
-            unset($this->attributes[$offset]);
-        }
-    }
-
-    /**
-     * Retrieve a property value by name, supporting declared class properties and dynamic attributes.
-     *
-     * @param string $name The property name to retrieve.
-     * @return mixed The property value if present, otherwise `null`.
-     */
-    public function __get(string $name)
-    {
-        if (property_exists($this, $name)) {
-            return $this->$name;
-        }
-        return $this->attributes[$name] ?? null;
-    }
-
-    /**
-     * Sets a declared property or stores a value in the dynamic attributes map for backward compatibility.
-     *
-     * If the class has a declared property with the given name, the value is assigned to that property;
-     * otherwise the value is stored in the `$attributes` array under the provided name.
-     *
-     * @param string $name The property name to set.
-     * @param mixed $value The value to assign.
-     */
-    public function __set(string $name, $value): void
-    {
-        if (property_exists($this, $name)) {
-            $this->$name = $value;
-        } else {
-            $this->attributes[$name] = $value;
-        }
-    }
-
-    /**
-     * Determine whether a named property or dynamic attribute is present.
-     *
-     * Checks if the class defines the property with the given name or if the
-     * dynamic attribute with that key exists and is set.
-     *
-     * @param string $name The property or attribute name to check.
-     * @return bool `true` if the property is defined on the object or the attribute with that key is set, `false` otherwise.
-     */
-    public function __isset(string $name): bool
-    {
-        return property_exists($this, $name) || isset($this->attributes[$name]);
     }
 }

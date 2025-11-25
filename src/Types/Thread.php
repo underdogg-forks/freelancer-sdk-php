@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace FreelancerSdk\Types;
 
-use ArrayAccess;
-use JsonSerializable;
-
 /**
  * Thread model class
  * Represents a Thread object from the Freelancer API.
  */
-class Thread implements ArrayAccess, JsonSerializable
+class Thread extends BaseType
 {
     protected ?int $id             = null;
     protected ?array $thread       = null;
@@ -20,38 +17,6 @@ class Thread implements ArrayAccess, JsonSerializable
     protected ?int $owner          = null;
     protected ?string $thread_type = null;
     protected ?int $time_created   = null;
-    protected array $attributes    = [];
-
-    /**
-     * Create a Thread instance populated from the provided data.
-     *
-     * Maps recognized keys to their corresponding properties and stores any
-     * additional keys in the `attributes` array for dynamic access.
-     *
-     * @param array $data Associative array of initial values; recognized keys set corresponding properties, other keys are stored in `attributes`.
-     */
-    public function __construct(array $data = [])
-    {
-        $this->fill($data);
-    }
-
-    /**
-     * Populate the model with data by assigning values to declared properties when keys match and storing other keys in attributes.
-     *
-     * @param array $data Associative array of data to set; keys matching class properties are assigned, other keys are stored in the `attributes` array.
-     * @return self The current instance.
-     */
-    public function fill(array $data): self
-    {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            } else {
-                $this->attributes[$key] = $value;
-            }
-        }
-        return $this;
-    }
 
     /**
      * Gets the thread identifier.
