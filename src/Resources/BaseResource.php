@@ -40,6 +40,9 @@ abstract class BaseResource
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException('Invalid JSON response: ' . json_last_error_msg());
         }
+        if (!is_array($decoded)) {
+            throw new RuntimeException('Expected JSON object or array, got ' . gettype($decoded));
+        }
 
         return $decoded;
     }
