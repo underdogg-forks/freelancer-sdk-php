@@ -15,17 +15,22 @@ class Users
 {
     private const ENDPOINT = 'api/users/0.1';
 
+    /**
+     * Initialize the Users resource with a Session for API requests.
+     */
     public function __construct(
         private readonly Session $session
     ) {
     }
 
     /**
-     * Get details about the currently authenticated user
+     * Retrieve details for the currently authenticated user.
      *
-     * @param  array<string, mixed>  $userDetails
-     * @return array<string, mixed>
-     * @throws GuzzleException
+     * Forces a compact response by setting `'compact' => true` on the query parameters.
+     *
+     * @param array<string,mixed> $userDetails Optional query parameters to modify the response.
+     * @return array<string,mixed> The authenticated user's details.
+     * @throws GuzzleException If the HTTP request fails.
      */
     public function getSelf(array $userDetails = []): array
     {
@@ -34,11 +39,11 @@ class Users
     }
 
     /**
-     * Get details about a specific user
+     * Retrieve a user's compact profile by user ID.
      *
-     * @param  int  $userId
-     * @param  array<string, mixed>  $userDetails
-     * @return array<string, mixed>
+     * @param int $userId The ID of the user to fetch.
+     * @param array<string,mixed> $userDetails Optional query parameters; the `compact` parameter will be set to `true`.
+     * @return array<string,mixed> The user's profile data.
      * @throws GuzzleException
      */
     public function getUserById(int $userId, array $userDetails = []): array
@@ -48,23 +53,24 @@ class Users
     }
 
     /**
-     * Get one or more users
-     *
-     * @param  array<string, mixed>  $query
-     * @return array<string, mixed>
-     * @throws GuzzleException
-     */
+         * Retrieve users that match the provided query parameters.
+         *
+         * @param array<string, mixed> $query Query parameters to filter, sort, or paginate the user list.
+         * @return array<string, mixed> The API response `result` containing user data.
+         * @throws GuzzleException
+         */
     public function getUsers(array $query): array
     {
         return $this->fetchResult('/users/', $query, 'Failed to get users');
     }
 
     /**
-     * Search for freelancers
+     * Search freelancers using the users directory endpoint.
      *
-     * @param  array<string, mixed>  $searchData
-     * @return array<string, mixed>
-     * @throws GuzzleException
+     * @param array<string,mixed> $searchData Query parameters to send to the directory search.
+     * @return array<string,mixed> The API `result` payload containing matching freelancers.
+     * @throws \GuzzleHttp\Exception\GuzzleException If the HTTP request fails.
+     * @throws \RuntimeException If the API response is not successful or does not contain a `result`.
      */
     public function searchFreelancers(array $searchData): array
     {
@@ -83,11 +89,12 @@ class Users
     }
 
     /**
-     * Get user reputations
+     * Retrieve reputations matching the provided query parameters.
      *
-     * @param  array<string, mixed>  $query
-     * @return array<string, mixed>
-     * @throws GuzzleException
+     * @param array<string, mixed> $query Query parameters to send to the reputations endpoint.
+     * @return array<string, mixed> The `result` data returned by the API.
+     * @throws GuzzleException When the HTTP client encounters an error.
+     * @throws \RuntimeException When the API response is not successful or does not contain a `result`.
      */
     public function getReputations(array $query): array
     {
@@ -106,11 +113,12 @@ class Users
     }
 
     /**
-     * Get user portfolios
+     * Retrieve user portfolios from the API.
      *
-     * @param  array<string, mixed>  $query
-     * @return array<string, mixed>
-     * @throws GuzzleException
+     * @param array<string,mixed> $query Query parameters to send with the request (filters, pagination, etc.).
+     * @return array<string,mixed> The decoded API `result` array containing portfolios.
+     * @throws GuzzleException If the HTTP client encounters a transport error.
+     * @throws \RuntimeException If the API responds with an error or missing result.
      */
     public function getPortfolios(array $query): array
     {
@@ -128,22 +136,31 @@ class Users
         throw new \RuntimeException($data['message'] ?? 'Failed to get portfolios');
     }
 
-    // Deprecated method for backward compatibility
+    /**
+     * Compatibility wrapper to retrieve a user's profile by user ID.
+     *
+     * @param int $userId The user identifier.
+     * @return array The user's details as an associative array.
+     * @deprecated Use {@see self::getUserById()} instead.
+     */
     public function getUserProfile(int $userId): array
     {
         return $this->getUserById($userId);
     }
 
     /**
-     * Fetch result from API endpoint with common error handling
-     *
-     * @param  string  $path
-     * @param  array<string, mixed>  $query
-     * @param  string  $defaultError
-     * @return array<string, mixed>
-     * @throws GuzzleException
-     * @throws \RuntimeException
-     */
+         * Retrieve the decoded `result` payload from the users API endpoint or raise an error.
+         *
+         * Performs an HTTP GET to the users endpoint path with the provided query parameters,
+         * decodes the JSON response, and returns the `result` element when present.
+         *
+         * @param string $path Relative path appended to the users API endpoint.
+         * @param array<string,mixed> $query Query parameters to include in the request.
+         * @param string $defaultError Default error message used when the response does not provide one.
+         * @return array<string,mixed> The decoded `result` field from the API response.
+         * @throws GuzzleException When the HTTP client request fails.
+         * @throws \RuntimeException When the response is not successful or does not contain a `result`.
+         */
     private function fetchResult(string $path, array $query, string $defaultError): array
     {
         $response = $this->session->getClient()->get(

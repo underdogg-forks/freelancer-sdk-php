@@ -9,7 +9,13 @@ use FreelancerSdk\Resources\Messages\Messages;
 use FreelancerSdk\Session;
 
 /**
- * Create a project thread
+ * Creates a project messaging thread that includes specified project members.
+ *
+ * The function reads FLN_OAUTH_TOKEN for the OAuth token and FLN_URL for the API base URL
+ * (defaults to https://www.freelancer.com), initializes a Session and Messages client,
+ * and attempts to create a project thread with predefined member IDs, project ID, and message.
+ *
+ * @return object|null The created thread object on success, `null` on error.
  */
 function sampleCreateMessageProjectThread(): ?object
 {

@@ -18,13 +18,14 @@ use FreelancerSdk\Types\Project;
 class Projects extends ProjectsBase
 {
     /**
-     * Create a new project.
+     * Create a new project with the provided data.
      *
-     * @param array $data Project data including title, description, currency, budget, jobs
+     * If the created project contains a `seo_url`, the returned Project's `url` property
+     * will be set to the full project URL based on the current session URL.
      *
-     * @return Project
-     *
-     * @throws ProjectNotCreatedException
+     * @param array $data Project data (e.g., title, description, currency, budget, jobs).
+     * @return Project The created Project instance.
+     * @throws ProjectNotCreatedException When the API returns a failure response or the request cannot be completed.
      */
     public function createProject(array $data): Project
     {
@@ -60,14 +61,13 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Get projects by various filters.
-     *
-     * @param array $filters
-     *
-     * @return array
-     *
-     * @throws ProjectsNotFoundException
-     */
+         * Retrieve projects matching optional query filters.
+         *
+         * @param array $filters Optional associative filters applied to the projects query (e.g. category, budget, page).
+         * @return Project[] An array of Project instances that match the provided filters.
+         *
+         * @throws ProjectsNotFoundException If the API response does not contain projects or an error occurs.
+         */
     public function getProjects(array $filters = []): array
     {
         try {
@@ -104,15 +104,16 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Place a bid on a project.
-     *
-     * @param int   $projectId
-     * @param array $bidData
-     *
-     * @return Bid
-     *
-     * @throws BidNotPlacedException
-     */
+         * Place a bid on the specified project.
+         *
+         * Sends the provided bid data to the API for the given project and returns the created Bid.
+         *
+         * @param int   $projectId ID of the project to place the bid on.
+         * @param array $bidData   Associative array of bid fields (for example: amount, cover_letter); keys depend on API.
+         * @return Bid The created Bid instance.
+         *
+         * @throws BidNotPlacedException If the API fails to create the bid. The exception includes the API message, error code, and request ID when available.
+         */
     public function placeBid(int $projectId, array $bidData): Bid
     {
         try {
@@ -143,13 +144,11 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Get bids for a project.
+     * Retrieve bids matching the provided optional filters.
      *
-     * @param array $filters
-     *
-     * @return array
-     *
-     * @throws BidsNotFoundException
+     * @param array $filters Optional associative array of query parameters to filter bids (e.g., project_id, user_id, limit).
+     * @return Bid[] An array of Bid instances matching the filters.
+     * @throws BidsNotFoundException If the API response indicates failure or no bids were found.
      */
     public function getBids(array $filters = []): array
     {
@@ -187,13 +186,11 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Search for projects.
+     * Search active projects using optional query filters.
      *
-     * @param array $filters
-     *
-     * @return array
-     *
-     * @throws ProjectsNotFoundException
+     * @param array $filters Optional associative array of query parameters to filter the search.
+     * @return Project[] An array of Project instances matching the search criteria.
+     * @throws ProjectsNotFoundException When the API response indicates failure or no projects are found; exception contains API message, error code, and request id when available.
      */
     public function searchProjects(array $filters = []): array
     {
@@ -231,14 +228,16 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Get a project by id.
-     *
-     * @param int $projectId
-     *
-     * @return Project
-     *
-     * @throws ProjectsNotFoundException
-     */
+         * Retrieve a project by its ID.
+         *
+         * If the API response wraps the result in a `projects` array, the first item is returned.
+         *
+         * @param int $projectId The project identifier.
+         *
+         * @return Project The requested project.
+         *
+         * @throws ProjectsNotFoundException If the project cannot be found or the request fails.
+         */
     public function getProject(int $projectId): Project
     {
         try {
@@ -262,14 +261,14 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Update a project.
+     * Update an existing project with the provided data.
      *
-     * @param int   $projectId
-     * @param array $data
+     * @param int   $projectId ID of the project to update.
+     * @param array $data      Associative array of project fields to update.
      *
-     * @return Project
+     * @return Project The updated Project instance.
      *
-     * @throws ProjectNotCreatedException
+     * @throws ProjectNotCreatedException If the project could not be updated; when wrapping other exceptions the original message, code, and previous exception are preserved.
      */
     public function updateProject(int $projectId, array $data): Project
     {
@@ -288,13 +287,11 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Delete/Cancel a project.
+     * Delete (cancel) a project by its ID.
      *
-     * @param int $projectId
-     *
-     * @return bool
-     *
-     * @throws ProjectsNotFoundException
+     * @param int $projectId The ID of the project to delete.
+     * @return bool `true` if the project was deleted.
+     * @throws ProjectsNotFoundException If the project could not be deleted or the request failed.
      */
     public function deleteProject(int $projectId): bool
     {
@@ -313,15 +310,15 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Update a bid on a project.
-     *
-     * @param int   $bidId
-     * @param array $data
-     *
-     * @return Bid
-     *
-     * @throws BidNotPlacedException
-     */
+         * Update an existing bid.
+         *
+         * @param int   $bidId The identifier of the bid to update.
+         * @param array $data  Associative array of fields to update on the bid.
+         *
+         * @return Bid The updated Bid instance.
+         *
+         * @throws BidNotPlacedException If the update is rejected or the request fails.
+         */
     public function updateBid(int $bidId, array $data): Bid
     {
         try {
@@ -339,13 +336,11 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Retract a bid.
+     * Retract a bid identified by its ID.
      *
-     * @param int $bidId
-     *
-     * @return bool
-     *
-     * @throws BidNotRetractedException
+     * @param int $bidId The identifier of the bid to retract.
+     * @return bool `true` if the bid was successfully retracted.
+     * @throws \FreelancerSdk\Exceptions\Projects\BidNotRetractedException If the retraction fails.
      */
     public function retractBid(int $bidId): bool
     {
@@ -364,13 +359,11 @@ class Projects extends ProjectsBase
     }
 
     /**
-     * Get list of jobs.
+     * Retrieve jobs using optional filters.
      *
-     * @param array $filters
-     *
-     * @return array
-     *
-     * @throws JobsNotFoundException
+     * @param array $filters Optional query filters to apply to the jobs request.
+     * @return array Array of jobs returned by the API.
+     * @throws JobsNotFoundException When the API response indicates failure or no jobs were found.
      */
     public function getJobs(array $filters = []): array
     {

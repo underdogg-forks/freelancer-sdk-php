@@ -8,7 +8,13 @@ use FreelancerSdk\Resources\Projects\Projects;
 use FreelancerSdk\Session;
 
 /**
- * Search for projects
+ * Searches Freelancer projects using a session configured from environment variables.
+ *
+ * Performs a search for "php development" (limit 10, offset 0, jobs only) using a Session
+ * constructed from FLN_OAUTH_TOKEN (nullable) and FLN_URL (defaults to https://www.freelancer.com).
+ * On error, prints the exception message and returns null.
+ *
+ * @return array|null Array of project result data when successful, `null` if an exception occurred.
  */
 function sampleSearchProjects(): ?array
 {

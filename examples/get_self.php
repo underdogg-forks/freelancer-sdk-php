@@ -8,7 +8,12 @@ use FreelancerSdk\Resources\Users;
 use FreelancerSdk\Session;
 
 /**
- * Get self user details
+ * Retrieve details for the currently authenticated user.
+ *
+ * Reads the OAuth token from the `FLN_OAUTH_TOKEN` environment variable and the base URL
+ * from `FLN_URL` (defaults to `https://www.freelancer.com`) before requesting the user's details.
+ *
+ * @return array|null The user details array on success, `null` if an error occurred.
  */
 function sampleGetSelf(): ?array
 {

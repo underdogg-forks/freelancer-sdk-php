@@ -8,7 +8,11 @@ use FreelancerSdk\Resources\Users;
 use FreelancerSdk\Session;
 
 /**
- * Search for freelancers
+ * Searches freelancers with a sample set of parameters using a Session created from environment variables.
+ *
+ * Uses FLN_OAUTH_TOKEN and FLN_URL to initialize the session and returns the API response.
+ *
+ * @return array|null The search result as an associative array (includes a 'users' key on success), or `null` if an error occurred.
  */
 function sampleSearchFreelancers(): ?array
 {

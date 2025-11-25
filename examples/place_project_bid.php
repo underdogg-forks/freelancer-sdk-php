@@ -9,7 +9,13 @@ use FreelancerSdk\Resources\Projects\Projects;
 use FreelancerSdk\Session;
 
 /**
- * Place a bid on a project
+ * Attempt to place a bid on a project using credentials from the environment.
+ *
+ * Reads FLN_OAUTH_TOKEN and FLN_URL from the environment, creates a session, and attempts
+ * to place a bid for a placeholder project ID. Returns the created bid object on success
+ * or `null` if the bid could not be placed.
+ *
+ * @return object|null The placed bid object on success, `null` if placement failed.
  */
 function samplePlaceProjectBid(): ?object
 {

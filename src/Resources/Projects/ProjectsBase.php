@@ -14,18 +14,23 @@ class ProjectsBase
 
     protected string $endpoint = 'api/projects/0.1';
 
+    /**
+     * Bind the resource to a Session for performing API requests.
+     *
+     * @param Session $session Session used to perform HTTP requests to the API.
+     */
     public function __construct(Session $session)
     {
         $this->session = $session;
     }
 
     /**
-     * Make a GET request to the API.
+     * Send a GET request to the projects API path and return the decoded JSON response.
      *
-     * @param string $path
-     * @param array  $params
-     *
-     * @return array
+     * @param string $path Path segment appended to the base API endpoint.
+     * @param array  $params Query parameters to include in the request.
+     * @return array Decoded JSON response as an associative array.
+     * @throws \RuntimeException If the response body is not valid JSON.
      */
     protected function makeGetRequest(string $path, array $params = []): array
     {
@@ -40,12 +45,12 @@ class ProjectsBase
     }
 
     /**
-     * Make a POST request to the API.
+     * Send a POST request to the projects API and decode the JSON response.
      *
-     * @param string $path
-     * @param array  $data
-     *
-     * @return array
+     * @param string $path API path segment appended to the base endpoint.
+     * @param array  $data Request payload that will be JSON-encoded.
+     * @return array Decoded JSON response as an associative array.
+     * @throws RuntimeException If the response body is not valid JSON.
      */
     protected function makePostRequest(string $path, array $data = []): array
     {
@@ -60,13 +65,13 @@ class ProjectsBase
     }
 
     /**
-     * Make a PUT request to the API.
+     * Send a PUT request to the API at the given path and return the decoded JSON response.
      *
-     * @param string $path
-     * @param array  $data
-     * @param array  $params
-     *
-     * @return array
+     * @param string $path API path suffix appended to the base endpoint.
+     * @param array $data JSON-serializable data to include in the request body.
+     * @param array $params Query parameters to include in the request URL.
+     * @return array The response body decoded as an associative array.
+     * @throws \RuntimeException If the response body is not valid JSON.
      */
     protected function makePutRequest(string $path, array $data = [], array $params = []): array
     {
@@ -88,12 +93,12 @@ class ProjectsBase
     }
 
     /**
-     * Make a DELETE request to the API.
+     * Perform a DELETE request against the projects API and return the decoded JSON response.
      *
-     * @param string $path
-     * @param array  $params
-     *
-     * @return array
+     * @param string $path   API path relative to the class endpoint (appended to the base endpoint).
+     * @param array  $params Query parameters to include with the request.
+     * @return array The response decoded from JSON into an associative array.
+     * @throws \RuntimeException If the response body cannot be parsed as valid JSON.
      */
     protected function makeDeleteRequest(string $path, array $params = []): array
     {

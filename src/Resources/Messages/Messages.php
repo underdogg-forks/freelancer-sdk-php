@@ -17,21 +17,23 @@ class Messages
 {
     private const ENDPOINT = 'api/messages/0.1';
 
+    /**
+     * Initialize the Messages resource with a session used for HTTP requests.
+     */
     public function __construct(
         private readonly Session $session
     ) {
     }
 
     /**
-     * Create a thread
+     * Creates a message thread with the specified members, context, and initial message.
      *
-     * @param  array<int>  $memberIds
-     * @param  string  $contextType
-     * @param  int  $context
-     * @param  string  $message
-     * @return Thread
-     * @throws ThreadNotCreatedException
-     * @throws GuzzleException
+     * @param int[] $memberIds Array of user IDs to include in the thread.
+     * @param string $contextType The context type for the thread (for example, 'project').
+     * @param int $context Numeric identifier for the context (for example, a project ID).
+     * @param string $message Initial message body to post in the thread.
+     * @return Thread The created Thread instance.
+     * @throws ThreadNotCreatedException If the thread could not be created.
      */
     public function createThread(array $memberIds, string $contextType, int $context, string $message): Thread
     {
@@ -70,28 +72,26 @@ class Messages
     }
 
     /**
-     * Create a project thread
+     * Create a thread scoped to a specific project with the given members and initial message.
      *
-     * @param  array<int>  $memberIds
-     * @param  int  $projectId
-     * @param  string  $message
-     * @return Thread
-     * @throws ThreadNotCreatedException
-     * @throws GuzzleException
+     * @param int[] $memberIds Array of member user IDs to include in the thread.
+     * @param int $projectId The project ID to associate the thread with.
+     * @param string $message The initial message content for the thread.
+     * @return Thread The created thread.
+     * @throws ThreadNotCreatedException If the thread could not be created.
      */
     public function createProjectThread(array $memberIds, int $projectId, string $message): Thread
     {
         return $this->createThread($memberIds, 'project', $projectId, $message);
     }
 
-    /**
-     * Post a message to a thread
+    / **
+     * Posts a message to an existing thread.
      *
-     * @param  int  $threadId
-     * @param  string  $message
-     * @return Message
-     * @throws MessageNotCreatedException
-     * @throws GuzzleException
+     * @param int $threadId The ID of the thread to post the message to.
+     * @param string $message The message body to post.
+     * @return Message A Message representing the created message.
+     * @throws MessageNotCreatedException If the API response does not contain a result or if the HTTP request fails.
      */
     public function postMessage(int $threadId, string $message): Message
     {
@@ -127,13 +127,12 @@ class Messages
     }
 
     /**
-     * Post an attachment to a thread
+     * Uploads attachments to a thread and returns the created Message.
      *
-     * @param  int  $threadId
-     * @param  array<array{file: resource, filename: string}>  $attachments
-     * @return Message
-     * @throws MessageNotCreatedException
-     * @throws GuzzleException
+     * @param int $threadId The ID of the thread to post attachments to.
+     * @param array<array{file: resource, filename: string}> $attachments List of attachments; each item must contain a `file` stream resource and a `filename`.
+     * @return Message The Message object created by the API.
+     * @throws MessageNotCreatedException If the API responds with an error or the upload fails.
      */
     public function postAttachment(int $threadId, array $attachments): Message
     {
@@ -188,14 +187,13 @@ class Messages
     }
 
     /**
-     * Get messages
+     * Retrieve messages that match the given query parameters with pagination.
      *
-     * @param  array<string, mixed>  $query
-     * @param  int  $limit
-     * @param  int  $offset
-     * @return array<string, mixed>
-     * @throws MessagesNotFoundException
-     * @throws GuzzleException
+     * @param array<string,mixed> $query Associative query parameters used to filter results; `limit` and `offset` will be set by this method.
+     * @param int $limit Maximum number of messages to return.
+     * @param int $offset Number of messages to skip (zero-based).
+     * @return array<string,mixed> Array of message records returned by the API (the `result` payload).
+     * @throws MessagesNotFoundException If the API returns a non-200 response or the request fails.
      */
     public function getMessages(array $query, int $limit = 10, int $offset = 0): array
     {
@@ -229,19 +227,18 @@ class Messages
     }
 
     /**
-     * Search messages
-     *
-     * @param  int  $threadId
-     * @param  string  $query
-     * @param  int  $limit
-     * @param  int  $offset
-     * @param  bool|null  $contextDetails
-     * @param  int|null  $windowAbove
-     * @param  int|null  $windowBelow
-     * @return array<string, mixed>
-     * @throws MessagesNotFoundException
-     * @throws GuzzleException
-     */
+         * Search messages within a thread using optional context and window filters.
+         *
+         * @param int $threadId The ID of the thread to search.
+         * @param string $query The search query string.
+         * @param int $limit Maximum number of results to return.
+         * @param int $offset Number of results to skip.
+         * @param bool|null $contextDetails When true, include message context details in results.
+         * @param int|null $windowAbove Number of messages above a match to include when contextDetails is enabled.
+         * @param int|null $windowBelow Number of messages below a match to include when contextDetails is enabled.
+         * @return array<string, mixed> The API search results array.
+         * @throws MessagesNotFoundException If the search fails or no results are returned.
+         */
     public function searchMessages(
         int $threadId,
         string $query,
@@ -295,12 +292,11 @@ class Messages
     }
 
     /**
-     * Get threads
+     * Retrieve message threads matching the provided query parameters.
      *
-     * @param  array<string, mixed>  $query
-     * @return array<string, mixed>
-     * @throws ThreadsNotFoundException
-     * @throws GuzzleException
+     * @param array<string,mixed> $query Query parameters to filter or paginate threads.
+     * @return array<string,mixed> The API `result` payload containing matching threads.
+     * @throws ThreadsNotFoundException Thrown when the API does not return threads or the request fails.
      */
     public function getThreads(array $query): array
     {
