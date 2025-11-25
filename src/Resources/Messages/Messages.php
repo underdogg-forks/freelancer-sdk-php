@@ -235,7 +235,7 @@ class Messages
      * @param  string  $query
      * @param  int  $limit
      * @param  int  $offset
-     * @param  bool|null  $messageContextDetails
+     * @param  bool|null  $contextDetails
      * @param  int|null  $windowAbove
      * @param  int|null  $windowBelow
      * @return array<string, mixed>
@@ -247,7 +247,7 @@ class Messages
         string $query,
         int $limit = 20,
         int $offset = 0,
-        ?bool $messageContextDetails = null,
+        ?bool $contextDetails = null,
         ?int $windowAbove = null,
         ?int $windowBelow = null
     ): array {
@@ -259,8 +259,8 @@ class Messages
                 'offset'    => $offset,
             ];
 
-            if ($messageContextDetails !== null) {
-                $queryParams['message_context_details'] = $messageContextDetails;
+            if ($contextDetails !== null) {
+                $queryParams['message_context_details'] = $contextDetails;
             }
             if ($windowAbove !== null) {
                 $queryParams['window_above'] = $windowAbove;

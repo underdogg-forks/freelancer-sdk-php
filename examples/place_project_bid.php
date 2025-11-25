@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use FreelancerSdk\Exceptions\Projects\BidNotPlacedException;
 use FreelancerSdk\Resources\Projects\Projects;
 use FreelancerSdk\Session;
 
@@ -30,13 +31,18 @@ function samplePlaceProjectBid(): ?object
     try {
         $bid = $projects->placeBid($projectId, $bidData);
         return $bid;
+    } catch (BidNotPlacedException $e) {
+        echo "Error placing bid: {$e->getMessage()}\n";
+        return null;
     } catch (\Exception $e) {
-        echo "Error message: {$e->getMessage()}\n";
+        echo "Unexpected error: {$e->getMessage()}\n";
         return null;
     }
 }
 
 $bid = samplePlaceProjectBid();
-if ($bid) {
+if ($bid && isset($bid->id)) {
     echo "Bid placed successfully: bid_id={$bid->id}\n";
+} elseif ($bid) {
+    echo "Bid placed but no ID returned\n";
 }

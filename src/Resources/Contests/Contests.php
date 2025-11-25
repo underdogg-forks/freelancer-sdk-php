@@ -43,6 +43,23 @@ class Contests
 
             $data = json_decode($response->getBody()->getContents(), true);
 
+            // Validate JSON decode result
+            if ($data === null || json_last_error() !== JSON_ERROR_NONE) {
+                throw new ContestNotCreatedException(
+                    'Invalid JSON response from API: ' . json_last_error_msg(),
+                    null,
+                    null
+                );
+            }
+
+            if (!is_array($data)) {
+                throw new ContestNotCreatedException(
+                    'Unexpected response format from API',
+                    null,
+                    null
+                );
+            }
+
             if ($response->getStatusCode() === 200 && isset($data['result'])) {
                 return new Contest($data['result']);
             }
@@ -56,7 +73,9 @@ class Contests
             throw new ContestNotCreatedException(
                 'Failed to create contest: ' . $e->getMessage(),
                 null,
-                null
+                null,
+                $e->getCode(),
+                $e
             );
         }
     }
