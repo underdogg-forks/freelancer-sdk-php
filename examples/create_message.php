@@ -12,7 +12,7 @@ use FreelancerSdk\Session;
  */
 function sampleCreateMessage(): ?object
 {
-    $oauthToken = getenv('FLN_OAUTH_TOKEN');
+    $oauthToken = getenv('FLN_OAUTH_TOKEN') ?: null;
     $url = getenv('FLN_URL') ?: 'https://www.freelancer.com';
 
     $session = new Session($oauthToken, $url);
@@ -24,7 +24,7 @@ function sampleCreateMessage(): ?object
     try {
         $message = $messages->postMessage($threadId, $messageText);
         return $message;
-    } catch (\Exception $e) {
+    } catch (\FreelancerSdk\Exceptions\Messages\MessageNotCreatedException $e) {
         echo "Error message: {$e->getMessage()}\n";
         return null;
     }
@@ -32,5 +32,7 @@ function sampleCreateMessage(): ?object
 
 $message = sampleCreateMessage();
 if ($message) {
-    echo "Message posted: message_id={$message->id}\n";
+ if ($message) {
+    echo "Message posted: message_id=" . ($message->id ?? 'unknown') . "\n";
+ }
 }

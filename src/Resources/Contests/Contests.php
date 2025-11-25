@@ -32,7 +32,6 @@ class Contests
      * } $contestData
      * @return Contest
      * @throws ContestNotCreatedException
-     * @throws GuzzleException
      */
     public function createContest(array $contestData): Contest
     {

@@ -12,7 +12,7 @@ use FreelancerSdk\Session;
  */
 function sampleCreateMessageProjectThread(): ?object
 {
-    $oauthToken = getenv('FLN_OAUTH_TOKEN');
+    $oauthToken = getenv('FLN_OAUTH_TOKEN') ?: null;
     $url = getenv('FLN_URL') ?: 'https://www.freelancer.com';
 
     $session = new Session($oauthToken, $url);
@@ -25,9 +25,12 @@ function sampleCreateMessageProjectThread(): ?object
     try {
         $thread = $messages->createProjectThread($memberIds, $projectId, $message);
         return $thread;
-    } catch (\Exception $e) {
+use FreelancerSdk\Exceptions\Messages\ThreadNotCreatedException;
+
+    } catch (ThreadNotCreatedException $e) {
         echo "Error message: {$e->getMessage()}\n";
         return null;
+    }
     }
 }
 

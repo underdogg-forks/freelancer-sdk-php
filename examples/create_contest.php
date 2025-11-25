@@ -13,7 +13,7 @@ use FreelancerSdk\Session;
  */
 function sampleCreateContest(): ?object
 {
-    $oauthToken = getenv('FLN_OAUTH_TOKEN');
+    $oauthToken = getenv('FLN_OAUTH_TOKEN') ?: null;
     $url = getenv('FLN_URL') ?: 'https://www.freelancer.com';
 
     $session = new Session($oauthToken, $url);
@@ -41,5 +41,7 @@ function sampleCreateContest(): ?object
 
 $contest = sampleCreateContest();
 if ($contest) {
-    echo "Contest created: contest_id={$contest->id}\n";
+    if ($contest) {
+        echo "Contest created: contest_id=" . ($contest->id ?? 'unknown') . "\n";
+    }
 }
