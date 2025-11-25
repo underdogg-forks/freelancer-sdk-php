@@ -124,9 +124,7 @@ class ExamplesTest extends BaseTestCase
         $this->assertNotEmpty($exampleFiles);
 
         foreach ($exampleFiles as $file) {
-            if (basename($file) === 'README.md') {
-                continue;
-            }
+            $content = file_get_contents($file);
             $content = file_get_contents($file);
             $this->assertStringContainsString(
                 "require_once __DIR__ . '/../vendor/autoload.php'",
