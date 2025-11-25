@@ -8,22 +8,20 @@ use ArrayAccess;
 use JsonSerializable;
 
 /**
- * Project model class
- * Represents a Project object from the Freelancer API.
+ * Contest model class
+ * Represents a Contest object from the Freelancer API.
  */
-class Project implements ArrayAccess, JsonSerializable
+class Contest implements ArrayAccess, JsonSerializable
 {
     protected ?int $id             = null;
+    protected ?int $owner_id       = null;
     protected ?string $title       = null;
     protected ?string $description = null;
-    protected ?string $seo_url     = null;
-    protected ?string $url         = null;
-    protected ?array $currency     = null;
-    protected ?array $budget       = null;
+    protected ?string $type        = null;
+    protected ?int $duration       = null;
     protected ?array $jobs         = null;
-    protected ?int $owner_id       = null;
-    protected ?string $status      = null;
-    protected ?array $tracks       = null;
+    protected ?array $currency     = null;
+    protected ?float $prize        = null;
     protected array $attributes    = [];
 
     public function __construct(array $data = [])
@@ -48,6 +46,11 @@ class Project implements ArrayAccess, JsonSerializable
         return $this->id;
     }
 
+    public function getOwnerId(): ?int
+    {
+        return $this->owner_id;
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -58,30 +61,14 @@ class Project implements ArrayAccess, JsonSerializable
         return $this->description;
     }
 
-    public function getSeoUrl(): ?string
+    public function getType(): ?string
     {
-        return $this->seo_url;
+        return $this->type;
     }
 
-    public function getUrl(): ?string
+    public function getDuration(): ?int
     {
-        return $this->url;
-    }
-
-    public function setUrl(string $url): self
-    {
-        $this->url = $url;
-        return $this;
-    }
-
-    public function getCurrency(): ?array
-    {
-        return $this->currency;
-    }
-
-    public function getBudget(): ?array
-    {
-        return $this->budget;
+        return $this->duration;
     }
 
     public function getJobs(): ?array
@@ -89,19 +76,14 @@ class Project implements ArrayAccess, JsonSerializable
         return $this->jobs;
     }
 
-    public function getOwnerId(): ?int
+    public function getCurrency(): ?array
     {
-        return $this->owner_id;
+        return $this->currency;
     }
 
-    public function getStatus(): ?string
+    public function getPrize(): ?float
     {
-        return $this->status;
-    }
-
-    public function getTracks(): ?array
-    {
-        return $this->tracks;
+        return $this->prize;
     }
 
     public function getAttribute(string $key, $default = null)

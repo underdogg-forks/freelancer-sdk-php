@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "result": {
+    "users": {
+      "100": {
+        "status": null,
+        "id": 100
+      },
+      "200": {
+        "status": null,
+        "id": 200
+      }
+    }
+  }
+}

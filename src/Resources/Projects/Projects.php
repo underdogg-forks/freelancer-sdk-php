@@ -41,7 +41,7 @@ class Projects extends ProjectsBase
             }
 
             throw new ProjectNotCreatedException(
-                $response['message'] ?? 'Failed to create project',
+                $response['message']    ?? 'Failed to create project',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
@@ -85,7 +85,7 @@ class Projects extends ProjectsBase
             }
 
             throw new ProjectsNotFoundException(
-                $response['message'] ?? 'Projects not found',
+                $response['message']    ?? 'Projects not found',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
@@ -124,7 +124,7 @@ class Projects extends ProjectsBase
             }
 
             throw new BidNotPlacedException(
-                $response['message'] ?? 'Failed to place bid',
+                $response['message']    ?? 'Failed to place bid',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
@@ -168,7 +168,7 @@ class Projects extends ProjectsBase
             }
 
             throw new BidsNotFoundException(
-                $response['message'] ?? 'Bids not found',
+                $response['message']    ?? 'Bids not found',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );
@@ -212,7 +212,7 @@ class Projects extends ProjectsBase
             }
 
             throw new ProjectsNotFoundException(
-                $response['message'] ?? 'Projects not found',
+                $response['message']    ?? 'Projects not found',
                 $response['error_code'] ?? null,
                 $response['request_id'] ?? null
             );

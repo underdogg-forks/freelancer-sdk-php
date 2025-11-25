@@ -1,0 +1,19 @@
+{
+  "status": "success",
+  "result": {
+    "bids": [
+      {
+        "id": 301,
+        "project_id": 201,
+        "bidder_id": 101,
+        "amount": 100
+      },
+      {
+        "id": 302,
+        "project_id": 201,
+        "bidder_id": 102,
+        "amount": 150
+      }
+    ]
+  }
+}

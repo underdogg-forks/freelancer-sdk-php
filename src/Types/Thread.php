@@ -8,22 +8,18 @@ use ArrayAccess;
 use JsonSerializable;
 
 /**
- * Project model class
- * Represents a Project object from the Freelancer API.
+ * Thread model class
+ * Represents a Thread object from the Freelancer API.
  */
-class Project implements ArrayAccess, JsonSerializable
+class Thread implements ArrayAccess, JsonSerializable
 {
     protected ?int $id             = null;
-    protected ?string $title       = null;
-    protected ?string $description = null;
-    protected ?string $seo_url     = null;
-    protected ?string $url         = null;
-    protected ?array $currency     = null;
-    protected ?array $budget       = null;
-    protected ?array $jobs         = null;
-    protected ?int $owner_id       = null;
-    protected ?string $status      = null;
-    protected ?array $tracks       = null;
+    protected ?array $thread       = null;
+    protected ?array $context      = null;
+    protected ?array $members      = null;
+    protected ?int $owner          = null;
+    protected ?string $thread_type = null;
+    protected ?int $time_created   = null;
     protected array $attributes    = [];
 
     public function __construct(array $data = [])
@@ -48,60 +44,34 @@ class Project implements ArrayAccess, JsonSerializable
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getThread(): ?array
     {
-        return $this->title;
+        return $this->thread;
     }
 
-    public function getDescription(): ?string
+    public function getContext(): ?array
     {
-        return $this->description;
+        return $this->context;
     }
 
-    public function getSeoUrl(): ?string
+    public function getMembers(): ?array
     {
-        return $this->seo_url;
+        return $this->members;
     }
 
-    public function getUrl(): ?string
+    public function getOwner(): ?int
     {
-        return $this->url;
+        return $this->owner;
     }
 
-    public function setUrl(string $url): self
+    public function getThreadType(): ?string
     {
-        $this->url = $url;
-        return $this;
+        return $this->thread_type;
     }
 
-    public function getCurrency(): ?array
+    public function getTimeCreated(): ?int
     {
-        return $this->currency;
-    }
-
-    public function getBudget(): ?array
-    {
-        return $this->budget;
-    }
-
-    public function getJobs(): ?array
-    {
-        return $this->jobs;
-    }
-
-    public function getOwnerId(): ?int
-    {
-        return $this->owner_id;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function getTracks(): ?array
-    {
-        return $this->tracks;
+        return $this->time_created;
     }
 
     public function getAttribute(string $key, $default = null)
