@@ -12,7 +12,7 @@ use FreelancerSdk\Session;
  */
 function sampleSearchFreelancers(): ?array
 {
-    $oauthToken = getenv('FLN_OAUTH_TOKEN');
+    $oauthToken = getenv('FLN_OAUTH_TOKEN') ?: null;
     $url = getenv('FLN_URL') ?: 'https://www.freelancer.com';
 
     $session = new Session($oauthToken, $url);
