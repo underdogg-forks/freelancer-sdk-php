@@ -30,19 +30,7 @@ class Users
     public function getSelf(array $userDetails = []): array
     {
         $userDetails['compact'] = true;
-
-        $response = $this->session->getClient()->get(
-            self::ENDPOINT . '/self/',
-            ['query' => $userDetails]
-        );
-
-        $data = json_decode($response->getBody()->getContents(), true);
-
-        if ($response->getStatusCode() === 200 && isset($data['result'])) {
-            return $data['result'];
-        }
-
-        throw new \RuntimeException($data['message'] ?? 'Failed to get self user');
+        return $this->fetchResult('/self/', $userDetails, 'Failed to get self user');
     }
 
     /**
@@ -56,19 +44,7 @@ class Users
     public function getUserById(int $userId, array $userDetails = []): array
     {
         $userDetails['compact'] = true;
-
-        $response = $this->session->getClient()->get(
-            self::ENDPOINT . '/users/' . $userId . '/',
-            ['query' => $userDetails]
-        );
-
-        $data = json_decode($response->getBody()->getContents(), true);
-
-        if ($response->getStatusCode() === 200 && isset($data['result'])) {
-            return $data['result'];
-        }
-
-        throw new \RuntimeException($data['message'] ?? 'Failed to get user');
+        return $this->fetchResult('/users/' . $userId . '/', $userDetails, 'Failed to get user');
     }
 
     /**
@@ -80,18 +56,7 @@ class Users
      */
     public function getUsers(array $query): array
     {
-        $response = $this->session->getClient()->get(
-            self::ENDPOINT . '/users/',
-            ['query' => $query]
-        );
-
-        $data = json_decode($response->getBody()->getContents(), true);
-
-        if ($response->getStatusCode() === 200 && isset($data['result'])) {
-            return $data['result'];
-        }
-
-        throw new \RuntimeException($data['message'] ?? 'Failed to get users');
+        return $this->fetchResult('/users/', $query, 'Failed to get users');
     }
 
     /**
@@ -167,5 +132,32 @@ class Users
     public function getUserProfile(int $userId): array
     {
         return $this->getUserById($userId);
+    }
+
+    /**
+     * Fetch result from API endpoint with common error handling
+     *
+     * @param  string  $path
+     * @param  array<string, mixed>  $query
+     * @param  string  $defaultError
+     * @return array<string, mixed>
+     * @throws GuzzleException
+     * @throws \RuntimeException
+     */
+    private function fetchResult(string $path, array $query, string $defaultError): array
+    {
+        $response = $this->session->getClient()->get(
+            self::ENDPOINT . $path,
+            ['query' => $query]
+        );
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        if ($response->getStatusCode() === 200 && isset($data['result'])) {
+            return $data['result'];
+        }
+
+        $message = is_array($data) && isset($data['message']) ? $data['message'] : $defaultError;
+        throw new \RuntimeException($message);
     }
 }

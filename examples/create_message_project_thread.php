@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use FreelancerSdk\Exceptions\Messages\ThreadNotCreatedException;
 use FreelancerSdk\Resources\Messages\Messages;
 use FreelancerSdk\Session;
 
@@ -25,16 +26,18 @@ function sampleCreateMessageProjectThread(): ?object
     try {
         $thread = $messages->createProjectThread($memberIds, $projectId, $message);
         return $thread;
-use FreelancerSdk\Exceptions\Messages\ThreadNotCreatedException;
-
     } catch (ThreadNotCreatedException $e) {
-        echo "Error message: {$e->getMessage()}\n";
+        echo "Error creating thread: {$e->getMessage()}\n";
         return null;
-    }
+    } catch (\Exception $e) {
+        echo "Unexpected error: {$e->getMessage()}\n";
+        return null;
     }
 }
 
 $thread = sampleCreateMessageProjectThread();
-if ($thread) {
+if ($thread && isset($thread->id)) {
     echo "Thread created: thread_id={$thread->id}\n";
+} elseif ($thread) {
+    echo "Thread created but no ID returned\n";
 }
