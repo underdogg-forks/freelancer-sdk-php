@@ -74,6 +74,7 @@ class MessagesTest extends BaseTestCase
         $message      = $messages->postAttachment(301, [
             ['file' => $fileResource, 'filename' => 'file.txt'],
         ]);
+        fclose($fileResource);
 
         $this->assertSame(401, $message->id);
         $this->assertSame(301, $message->thread_id);
