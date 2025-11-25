@@ -21,36 +21,6 @@ class Contest extends BaseType
     protected ?float $prize        = null;
 
     /**
-     * Initialize the Contest model and populate its properties from provided data.
-     *
-     * @param array $data Associative array of initial values; keys that match class properties
-     *                    will be assigned to those properties, and any other keys will be stored
-     *                    in the `attributes` array.
-     */
-    public function __construct(array $data = [])
-    {
-        $this->fill($data);
-    }
-
-    /**
-     * Populate the model from an associative array, assigning known keys to class properties and storing unknown keys in `attributes`.
-     *
-     * @param array $data Associative array of values; keys that match existing properties are set on the instance, other keys are saved into the `attributes` array.
-     * @return self The current instance with values applied.
-     */
-    public function fill(array $data): self
-    {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            } else {
-                $this->attributes[$key] = $value;
-            }
-        }
-        return $this;
-    }
-
-    /**
      * Get the contest identifier.
      *
      * @return int|null The contest identifier, or null if not set.

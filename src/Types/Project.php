@@ -23,40 +23,6 @@ class Project extends BaseType
     protected ?array $tracks       = null;
 
     /**
-     * Create a Project instance populated from provided data.
-     *
-     * Initializes declared properties from the provided associative array; any keys
-     * that do not match declared properties are stored in the instance's attributes map.
-     *
-     * @param array $data Associative array of project fields (e.g. id, title, description, url, currency, budget).
-     */
-    public function __construct(array $data = [])
-    {
-        $this->fill($data);
-    }
-
-    /**
-     * Populate the model from an associative array.
-     *
-     * Keys in `$data` that match declared class properties are assigned to those properties;
-     * any other key/value pairs are stored in the internal `$attributes` map.
-     *
-     * @param array $data Associative array of field names to values.
-     * @return self The current instance (allows method chaining).
-     */
-    public function fill(array $data): self
-    {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            } else {
-                $this->attributes[$key] = $value;
-            }
-        }
-        return $this;
-    }
-
-    /**
      * Get the project's identifier.
      *
      * @return int|null The project id, or null if not set.
