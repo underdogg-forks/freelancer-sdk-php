@@ -20,7 +20,7 @@ class UserTest extends TestCase
     public function it_can_instantiate_with_empty_array(): void
     {
         $user = new User([]);
-        
+
         $this->assertInstanceOf(User::class, $user);
     }
 
@@ -31,9 +31,9 @@ class UserTest extends TestCase
     public function it_can_instantiate_with_data(): void
     {
         $data = [
-            'id' => 12345,
+            'id'       => 12345,
             'username' => 'john_doe',
-            'email' => 'john@example.com',
+            'email'    => 'john@example.com',
         ];
 
         $user = new User($data);
@@ -48,11 +48,11 @@ class UserTest extends TestCase
     public function it_magic_get_retrieves_data(): void
     {
         $data = [
-            'id' => 123,
-            'username' => 'freelancer_joe',
-            'email' => 'joe@freelancer.com',
+            'id'           => 123,
+            'username'     => 'freelancer_joe',
+            'email'        => 'joe@freelancer.com',
             'display_name' => 'Joe Smith',
-            'status' => 'active',
+            'status'       => 'active',
         ];
 
         $user = new User($data);
@@ -84,10 +84,10 @@ class UserTest extends TestCase
     public function it_to_array_returns_underlying_data(): void
     {
         $data = [
-            'id' => 999,
+            'id'       => 999,
             'username' => 'test_user',
-            'email' => 'test@example.com',
-            'avatar' => 'https://example.com/avatar.jpg',
+            'email'    => 'test@example.com',
+            'avatar'   => 'https://example.com/avatar.jpg',
         ];
 
         $user = new User($data);
@@ -113,15 +113,15 @@ class UserTest extends TestCase
     public function it_handles_complex_nested_data(): void
     {
         $data = [
-            'id' => 12345,
+            'id'       => 12345,
             'username' => 'john_doe',
-            'profile' => [
-                'bio' => 'Experienced developer',
+            'profile'  => [
+                'bio'    => 'Experienced developer',
                 'skills' => ['PHP', 'JavaScript', 'Python'],
             ],
             'location' => [
                 'country' => 'USA',
-                'city' => 'New York',
+                'city'    => 'New York',
             ],
         ];
 
@@ -140,9 +140,9 @@ class UserTest extends TestCase
     public function it_handles_array_values(): void
     {
         $data = [
-            'id' => 123,
-            'skills' => ['PHP', 'Laravel', 'Vue.js'],
-            'badges' => ['verified', 'premium'],
+            'id'       => 123,
+            'skills'   => ['PHP', 'Laravel', 'Vue.js'],
+            'badges'   => ['verified', 'premium'],
             'projects' => [1, 2, 3, 4, 5],
         ];
 
@@ -160,9 +160,9 @@ class UserTest extends TestCase
     public function it_handles_boolean_values(): void
     {
         $data = [
-            'id' => 123,
-            'is_verified' => true,
-            'is_active' => false,
+            'id'              => 123,
+            'is_verified'     => true,
+            'is_active'       => false,
             'email_confirmed' => true,
         ];
 
@@ -180,10 +180,10 @@ class UserTest extends TestCase
     public function it_handles_numeric_edge_cases(): void
     {
         $data = [
-            'id' => 0,
-            'rating' => 0.0,
+            'id'       => 0,
+            'rating'   => 0.0,
             'large_id' => PHP_INT_MAX,
-            'balance' => 9999999.99,
+            'balance'  => 9999999.99,
         ];
 
         $user = new User($data);
@@ -201,15 +201,15 @@ class UserTest extends TestCase
     public function it_handles_string_with_special_characters(): void
     {
         $data = [
-            'id' => 123,
-            'username' => "user_with-special.chars",
-            'bio' => "I'm a developer & designer",
-            'notes' => "Line 1\nLine 2\tTabbed",
+            'id'       => 123,
+            'username' => 'user_with-special.chars',
+            'bio'      => "I'm a developer & designer",
+            'notes'    => "Line 1\nLine 2\tTabbed",
         ];
 
         $user = new User($data);
 
-        $this->assertSame("user_with-special.chars", $user->username);
+        $this->assertSame('user_with-special.chars', $user->username);
         $this->assertSame("I'm a developer & designer", $user->bio);
         $this->assertSame("Line 1\nLine 2\tTabbed", $user->notes);
     }
@@ -221,9 +221,9 @@ class UserTest extends TestCase
     public function it_handles_empty_strings(): void
     {
         $data = [
-            'id' => 123,
+            'id'       => 123,
             'username' => '',
-            'bio' => '',
+            'bio'      => '',
         ];
 
         $user = new User($data);
@@ -239,7 +239,7 @@ class UserTest extends TestCase
     public function it_handles_null_values(): void
     {
         $data = [
-            'id' => 123,
+            'id'    => 123,
             'email' => null,
             'phone' => null,
         ];
@@ -258,21 +258,21 @@ class UserTest extends TestCase
     public function it_comprehensive_user_data(): void
     {
         $data = [
-            'id' => 12345,
-            'username' => 'professional_dev',
-            'email' => 'dev@example.com',
-            'display_name' => 'Professional Developer',
-            'first_name' => 'Professional',
-            'last_name' => 'Developer',
-            'status' => 'active',
-            'role' => 'freelancer',
-            'avatar' => 'https://example.com/avatar.jpg',
-            'rating' => 4.8,
-            'reviews_count' => 125,
+            'id'                 => 12345,
+            'username'           => 'professional_dev',
+            'email'              => 'dev@example.com',
+            'display_name'       => 'Professional Developer',
+            'first_name'         => 'Professional',
+            'last_name'          => 'Developer',
+            'status'             => 'active',
+            'role'               => 'freelancer',
+            'avatar'             => 'https://example.com/avatar.jpg',
+            'rating'             => 4.8,
+            'reviews_count'      => 125,
             'completed_projects' => 98,
-            'country_code' => 'US',
-            'timezone' => 'America/New_York',
-            'member_since' => 1577836800,
+            'country_code'       => 'US',
+            'timezone'           => 'America/New_York',
+            'member_since'       => 1577836800,
         ];
 
         $user = new User($data);
@@ -320,10 +320,10 @@ class UserTest extends TestCase
     public function it_user_data_immutable_from_external_modifications(): void
     {
         $originalData = ['id' => 123, 'username' => 'original'];
-        $user = new User($originalData);
+        $user         = new User($originalData);
 
         // Modify the original array
-        $originalData['username'] = 'modified';
+        $originalData['username']  = 'modified';
         $originalData['new_field'] = 'new_value';
 
         // User should still have original data

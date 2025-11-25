@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FreelancerSdk\Resources;
 
-use FreelancerSdk\Resources\BaseResource;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**

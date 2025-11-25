@@ -20,11 +20,11 @@ class ProjectTypeTest extends TestCase
     public function it_has_all_expected_enum_cases(): void
     {
         $this->assertTrue(enum_exists(ProjectType::class));
-        
+
         $cases = ProjectType::cases();
         $this->assertCount(2, $cases);
-        
-        $caseNames = array_map(fn($case) => $case->name, $cases);
+
+        $caseNames = array_map(fn ($case) => $case->name, $cases);
         $this->assertContains('FIXED', $caseNames);
         $this->assertContains('HOURLY', $caseNames);
     }

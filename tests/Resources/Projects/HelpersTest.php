@@ -89,7 +89,7 @@ class HelpersTest extends TestCase
     public function it_create_job_object_with_all_parameters(): void
     {
         $category = ['id' => 5, 'name' => 'Programming'];
-        $seoInfo = ['title' => 'PHP Jobs', 'description' => 'Find PHP jobs'];
+        $seoInfo  = ['title' => 'PHP Jobs', 'description' => 'Find PHP jobs'];
 
         $job = Helpers::createJobObject(
             10,
@@ -241,7 +241,7 @@ class HelpersTest extends TestCase
     public function it_helper_methods_are_static(): void
     {
         $reflection = new \ReflectionClass(Helpers::class);
-        $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
+        $methods    = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
 
         foreach ($methods as $method) {
             $this->assertTrue(
